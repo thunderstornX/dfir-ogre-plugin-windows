@@ -1,0 +1,6 @@
+C:\Program Files\WindowsApps\MicrosoftTeams_22248.701.1548.6610_x64__8wekyb3d8bbwe\msteams.exe|2022-10-12 16:13:52.804
+C:\Program Files\WindowsApps\Microsoft.WindowsTerminal_1.12.10983.0_x64__8wekyb3d8bbwe\wt.exe|2022-10-12 16:16:27.130
+C:\Windows\SoftwareDistribution\Download\078055ff2cc8d6dea813b8ac94caa8e0\unifiedinstaller.exe|2023-02-16 14:59:51.240
+C:\Windows\SoftwareDistribution\Download\2cc59232ffb5f66b4e9f02a065836e72\unifiedinstaller.exe|2023-05-19 17:36:28.827
+C:\Program Files\WindowsApps\MicrosoftTeams_23062.1103.1944.2725_x64__8wekyb3d8bbwe\msteams.exe|2023-07-11 08:11:32.778
+C:\Program Files\WindowsApps\Microsoft.WindowsNotepad_11.2303.40.0_x64__8wekyb3d8bbwe\Notepad\Notepad.exe|2023-07-11 08:19:37.574

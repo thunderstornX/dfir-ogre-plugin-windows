@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="XML" file_encoding="UTF_8">
+  <mapping data_type="amcache_driver_xml">
+    <description>List drivers from various xml report files</description>
+    <category>Services and Applications</category>
+    <default_parser value="Ignore" />
+    <default_date_pattern value='%m/%d/%Y %H:%M:%S' />
+    <!-- Timeline definition -->
+    <timeline>
+      <timeline_type value="Standard" />
+      <description>
+        <output_name value="name" />
+      </description>
+      <additional_description>
+        <output_name value="product" />
+        <output_name value="company" />
+      </additional_description>
+    </timeline>
+    <xpath_tuple value="//Driver" />
+    <fields>
+        <field input="@DriverId" output="sha1" parser="String" />
+        <field input="@Name" output="name" parser="String" />
+        <field input="@Type" output="type" parser="String" />
+        <field input="@Version" output="version" parser="String" />
+        <field
+        input="@TimeStamp"
+        output="compilation_date"
+        parser="DateTime"
+        date_codec="timestamp_hex"
+      />
+        <field input="@CheckSum" output="checksum" parser="String" />
+        <field
+        input="@ImageSize"
+        output="image_size"
+        parser="IntRadix"
+        radix="16"
+      />
+        <field input="@Company" output="company" parser="String" />
+        <field input="@Product" output="product" parser="String" />
+        <field
+        input="@ProductVersion"
+        output="product_version"
+        parser="String"
+      />
+        <field input="@WdfVersion" output="wdf_version" parser="String" />
+    </fields>
+  </mapping>
+</plugin>

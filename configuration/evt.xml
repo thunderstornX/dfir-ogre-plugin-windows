@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="WinEvt" file_encoding="UTF_8">
+  <mapping data_type="evt">
+    <description
+    >Parse Windows EventLog (EVT) files and emit one record per event.</description>
+    <category>Logs</category>
+
+    <default_parser value="String" />
+    <default_date_pattern value="iso" />
+
+    <!-- Timeline definition – shows an event line on the timeline view. -->
+    <timeline>
+      <timeline_type value="Standard" />
+      <description include_field_name="false" field_separator=":">
+         <output_name value="provider_name" />
+        <output_name value="event_id" />
+      </description>
+      <additional_description include_field_name="false">
+        <output_name value="event_data" />
+      </additional_description>
+    </timeline>
+
+    <!-- Fields emitted by the plugin. -->
+    <fields>
+        <field
+        input="provider_name"
+        parser="String"
+        description="Name of the source that generated the event."
+      />
+        <field
+        input="event_id"
+        parser="Int"
+        description="Identifier of the event (lower 16 bits of the record identifier)."
+      />
+
+        <field
+        input="event_type"
+        parser="Int"
+        description="Event type (e.g. error, warning, information)."
+      />
+
+        <field
+        input="record_number"
+        parser="Int"
+        description="Sequential number of the event record in the EVT file."
+      />
+
+        <field
+        input="offset"
+        parser="Int"
+        description="Byte offset of the record from the start of the EVT file."
+      />
+
+        <field
+        input="recovered"
+        parser="Bool"
+        description="True if the record was recovered (partially overwritten)."
+      />
+
+        <field
+        input="facility"
+        parser="Int"
+        description="Facility code extracted from the event identifier."
+      />
+
+        <field
+        input="severity"
+        parser="Int"
+        description="Severity level extracted from the event identifier."
+      />
+
+        <field
+        input="message_identifier"
+        parser="Int"
+        description="Full 32‑bit message identifier."
+      />
+
+        <field
+        input="event_category"
+        parser="Int"
+        description="Category of the event."
+      />
+
+        <field
+        input="computer_name"
+        parser="String"
+        description="Computer name stored in the event record."
+      />
+
+        <field
+        input="user_sid"
+        parser="String"
+        qualifier="USER_ID"
+        description="User security identifier (SID) associated with the event."
+      />
+        <array>
+            <field
+          input="event_data"
+          parser="String"
+          description="Array of strings attached to the event."
+        />
+        </array>
+
+        <field
+        input="creation_time"
+        parser="DateTime"
+        qualifier="DATE_CREATION"
+        description="Timestamp when the event record was created."
+      />
+
+        <field
+        input="written_time"
+        parser="DateTime"
+        description="Timestamp when the event record was written to the log."
+      />
+
+    </fields>
+  </mapping>
+</plugin>

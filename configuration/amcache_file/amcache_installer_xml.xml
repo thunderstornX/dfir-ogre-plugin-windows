@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="XML" file_encoding="UTF_8">
+  <mapping data_type="amcache_installer_xml">
+    <description>List installed software from various Xml files</description>
+    <category>Services and Applications</category>
+    <default_parser value="Ignore" />
+    <default_date_pattern value='%m/%d/%Y %H:%M:%S' />
+    <!-- Timeline definition -->
+    <timeline>
+      <timeline_type value="Standard" />
+      <description>
+        <output_name value="name" />
+      </description>
+      <additional_description>
+        <output_name value="product" />
+        <output_name value="company" />
+      </additional_description>
+    </timeline>
+    <xpath_tuple value="//Installer" />
+    <fields>
+        <field input="InstallInfo/@Name" output="name" parser="String" />
+        <field input="@CompletionState" output="complete" parser="String" />
+        <field
+        input="ProgramIds/ProgramId/@Id"
+        output="program_id"
+        parser="String"
+      />
+        <field
+        input="@CreatedArpEntries"
+        output="created_arp_entries"
+        parser="String"
+      />
+
+        <field input="@StartTime" output="start_time" parser="DateTime" />
+        <field input="@StopTime" output="stop_time" parser="DateTime" />
+
+        <field
+        input="InstallInfo/@ShortName"
+        output="short_name"
+        parser="String"
+      />
+        <field
+        input="InstallInfo/@OsComponent"
+        output="is_os_component"
+        parser="String"
+      />
+        <field
+        input="InstallInfo/@Size"
+        output="size"
+        parser="IntRadix"
+        radix="16"
+      />
+        <field
+        input="InstallInfo/@PeHeaderHash"
+        output="pe_header_hash"
+        parser="String"
+      />
+        <field
+        input="InstallInfo/@SizeOfImage"
+        output="image_size"
+        parser="IntRadix"
+        radix="16"
+      />
+        <field
+        input="InstallInfo/@PeChecksum"
+        output="pe_checksum"
+        parser="String"
+      />
+        <field
+        input="InstallInfo/@LinkDate"
+        output="link_date"
+        parser="String"
+      />
+        <field
+        input="InstallInfo/@LinkerVersion"
+        output="linker_version"
+        parser="String"
+      />
+        <field
+        input="InstallInfo/@BinFileVersion"
+        output="bin_file_version"
+        parser="String"
+      />
+        <field
+        input="InstallInfo/@BinProductVersion"
+        output="bin_product_version"
+        parser="String"
+      />
+        <field
+        input="InstallInfo/@BinaryType"
+        output="binary_type"
+        parser="String"
+      />
+        <field
+        input="InstallInfo/@Created"
+        output="created"
+        parser="DateTime"
+      />
+        <field
+        input="InstallInfo/@Modified"
+        output="modified"
+        parser="DateTime"
+      />
+        <field
+        input="InstallInfo/@VerLanguage"
+        output="version_language"
+        parser="String"
+      />
+        <field input="InstallInfo/@Id" output="sha1" parser="String" />
+        <field
+        input="InstallInfo/@SigPublisherName"
+        output="sig_publisher_name"
+        parser="String"
+      />
+        <field
+        input="InstallInfo/@FileVersion"
+        output="file_version"
+        parser="String"
+      />
+        <field
+        input="InstallInfo/@CompanyName"
+        output="company"
+        parser="String"
+      />
+        <field
+        input="InstallInfo/@FileDescription"
+        output="file_description"
+        parser="String"
+      />
+        <field
+        input="InstallInfo/@ProductName"
+        output="product"
+        parser="String"
+      />
+        <field
+        input="InstallInfo/@LongPathHash"
+        output="long_path_hash"
+        parser="String"
+      />
+    </fields>
+  </mapping>
+</plugin>

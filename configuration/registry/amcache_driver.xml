@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="RegAmCacheDriver" file_encoding="UTF_8">
+  <mapping data_type="amcache_driver">
+    <description
+        ><![CDATA[
+Extracts driver metadata stored in the `AmCache` hive.
+
+- Retrieves driver attributes (name, version, product, company, etc.).
+- Captures file‑system information (path, size, SHA‑1, compilation date).
+]]>
+    </description>
+    <category>Services and Applications</category>
+    <default_parser value="Ignore" />
+    <default_date_pattern value='iso' />
+
+    <!-- Timeline definition -->
+    <timeline>
+      <timeline_type value="Standard" />
+      <related_user>
+        <output_name value="key_security.owner_sid" />
+      </related_user>
+      <description>
+        <output_name value="name" />
+      </description>
+      <additional_description>
+        <output_name value="path" />
+        <output_name value="size" />
+        <output_name value="service" />
+        <output_name value="key_path" />
+        <output_name value="sha1" />
+      </additional_description>
+    </timeline>
+
+    <!-- Fields -->
+    <fields>
+      <field
+                input="name"
+                parser="String"
+                qualifier="FILE_NAME"
+                description="file name"
+            />
+
+      <field
+                input="path"
+                parser="String"
+                qualifier="FILE_PATH"
+                description="file path"
+            />
+
+      <field
+                input="size"
+                parser="Int"
+                qualifier="FILE_SIZE"
+                description="file size"
+            />
+
+      <field
+                input="inf"
+                parser="String"
+                qualifier="FILE_NAME"
+                description="name of the associated .inf file"
+            />
+
+      <field
+                input="package_name"
+                parser="String"
+                description="name of the driver's package"
+            />
+
+      <field
+                input="service"
+                parser="String"
+                qualifier="SERVICE_NAME"
+                description="name of the service installed by the driver"
+            />
+
+      <field
+                input="version"
+                parser="String"
+                qualifier="PE_VERSION"
+                description="driver's version"
+            />
+
+      <field
+                input="product"
+                parser="String"
+                description="name of the product"
+            />
+
+      <field
+                input="product_version"
+                parser="String"
+                qualifier="PE_VERSION"
+                description="product's version"
+            />
+
+      <field
+                input="company"
+                parser="String"
+                qualifier="COMPANY"
+                description="company providing the driver"
+            />
+
+      <field input="driver_type" parser="Int" description="" />
+
+      <field
+                input="compilation_date"
+                parser="DateTime"
+                qualifier="DATE_COMPILATION"
+                display_name="Compilation date"
+                description="compilation date"
+            />
+
+      <field
+                input="image_size"
+                parser="Int"
+                description="equivalent to 'SizeOfImage' field of the PE header"
+            />
+
+      <field input="checksum" parser="Int" description="driver's checksum" />
+
+      <field
+                input="wdf_version"
+                parser="String"
+                qualifier="PE_VERSION"
+                description="Windows Driver Framework version"
+            />
+
+      <field
+                input="sha1"
+                parser="String"
+                qualifier="FILE_SHA1"
+                description="Sha-1 signature"
+            />
+
+      <!-- Registry Key data-->
+      <field
+                input="key_path"
+                parser="String"
+                qualifier="KEY_PATH"
+                description="full registry key name"
+            />
+      <field
+                input="key_modif_time"
+                parser="DateTime"
+                qualifier="DATE_MODIFICATION"
+                display_name="Registry key last modification"
+                description="last modification timestamp of the registry key"
+            />
+      <object input="key_security">
+        <field
+                    input="owner_sid"
+                    parser="String"
+                    qualifier="USER_SID"
+                    description="SID of the user that owns the registry key"
+                />
+        <field
+                    input="group_sid"
+                    parser="String"
+                    description="SID of the group that owns the registry key"
+                />
+        <array>
+          <field
+                        input="control_flags"
+                        parser="String"
+                        description="security descriptor control flags for the key"
+                    />
+        </array>
+        <object input="dacl_ace">
+          <field
+                        input="ace_type"
+                        parser="String"
+                        description="type of ACE (e.g., allow, deny)"
+                    />
+          <field
+                        input="account_sid"
+                        parser="String"
+                        description="SID of the account the ACE applies to"
+                    />
+          <array>
+            <field
+                            input="ace_flags"
+                            parser="String"
+                            description="ACE flags that modify inheritance or behavior"
+                        />
+          </array>
+          <array>
+            <field
+                            input="rights"
+                            parser="String"
+                            description="permissions granted or denied by the ACE"
+                        />
+          </array>
+        </object>
+      </object>
+    </fields>
+  </mapping>
+
+</plugin>

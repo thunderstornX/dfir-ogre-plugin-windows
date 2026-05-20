@@ -1,0 +1,34 @@
+default_date_pattern: '%Y-%m-%d %H:%M:%S'
+regexp_unmatched: Merge
+regex: ^(?<timestamp>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}),\s+(?<level>\w+)\s+(?<component>\w+)\s+(?P<message>.+)
+
+
+timeline:
+  timeline_type: MacbMacb
+  time_zone: UTC
+  source_type: NTFSInfo
+  data_type: File
+  description_field:
+  - level
+  additional_description_field:
+  - component
+
+fields:
+
+- input_name: timestamp
+  qualifier: DATE_CREATION
+  parser:
+    type: DateTime
+    pattern: default
+
+- input_name: level
+  parser:
+    type: String
+
+- input_name: component
+  parser:
+    type: String
+
+- input_name: message
+  parser:
+    type: String

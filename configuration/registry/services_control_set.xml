@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="RegServicesControlSet" file_encoding="UTF_8">
+  <mapping data_type="services_control_set">
+    <description
+    ><![CDATA[
+Extracts all service definitions from a Windows `System` hive, in the related control‑set keys.
+
+- Provides service identifiers and display names.
+- Shows how the service is configured (type, start type, image path).
+- Reveals the account (user or system) that owns / runs the service.
+- Supplies raw values useful for correlation with other artefacts.
+]]>
+    </description>
+    <category>Persistence</category>
+    <default_parser value="Ignore" />
+    <default_date_pattern value='iso' />
+
+    <!-- Timeline definition -->
+    <timeline>
+      <timeline_type value="Standard" />
+      <related_user>
+        <output_name value="key_security.owner_sid" />
+      </related_user>
+      <description>
+        <output_name value="name" />
+        <output_name value="display_name" />
+      </description>
+      <additional_description>
+        <output_name value="service_type" />
+        <output_name value="start_type" />
+        <output_name value="image_path" />
+        <output_name value="run_as" />
+      </additional_description>
+    </timeline>
+
+    <!-- Fields -->
+    <fields>
+      <field
+        input="name"
+        parser="String"
+        qualifier="SERVICE_NAME"
+        description="unique identifier of the service (registry key name)"
+      />
+
+      <field
+        input="service_type"
+        parser="String"
+        qualifier="SERVICE_TYPE"
+        description="type of the service (e.g., Kernel driver, WIN32 service, packaged service)"
+      />
+
+      <field
+        input="display_name"
+        parser="String"
+        qualifier="SERVICE_DISPLAY_NAME"
+        description="human‑readable display name of the service"
+      />
+
+      <field
+        input="description"
+        parser="String"
+        description="textual description of the service"
+      />
+
+      <field
+        input="error_control"
+        parser="String"
+        description="error‑control setting (Ignore, Normal, Severe, Critical)"
+      />
+
+      <field
+        input="service_type"
+        parser="String"
+        qualifier="SERVICE_TYPE"
+        description="type of the service (duplicate entry for compatibility)"
+      />
+
+      <field
+        input="start_type"
+        parser="String"
+        qualifier="SERVICE_START_TYPE"
+        description="service start mode (Boot, System, Auto, Manual, Disabled)"
+      />
+
+      <field
+        input="is_interactive"
+        parser="Bool"
+        description="whether the service is interactive"
+      />
+
+      <field
+        input="is_packaged_service"
+        parser="Bool"
+        description="whether the service is a packaged (UWP) service"
+      />
+
+      <field
+        input="is_service_driver"
+        parser="Bool"
+        description="whether the service is a driver (kernel, file‑system or recogniser)"
+      />
+
+      <field
+        input="is_service_win32"
+        parser="Bool"
+        description="whether the service is a WIN32 service"
+      />
+
+      <field
+        input="image_path"
+        parser="String"
+        qualifier="COMMAND_LINE"
+        description="command line or executable path that the service runs"
+      />
+
+      <field
+        input="group"
+        parser="String"
+        description="load‑order group name the service belongs to"
+      />
+
+      <field
+        input="tag"
+        parser="String"
+        description="numeric tag used for service ordering"
+      />
+
+      <field
+        input="depend_on_group"
+        parser="String"
+        description="service groups this service depends on"
+      />
+
+      <field
+        input="depend_on_service"
+        parser="String"
+        qualifier="SERVICE_NAME"
+        description="other services this service depends on"
+      />
+
+      <field
+        input="delete_flag"
+        parser="String"
+        description="flag indicating the service is marked for deletion"
+      />
+
+      <field
+        input="object_name"
+        parser="String"
+        qualifier="WINDOWS_OBJECT"
+        description="kernel object name for driver services"
+      />
+
+      <field
+        input="run_as"
+        parser="String"
+        qualifier="USER_NAME"
+        description="account name under which the service runs"
+      />
+
+      <field
+        input="wow64"
+        parser="String"
+        description="WOW64 flag indicating a 32‑bit service on a 64‑bit OS"
+      />
+
+      <field
+        input="alias"
+        parser="String"
+        qualifier="SERVICE_NAME"
+        description="alternative name (alias) for the service"
+      />
+
+      <field
+        input="delayed_auto_start"
+        parser="String"
+        description="whether the service uses delayed automatic start"
+      />
+
+      <field
+        input="preshutdown_timeout"
+        parser="String"
+        description="pre‑shutdown timeout value (milliseconds)"
+      />
+
+      <field
+        input="service_sid_type"
+        parser="String"
+        description="SID type assigned to the service (None, Unrestricted, Restricted)"
+      />
+
+      <field
+        input="required_privileges"
+        parser="String"
+        qualifier="WINDOWS_PRIVILEGES"
+        description="list of privileges the service requires"
+      />
+
+      <field
+        input="launch_protected"
+        parser="String"
+        description="protected‑process level of the service (None, Windows, Light, etc.)"
+      />
+
+      <field
+        input="user_service_flags"
+        parser="String"
+        description="flags controlling user‑service permissions (e.g., DSMA allow)"
+      />
+
+      <field
+        input="svchost_split_disable"
+        parser="String"
+        description="whether svchost split is disabled for this service"
+      />
+
+      <field
+        input="package_fullname"
+        parser="String"
+        description="full package name for a packaged service"
+      />
+
+      <field
+        input="app_usermodel_id"
+        parser="String"
+        description="AppUserModel ID associated with the service"
+      />
+
+      <field
+        input="package_origin"
+        parser="String"
+        description="origin of the package (Unsigned, Inbox, Store, Developer)"
+      />
+
+      <field
+        input="service_dll"
+        parser="String"
+        qualifier="FILE_PATH"
+        description="path to the ServiceDll implementing the service"
+      />
+
+      <field
+        input="service_manifest"
+        parser="String"
+        qualifier="FILE_PATH"
+        description="path to the ServiceManifest file"
+      />
+
+      <field
+        input="service_main"
+        parser="String"
+        description="name(s) of the service's main entry point function(s)"
+      />
+
+      <field
+        input="parameters_key_last_modif"
+        parser="DateTime"
+        qualifier="DATE_MODIFICATION"
+        display_name="Parameter key last modification"
+        description="last modification timestamp of the Parameters sub‑key"
+      />
+
+      <field
+        input="parameters_service_dll"
+        parser="String"
+        qualifier="FILE_PATH"
+        description="ServiceDll value inside the Parameters sub‑key"
+      />
+
+      <field
+        input="parameters_service_manifest"
+        parser="String"
+        qualifier="FILE_PATH"
+        description="ServiceManifest value inside the Parameters sub‑key"
+      />
+
+      <field
+        input="parameters_service_main"
+        parser="String"
+        description="ServiceMain value inside the Parameters sub‑key"
+      />
+
+      <field
+        input="performance_key_last_modif"
+        parser="DateTime"
+        qualifier="DATE_MODIFICATION"
+        display_name="Performance key last modification"
+        description="last modification timestamp of the Performance sub‑key"
+      />
+
+      <field
+        input="performance_library"
+        parser="String"
+        qualifier="FILE_PATH"
+        description="library file used for performance counters"
+      />
+
+      <field
+        input="performance_open_function"
+        parser="String"
+        description="function name that opens performance data"
+      />
+
+      <field
+        input="performance_collect_function"
+        parser="String"
+        description="function name that collects performance data"
+      />
+
+      <field
+        input="performance_close_function"
+        parser="String"
+        description="function name that closes performance data"
+      />
+
+      <field
+        input="failure_actions"
+        parser="String"
+        description="binary blob describing service failure actions"
+      />
+
+      <field
+        input="failure_command"
+        parser="String"
+        qualifier="COMMAND_LINE"
+        description="command executed when the service fails"
+      />
+
+      <field
+        input="failure_actions_on_non_crash_failures"
+        parser="Bool"
+        description="whether failure actions apply to non‑crash failures"
+      />
+
+      <!-- Registry Key data-->
+      <field
+        input="key_path"
+        parser="String"
+        qualifier="KEY_PATH"
+        description=" full registry key name"
+      />
+      <field
+        input="key_modif_time"
+        parser="DateTime"
+        qualifier="DATE_MODIFICATION"
+        display_name="Registry key last modification"
+        description=" last modification timestamp of the registry key"
+      />
+      <object input="key_security">
+        <field
+          input="owner_sid"
+          parser="String"
+          qualifier="USER_SID"
+          description=" SID of the user that owns the registry key"
+        />
+        <field
+          input="group_sid"
+          parser="String"
+          description=" SID of the group that owns the registry key"
+        />
+        <array>
+          <field
+            input="control_flags"
+            parser="String"
+            description=" security descriptor control flags for the key"
+          />
+        </array>
+        <object input="dacl_ace">
+          <field
+            input="ace_type"
+            parser="String"
+            description=" type of ACE (e.g., allow, deny)"
+          />
+          <field
+            input="account_sid"
+            parser="String"
+            description=" SID of the account the ACE applies to"
+          />
+          <array>
+            <field
+              input="ace_flags"
+              parser="String"
+              description=" ACE flags that modify inheritance or behavior"
+            />
+          </array>
+          <array>
+            <field
+              input="rights"
+              parser="String"
+              description=" permissions granted or denied by the ACE"
+            />
+          </array>
+        </object>
+      </object>
+    </fields>
+
+
+  </mapping>
+
+</plugin>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="SQLite" file_encoding="UTF_8">
+  <mapping data_type="browser_history">
+    <description
+    ><![CDATA[
+Parses the browsing hisory database of a Chrome profile (typically `*/Default/History`). It
+extracts each recorded URL, its page title, visit timestamps, the number of times the URL was
+visited, and the referer URL if available.
+
+- Shows which web resources a user accessed.
+- Provides visit frequency, helping gauge the relevance of each site.
+- Captures the referer, offering context about navigation paths.
+]]>
+    </description>
+    <category>Browser Artefacts</category>
+    <default_date_pattern value='timestamp_ms' />
+    <default_parser value="String" />
+    <!-- sqlite specific parameters -->
+    <query>
+      <![CDATA[
+    SELECT
+      urls.url,
+      urls.title,
+      visits.visit_time/1000 - 11644473600000 AS visit_date_ms,
+      urls.visit_count,
+      referer.url AS referer,
+      urls.hidden
+    FROM urls
+    LEFT JOIN visits on urls.id = visits.url
+    LEFT JOIN urls as referer on visits.from_visit = referer.id
+    ORDER BY urls.url, visits.visit_time
+      ]]>
+    </query>
+
+    <!-- Timeline definition -->
+    <timeline>
+      <timeline_type value="Standard" />
+      <description>
+        <output_name value="url" />
+      </description>
+      <additional_description>
+        <output_name value="title" />
+        <output_name value="visit_count" />
+        <output_name value="origin" />
+      </additional_description>
+    </timeline>
+
+    <!-- field mapping that match the query result -->
+    <fields>
+      <field
+        input="url"
+        parser="String"
+        description="web address that was visited"
+      />
+
+      <field
+        input="title"
+        parser="String"
+        description="title of the visited webpage"
+      />
+
+      <field
+        input="visit_date_ms"
+        parser="DateTime"
+        output="visit_date"
+        description="timestamp of the visit"
+      />
+
+      <field
+        input="visit_count"
+        parser="Int"
+        description="total number of times the URL was visited"
+      />
+
+      <field
+        input="referer"
+        parser="String"
+        description="URL of the page that referred to this visit, if available"
+      />
+
+      <field
+        input="hidden"
+        parser="Int"
+        description="flag indicating whether the entry is hidden (1) or not (0)"
+      />
+    </fields>
+  </mapping>
+
+</plugin>

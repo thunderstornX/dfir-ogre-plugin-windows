@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="XML" file_encoding="UTF_8">
+  <mapping data_type="fastfind_obj">
+    <description>Parse the object result of the fastfind tool</description>
+    <category>Fast Find</category>
+    <default_parser value="Ignore" />
+    <default_date_pattern value='%Y-%m-%d %H:%M:%S.%f' />
+    <xpath_tuple value="/fast_find/object/object_match" />
+    <fields>
+      <field input="@description" output="description" parser="String" />
+      <array>
+        <object input="object" output="object">
+          <field input="@type" output="type" parser="String" />
+          <field input="@name" output="name" parser="String" />
+          <field input="@path" output="path" parser="String" />
+        </object>
+      </array>
+    </fields>
+  </mapping>
+</plugin>

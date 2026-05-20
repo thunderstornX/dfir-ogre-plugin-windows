@@ -1,0 +1,3 @@
+default_date_pattern: timestamp
+query: "SELECT * FROM sqlite_master WHERE type='table'"
+fields:

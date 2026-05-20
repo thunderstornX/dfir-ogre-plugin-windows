@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="JavaIdx" file_encoding="UTF_8">
+  <mapping data_type="java_idx">
+    <description
+    ><![CDATA[
+Extracts metadata about each downloaded artifact, including its URL, server IP, size,
+timestamps and signing status.
+
+The parser interprets version‑specific structures, handling incomplete or busy downloads, and
+converts dates to UTC where possible. All extracted fields are emitted as a structured tuple
+for downstream analysis.
+
+- Provides the original download URL and originating IP address.
+- Indicates whether the entry is a shortcut or an incomplete download.
+- Reports file size, last‑modified, expiration and optional signing flag.
+- Normalises timestamps to UTC for reliable chronology.
+]]>
+      </description>
+    <category>Application Specific</category>
+    <default_parser value="Ignore" />
+    <default_date_pattern value='iso' />
+
+    <!-- Timeline definition -->
+    <timeline>
+      <timeline_type value="Standard" />
+      <description>
+        <output_name value="url" />
+        <output_name value="ip_address" />
+      </description>
+      <additional_description>
+        <output_name value="is_incomplete" />
+        <output_name value="is_shortcut" />
+        <output_name value="content_length" />
+        <output_name value="signed" />
+      </additional_description>
+    </timeline>
+
+    <!-- Fields -->
+    <fields>
+      <field
+        input="url"
+        parser="String"
+        description="download URL of the file"
+      />
+
+      <field
+        input="ip_address"
+        parser="String"
+        description="source IP address of the server"
+      />
+
+      <field
+        input="is_incomplete"
+        parser="Bool"
+        description="true if the download was incomplete or still in progress"
+      />
+
+      <field
+        input="content_length"
+        parser="Int"
+        qualifier="FILE_SIZE"
+        description="size of the downloaded file in bytes"
+      />
+
+      <field
+        input="is_shortcut"
+        parser="Bool"
+        description="true if the entry represents a shortcut rather than the actual file"
+      />
+
+      <field
+        input="version_string"
+        parser="String"
+        description="version string extracted from the IDX file"
+      />
+
+      <field
+        input="namespace"
+        parser="String"
+        description="namespace associated with the download"
+      />
+
+      <field
+        input="signed"
+        parser="Bool"
+        description="indicates whether the downloaded file is digitally signed"
+      />
+
+      <field
+        input="download_date"
+        parser="DateTime"
+        display_name="download date"
+        description="timestamp when the file was downloaded"
+      />
+
+      <field
+        input="last_modified_date"
+        parser="DateTime"
+        qualifier="DATE_MODIFICATION"
+        display_name="last modified date"
+        description="last‑modified timestamp reported by the server"
+      />
+
+      <field
+        input="expiration_date"
+        parser="DateTime"
+        display_name="expiration date"
+        description="expiration timestamp of the file or associated resource"
+      />
+
+      <field
+        input="validation_date"
+        parser="DateTime"
+        display_name="validation date"
+        description="validation timestamp (available in IDX 6.05 format)"
+      />
+
+      <object
+        input="request"
+        description="raw HTTP request metadata extracted from the IDX file"
+      />
+
+    </fields>
+  </mapping>
+</plugin>

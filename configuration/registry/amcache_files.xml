@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="RegAmCacheFile" file_encoding="UTF_8">
+  <mapping data_type="amcache_file">
+    <description
+        ><![CDATA[
+Retrieves cached executable file metadata from the Windows `AmCache` hive.
+
+- Expose what the OS stores for quick access to recently used files.
+- Extracts file name, path, size, SHA‑1 hash, program identifiers, version info, timestamps, and security descriptors for forensic examination.
+]]>
+    </description>
+    <category>Services and Applications</category>
+    <default_parser value="Ignore" />
+    <default_date_pattern value='iso' />
+
+    <!-- Timeline definition -->
+    <timeline>
+      <timeline_type value="Standard" />
+      <related_user>
+        <output_name value="key_security.owner_sid" />
+      </related_user>
+      <description>
+        <output_name value="path" />
+      </description>
+      <additional_description>
+        <output_name value="sha1" />
+        <output_name value="size" />
+        <output_name value="program_id" />
+        <output_name value="key_path" />
+      </additional_description>
+    </timeline>
+
+    <!-- Fields -->
+    <fields>
+      <field
+                input="name"
+                parser="String"
+                qualifier="FILE_NAME"
+                description="filename"
+            />
+
+      <field
+                input="path"
+                parser="String"
+                qualifier="FILE_PATH"
+                description="file path"
+            />
+
+      <field
+                input="size"
+                parser="Int"
+                qualifier="FILE_SIZE"
+                description="size in bytes"
+            />
+
+      <field
+                input="program_id"
+                parser="String"
+                qualifier="APP_ID"
+                description="program ID, if it exists"
+            />
+
+      <field
+                input="sha1"
+                parser="String"
+                qualifier="FILE_SHA1"
+                description="SHA-1 hash of the file"
+            />
+
+      <field
+                input="product_name"
+                parser="String"
+                qualifier="PRODUCT"
+                description="Product name"
+            />
+
+      <field
+                input="company_name"
+                parser="String"
+                qualifier="COMPANY"
+                description="Company name"
+            />
+
+      <field
+                input="product_version"
+                parser="String"
+                qualifier="PE_VERSION"
+                description="Product version"
+            />
+
+      <field
+                input="version_language"
+                parser="Int"
+                description="Microsoft Language ID in decimal"
+            />
+
+      <field
+                input="short_name"
+                parser="String"
+                description="ShortName of the file as found in the MFT"
+            />
+
+      <field
+                input="original_filename"
+                parser="String"
+                qualifier="FILE_NAME"
+                description="Original FileName field of the PE header"
+            />
+
+      <field
+                input="file_version"
+                parser="String"
+                qualifier="PE_VERSION"
+                description="File version"
+            />
+
+      <field
+                input="image_size"
+                parser="Int"
+                description="'SizeOfImage' field of the PE header"
+            />
+
+      <field
+                input="file_description"
+                parser="String"
+                description="file description"
+            />
+
+      <field
+                input="linker_version"
+                parser="String"
+                qualifier="PE_VERSION"
+                description="combination of the 'MajorLinkerVersion' and 'MinorLinkerVersion' fields of the PE header"
+            />
+
+      <field
+                input="link_date"
+                parser="DateTime"
+                qualifier="DATE_COMPILATION"
+                display_name="Compilation date"
+                description="Compilation date"
+            />
+
+      <field input="binary_type" parser="String" description="32BIT or 64BIT" />
+
+      <field
+                input="creation_date"
+                parser="DateTime"
+                qualifier="DATE_CREATION"
+                display_name="File Creation date"
+            />
+
+      <field
+                input="modification_date"
+                parser="DateTime"
+                qualifier="DATE_MODIFICATION"
+                display_name="File Modification date"
+            />
+
+      <field
+                input="long_path_hash"
+                parser="String"
+                qualifier="FILE_PATH_SHA1"
+                description="SHA-1 of the complete lowercase file path in UTF-16"
+            />
+
+      <field
+                input="unique_id"
+                parser="String"
+                description="identifies the file location if it is in a program installation directory"
+            />
+
+      <field
+                input="volume_guid"
+                parser="String"
+                qualifier="VOLUME_GUID"
+                description="identifier of the volume where the file is located"
+            />
+
+      <field input="is_pe_file" parser="Bool" />
+
+      <field input="is_os_component" parser="Bool" />
+
+      <!-- Registry Key data-->
+      <field
+                input="key_path"
+                parser="String"
+                qualifier="KEY_PATH"
+                description="full registry key name"
+            />
+      <field
+                input="key_modif_time"
+                parser="DateTime"
+                qualifier="DATE_MODIFICATION"
+                display_name="Registry key last modification"
+                description="last modification timestamp of the registry key"
+            />
+      <object input="key_security">
+        <field
+                    input="owner_sid"
+                    parser="String"
+                    qualifier="USER_SID"
+                    description="SID of the user that owns the registry key"
+                />
+        <field
+                    input="group_sid"
+                    parser="String"
+                    description="SID of the group that owns the registry key"
+                />
+        <array>
+          <field
+                        input="control_flags"
+                        parser="String"
+                        description="security descriptor control flags for the key"
+                    />
+        </array>
+        <object input="dacl_ace">
+          <field
+                        input="ace_type"
+                        parser="String"
+                        description="type of ACE (e.g., allow, deny)"
+                    />
+          <field
+                        input="account_sid"
+                        parser="String"
+                        description="SID of the account the ACE applies to"
+                    />
+          <array>
+            <field
+                            input="ace_flags"
+                            parser="String"
+                            description="ACE flags that modify inheritance or behavior"
+                        />
+          </array>
+          <array>
+            <field
+                            input="rights"
+                            parser="String"
+                            description="permissions granted or denied by the ACE"
+                        />
+          </array>
+        </object>
+      </object>
+    </fields>
+  </mapping>
+
+</plugin>

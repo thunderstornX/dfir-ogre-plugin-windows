@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="ListDll" file_encoding="UTF_8">
+    <mapping data_type="listdlls">
+    <description
+    ><![CDATA[Parse output from Sysinternals **ListDLL** tool that lists loaded DLLs for running processes on Windows.]]>
+    </description>
+    <category>Services and Applications</category>
+    <default_parser value="Ignore" />
+    <default_date_pattern value='%Y-%m-%d %H:%M:%S.%3f' />
+
+    <fields>
+      <field input="process_name" parser="String" description="Process name" />
+      <field input="pid" parser="String" description="PID" />
+      <field
+        input="command_line"
+        parser="String"
+        description="Full command line used to start the process"
+      />
+      <field
+        input="base_addr"
+        parser="String"
+        description="Base address in memory where the DLL is loaded (hexadecimal)"
+      />
+      <field
+        input="size"
+        parser="String"
+        description="Size of the DLL module in memory "
+      />
+      <field
+        input="path"
+        parser="String"
+        description=" Full path to the DLL file on disk"
+      />
+
+    </fields>
+  </mapping>
+
+</plugin>

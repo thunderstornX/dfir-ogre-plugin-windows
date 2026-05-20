@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="Csv" file_encoding="UTF_16_LE">
+  <mapping data_type="autoruns">
+    <description
+    ><![CDATA[
+Parses CSV files produced by the Windows Autoruns utility, extracting entries that define programs or scripts that start automatically. It reads registry locations, file paths and related metadata to enumerate persistence mechanisms.
+
+- Reveals what programs are set to execute on boot or login.
+- Shows whether each autorun entry is active or disabled.
+- Identifies the exact file or command that will be launched.
+- Links each entry to its user profile, aiding attribution.
+]]>
+</description>
+    <category>Persistence</category>
+    <default_parser value="Ignore" />
+    <default_date_pattern value='%Y%m%d-%H%M%S' />
+    <csv_delimiter value="," />
+
+    <!-- Timeline definition -->
+    <timeline>
+      <timeline_type value="Standard" />
+      <description>
+        <output_name value="entry" />
+      </description>
+      <additional_description include_field_name="true" field_separator=" - ">
+        <output_name value="image_path" />
+        <output_name value="enabled" />
+        <output_name value="category" />
+        <output_name value="profile" />
+      </additional_description>
+    </timeline>
+
+    <fields>
+      <field
+        input="Time"
+        output="time"
+        parser="DateTime"
+        description="timestamp of the autorun entry"
+      />
+
+      <field
+        input="Entry Location"
+        output="entry_location"
+        qualifier="KEY_PATH"
+        parser="String"
+        description="registry key path where the autorun entry is stored"
+      />
+
+      <field
+        input="Entry"
+        output="entry_name"
+        parser="String"
+        qualifier="KEY_NAME"
+        description="name of the registry value representing the autorun entry"
+      />
+
+      <multi_input
+        output="entry"
+        parser="Join"
+        separator="\"
+        avoid_separator_duplication="true"
+        qualifier="KEY_PATH"
+        description="full registry path (location + value name) of the autorun entry"
+      >
+        <field input="Entry Location" parser="String" />
+
+        <field input="Entry" parser="String" />
+      </multi_input>
+
+      <field
+        input="Enabled"
+        output="enabled"
+        parser="Bool"
+        description="indicates whether the autorun entry is enabled (active)"
+      />
+
+      <field
+        input="Category"
+        output="category"
+        parser="String"
+        description="category of the autorun (e.g., Logon, Services, Drivers)"
+      />
+
+      <field
+        input="Profile"
+        output="profile"
+        parser="String"
+        description="user profile associated with the autorun entry"
+      />
+
+      <field
+        input="Description"
+        output="description"
+        parser="String"
+        description="human‑readable description of the autorun entry"
+      />
+
+      <field
+        input="Signer"
+        output="signer"
+        parser="String"
+        description="signer of the digital signature of the executable"
+      />
+
+      <field
+        input="Company"
+        output="company"
+        parser="String"
+        qualifier="COMPANY"
+        description="company name embedded in the executable"
+      />
+
+      <field
+        input="Image Path"
+        output="image_path"
+        qualifier="FILE_PATH"
+        parser="String"
+        description="full file‑system path of the executable or script"
+      />
+
+      <field
+        input="Version"
+        output="version"
+        parser="String"
+        qualifier="PE_VERSION"
+        description="version information of the executable (PE version)"
+      />
+
+      <field
+        input="Launch String"
+        output="launch_string"
+        parser="String"
+        description="command line or arguments used to launch the executable"
+      />
+
+      <!-- hash -->
+      <field
+        input="MD5"
+        output="md5"
+        parser="String"
+        qualifier="FILE_MD5"
+        description="MD5 hash of the executable file"
+      />
+
+      <field
+        input="SHA-1"
+        output="sha1"
+        parser="String"
+        qualifier="FILE_SHA1"
+        description="SHA‑1 hash of the executable file"
+      />
+
+      <field
+        input="PESHA-1"
+        output="pe_sha1"
+        parser="String"
+        qualifier="PE_SHA1"
+        description="SHA‑1 hash of the PE header"
+      />
+
+      <field
+        input="PESHA-256"
+        output="pe_sha256"
+        parser="String"
+        qualifier="PE_SHA256"
+        description="SHA‑256 hash of the PE header"
+      />
+
+      <field
+        input="SHA-256"
+        output="sha256"
+        parser="String"
+        qualifier="FILE_SHA256"
+        description="SHA‑256 hash of the executable file"
+      />
+
+      <!-- others -->
+      <field
+        input="IMP"
+        output="imp"
+        parser="String"
+        description="list of imported functions or DLLs used by the executable"
+      />
+
+
+    </fields>
+  </mapping>
+
+</plugin>

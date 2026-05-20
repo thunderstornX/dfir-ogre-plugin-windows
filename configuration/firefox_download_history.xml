@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="SQLite" file_encoding="UTF_8">
+  <mapping data_type="browser_download_history">
+    <description
+    ><![CDATA[
+Extracts records from the `places` sqlite database that Firefox uses to store download
+metadata. Each row contains the path of the saved file, the source URL, file size and
+timestamps for the start and end of the download.
+
+- Reveals which URLs were downloaded and where they were saved.
+- Provides the total byte count of each download.
+- Indicates whether a download entry has been removed (deleted flag).
+]]>
+    </description>
+    <category>Browser Artefacts</category>
+    <default_date_pattern value='timestamp_ms' />
+    <default_parser value="String" />
+    <!-- sqlite specific parameters -->
+    <query>
+      <![CDATA[
+      SELECT
+        moz_annos.content as target_path,
+        moz_places.url,
+        metadata.file_size as total_bytes,
+        moz_annos.dateAdded/1000 as start_time_ms,
+        metadata.end_time/1000 as end_time_ms,
+        metadata.state,
+        metadata.deleted
+      FROM moz_annos
+        JOIN moz_anno_attributes ON moz_annos.anno_attribute_id = moz_anno_attributes.id AND moz_anno_attributes.name="downloads/destinationFileURI"
+        JOIN moz_places ON moz_places.id = moz_annos.place_id
+        JOIN (
+          SELECT
+            moz_annos.place_id,
+            json_extract(content, '$.fileSize') as file_size,
+            json_extract(content, '$.endTime') as end_time,
+            json_extract(content, '$.state') as state,
+            json_extract(content, '$.deleted') as deleted
+          FROM moz_annos
+            JOIN moz_anno_attributes ON moz_annos.anno_attribute_id = moz_anno_attributes.id AND moz_anno_attributes.name="downloads/metaData"
+        ) metadata on metadata.place_id = moz_annos.place_id
+      ]]>
+    </query>
+
+    <!-- Timeline definition -->
+    <timeline>
+      <timeline_type value="Standard" />
+      <description>
+        <output_name value="url" />
+      </description>
+      <additional_description>
+        <output_name value="total_bytes" />
+        <output_name value="deleted" />
+      </additional_description>
+    </timeline>
+
+    <!-- field mapping that match the query result -->
+    <fields>
+      <field
+        input="target_path"
+        parser="String"
+        description="local file system path where the downloaded file was saved"
+      />
+
+      <field
+        input="url"
+        parser="String"
+        description="source URL from which the file was downloaded"
+      />
+
+      <field
+        input="total_bytes"
+        parser="Int"
+        description="total size of the downloaded file in bytes"
+      />
+
+      <field
+        input="start_time_ms"
+        parser="DateTime"
+        output="start_time"
+        description="timestamp when the download started"
+      />
+
+      <field
+        input="end_time_ms"
+        parser="DateTime"
+        output="end_time"
+        description="timestamp when the download finished"
+      />
+
+      <field
+        input="state"
+        parser="Int"
+        description="numeric code representing the download state (e.g., completed, cancelled, in‑progress)"
+      />
+
+      <field
+        input="deleted"
+        parser="Bool"
+        description="boolean flag indicating whether the download entry has been marked as deleted"
+      />
+    </fields>
+  </mapping>
+</plugin>

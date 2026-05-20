@@ -1,0 +1,33 @@
+from dfir_ogre_common import (
+    Metadata,
+    OgrePlugin,
+    PluginConfiguration,
+    PluginDescription,
+    RunConfiguration,
+    RunReport,
+    parse_csv,
+    win_frn_hex_parser,
+)
+
+
+class GetThis(OgrePlugin):
+    def description(self) -> PluginDescription:
+        return PluginDescription(
+            "GetThis",
+            "Parse Orc's GetThis.csv file",
+        )
+
+    def parse(
+        self,
+        input_file: str,
+        plugin_file: str,
+        run_config: RunConfiguration,
+        metadata: Metadata,
+    ) -> RunReport:
+        rust_mapping = {
+            "FRN": win_frn_hex_parser(""),
+            "ParentFRN": win_frn_hex_parser("parent_"),
+        }
+        plugin_config = PluginConfiguration.load(plugin_file, extension=rust_mapping)
+
+        return parse_csv(input_file, run_config, plugin_config, metadata, 100)

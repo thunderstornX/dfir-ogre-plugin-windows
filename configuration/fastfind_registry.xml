@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="XML" file_encoding="UTF_8">
+  <mapping data_type="fastfind_reg">
+    <description>Parse the registry results of the fastfind tool</description>
+    <category>Fast Find</category>
+    <default_parser value="Ignore" />
+    <default_date_pattern value='%Y-%m-%d %H:%M:%S.%f' />
+
+    <timeline>
+      <timeline_type value="Standard" />
+      <description>
+        <output_name value="description" />
+        <output_name value="hive_path" />
+      </description>
+    </timeline>
+
+    <xpath_tuple value="/fast_find/registry/hive/regfind_match" />
+    <fields>
+      <field input="../@volume_id" output="volume_id" parser="String" />
+      <field input="../@snapshot_id" output="snapshot_id" parser="String" />
+      <field
+        input="../@hive_path"
+        output="hive_path"
+        parser="String"
+        qualifier="FILE_PATH"
+      />
+
+      <field input="@description" output="description" parser="String" />
+
+      <array>
+        <object input="key" output="key">
+          <field
+            input="@key"
+            output="key"
+            parser="String"
+            qualifier="KEY_PATH"
+          />
+          <field input="@subkeys_count" output="subkeys_count" parser="Int" />
+          <field input="@values_count" output="values_count" parser="Int" />
+          <field
+            input="@lastmodified_key"
+            output="lastmodified_key"
+            parser="DateTime"
+            qualifier="DATE_MODIFICATION"
+          />
+        </object>
+      </array>
+      <array>
+        <object input="value" output="value">
+          <field
+            input="@key"
+            output="key"
+            parser="String"
+            qualifier="KEY_PATH"
+          />
+          <field
+            input="@value"
+            output="value"
+            parser="String"
+            qualifier="VALUE_NAME"
+          />
+          <field input="@type" output="type" parser="String" />
+          <field input="@data_size" output="data_size" parser="Int" />
+          <field
+            input="@lastmodified_key"
+            output="lastmodified_key"
+            parser="DateTime"
+            qualifier="DATE_MODIFICATION"
+          />
+        </object>
+      </array>
+    </fields>
+  </mapping>
+</plugin>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="RegRecentApp" file_encoding="UTF_8">
+  <mapping data_type="recent_app">
+    <description
+    ><![CDATA[
+Extracts information about applications and files recently accessed by a user from the `NtUser` hive. It parses each RecentApps key and its `RecentItems` sub‑key.
+
+- Provides per-application identifiers and launch statistics.
+- Captures timestamps of the last access for both the application and individual files.
+- Includes the full command line (path+arguments) used to launch each recent file.
+]]>
+    </description>
+    <category>Services and Applications</category>
+    <default_parser value="Ignore" />
+    <default_date_pattern value='iso' />
+
+    <!-- Timeline definition -->
+    <timeline>
+      <timeline_type value="Standard" />
+      <related_user>
+        <output_name value="key_security.owner_sid" />
+      </related_user>
+      <description>
+        <output_name value="path" />
+      </description>
+      <additional_description>
+        <output_name value="launch_count" />
+        <output_name value="display_name" />
+      </additional_description>
+    </timeline>
+
+    <!-- Fields -->
+    <fields>
+      <field
+        input="guid_app"
+        parser="String"
+        description="GUID of the application"
+      />
+
+      <field
+        input="app_id"
+        parser="String"
+        qualifier="APP_ID"
+        description="Application identifier"
+      />
+
+      <field
+        input="launch_count"
+        parser="Int"
+        description="Number of times the application has been launched"
+      />
+
+      <field
+        input="app_last_accessed_time"
+        parser="DateTime"
+        qualifier="DATE_ACCESS"
+        display_name="Application last access"
+        description="Timestamp of the last time the application was accessed"
+      />
+
+      <field
+        input="guid_file"
+        parser="String"
+        description="GUID of the recently accessed file"
+      />
+
+      <field
+        input="display_name"
+        parser="String"
+        description="Human‑readable display name of the recent file"
+      />
+
+      <field
+        input="path"
+        parser="String"
+        description="Full command line (file path plus arguments) used to launch the file"
+      />
+
+      <field
+        input="file_last_accessed_time"
+        parser="DateTime"
+        qualifier="DATE_ACCESS"
+        display_name="File last access"
+        description="Timestamp of the last time the file was accessed"
+      />
+
+      <!-- Registry Key data-->
+      <field
+        input="key_path"
+        parser="String"
+        qualifier="KEY_PATH"
+        description="full registry key name"
+      />
+      <field
+        input="key_modif_time"
+        parser="DateTime"
+        qualifier="DATE_MODIFICATION"
+        display_name="Registry key last modification"
+        description="last modification timestamp of the registry key"
+      />
+      <object input="key_security">
+        <field
+          input="owner_sid"
+          parser="String"
+          qualifier="USER_SID"
+          description="SID of the user that owns the registry key"
+        />
+        <field
+          input="group_sid"
+          parser="String"
+          description="SID of the group that owns the registry key"
+        />
+        <array>
+          <field
+            input="control_flags"
+            parser="String"
+            description="security descriptor control flags for the key"
+          />
+        </array>
+        <object input="dacl_ace">
+          <field
+            input="ace_type"
+            parser="String"
+            description="type of ACE (e.g., allow, deny)"
+          />
+          <field
+            input="account_sid"
+            parser="String"
+            description="SID of the account the ACE applies to"
+          />
+          <array>
+            <field
+              input="ace_flags"
+              parser="String"
+              description="ACE flags that modify inheritance or behavior"
+            />
+          </array>
+          <array>
+            <field
+              input="rights"
+              parser="String"
+              description="permissions granted or denied by the ACE"
+            />
+          </array>
+        </object>
+      </object>
+    </fields>
+  </mapping>
+
+</plugin>

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="RegSystemInfo" batch="true" file_encoding="UTF_8">
+  <mapping data_type="reg_systeminfo">
+    <description
+    ><![CDATA[
+Extracts various system information from the SYSTEM and SOFTWARE hives
+]]>
+    </description>
+    <category>System Information</category>
+    <default_parser value="Ignore" />
+    <default_date_pattern value='iso' />
+
+    <!-- Timeline definition -->
+    <timeline>
+      <timeline_type value="Standard" />
+
+      <description>
+        <output_name value="product_name" />
+      </description>
+      <additional_description>
+        <output_name value="os_version" />
+        <output_name value="build_number" />
+        <output_name value="architecture" />
+        <output_name value="timezone_iana" />
+      </additional_description>
+    </timeline>
+
+    <!-- Fields -->
+    <fields>
+        <field
+        input="computer_name"
+        parser="String"
+        description="Name of the computer"
+      />
+        <field
+        input="product_name"
+        parser="String"
+        description="Windows product name (e.g., Windows 10 Pro)"
+      />
+        <field
+        input="os_version"
+        parser="String"
+        description="Windows version number (major.minor"
+      />
+        <field
+        input="build_number"
+        parser="String"
+        description="Windows build number"
+      />
+        <field
+        input="install_date"
+        parser="DateTime"
+        display_name="Installation Date"
+        description="UTC timestamp when Windows was installed"
+      />
+        <field
+        input="shutdown_date"
+        parser="DateTime"
+        display_name="Shutdown Date"
+        description="Last recorded shutdown time in UTC"
+      />
+        <field
+        input="domain"
+        parser="String"
+        description="Domain the computer is joined to (if any)"
+      />
+        <field
+        input="system_root"
+        parser="String"
+        description="Windows system directory path (typically C:\Windows)"
+      />
+        <field
+        input="architecture"
+        parser="String"
+        description="Processor architecture (e.g., AMD64, x86)"
+      />
+        <field
+        input="has_emet"
+        parser="Bool"
+        description="True if EMET (Enhanced Mitigation Experience Toolkit) is installed"
+      />
+        <field
+        input="is_dc"
+        parser="Bool"
+        description="True if this computer is a Domain Controller"
+      />
+        <field
+        input="is_pki"
+        parser="Bool"
+        description="True if this computer has the PKI role"
+      />
+        <field
+        input="is_ias"
+        parser="Bool"
+        description="True if this computer has the IAS role"
+      />
+        <field
+        input="app_whitelisting"
+        parser="String"
+        description="Application whitelisting policy in use (AppLocker, SRP, or empty)"
+      />
+        <field
+        input="timezone_windows"
+        parser="String"
+        description="Windows timezone key name from registry"
+      />
+        <field
+        input="timezone_iana"
+        parser="String"
+        description="IANA timezone identifier converted from Windows timezone"
+      />
+        <field
+        input="wu_last_check"
+        parser="DateTime"
+        display_name="Windows Update last check"
+        description="Last successful Windows Update detection scan time"
+      />
+        <field
+        input="wu_last_download"
+        parser="DateTime"
+        display_name="Windows Update last download"
+        description="Last successful Windows Update download time"
+      />
+        <field
+        input="wu_last_install"
+        parser="DateTime"
+        display_name="Windows Update last install"
+        description="Last successful Windows Update installation time"
+      />
+        <field
+        input="install_date_local"
+        parser="String"
+        description="Local timezone timestamp when Windows was installed"
+      />
+        <field
+        input="control_set"
+        parser="String"
+        description="Active ControlSet currently in use (ControlSet001, ControlSet002, etc.)"
+      />
+        <array>
+            <object input="interfaces">
+                <field
+            input="guid"
+            parser="String"
+            description="Unique identifier for the network interface"
+          />
+                <field
+            input="name"
+            parser="String"
+            description="Network interface name as shown in Windows"
+          />
+                <field
+            input="description"
+            parser="String"
+            description="Network interface description"
+          />
+                <field
+            input="mac"
+            parser="String"
+            description="Physical MAC address of the interface"
+          />
+                <field
+            input="ipv4"
+            parser="String"
+            description="IPv4 addresses assigned to the interface"
+          />
+                <field
+            input="dhcp_enabled"
+            parser="String"
+            description="Whether DHCP is enabled for this interfac"
+          />
+                <field
+            input="dhcp_ipv4"
+            parser="String"
+            description="Current IPv4 address obtained via DHCP"
+          />
+                <field
+            input="dhcp_ipv4_server"
+            parser="String"
+            description="DHCP server that provided the IPv4 address"
+          />
+                <field
+            input="ipv6"
+            parser="String"
+            description="IPv6 addresses assigned to the interface"
+          />
+                <field
+            input="dhcp_ipv6"
+            parser="String"
+            description="Current IPv6 address obtained via DHCP"
+          />
+                <field
+            input="dhcp_ipv6_server"
+            parser="String"
+            description="DHCP server that provided the IPv6 address"
+          />
+            </object>
+        </array>
+    </fields>
+  </mapping>
+</plugin>

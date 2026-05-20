@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="RegSIPP" file_encoding="UTF_8">
+  <mapping data_type="subject_interface_package">
+    <description
+    ><![CDATA[
+Extracts Subject Interface Package (SIP) records from the Windows `Software` hive. It reads each SIP’s GUID, human‑readable name, associated DLL path, and entry‑point function name, together with key metadata.
+
+- Provides the SIP GUID, uniquely identifying the package.
+- Records the DLL location that implements the SIP.
+- Captures the function name used as the package's entry point.
+- Includes the registry key owner SID for user association.
+]]>
+    </description>
+    <category>Services and Applications</category>
+    <default_parser value="Ignore" />
+    <default_date_pattern value='iso' />
+
+    <!-- Timeline definition -->
+    <timeline>
+      <timeline_type value="Standard" />
+      <related_user>
+        <output_name value="key_security.owner_sid" />
+      </related_user>
+      <description>
+        <output_name value="name" />
+      </description>
+      <additional_description>
+        <output_name value="dll" />
+        <output_name value="function_name" />
+        <output_name value="guid" />
+      </additional_description>
+    </timeline>
+
+    <!-- Fields -->
+    <fields>
+      <field
+        input="name"
+        parser="String"
+        description="human‑readable name of the Subject Interface Package (SIP) identified by the GUID"
+      />
+
+      <field
+        input="dll"
+        parser="String"
+        qualifier="FILE_PATH"
+        description="filesystem path to the DLL that implements the SIP"
+      />
+
+      <field
+        input="function_name"
+        parser="String"
+        description="entry‑point function name within the DLL used for SIP verification"
+      />
+
+      <field
+        input="guid"
+        parser="String"
+        description="GUID uniquely identifying the Subject Interface Package"
+      />
+
+      <!-- Registry Key data-->
+      <field
+        input="key_path"
+        parser="String"
+        qualifier="KEY_PATH"
+        description="full registry key name"
+      />
+      <field
+        input="key_modif_time"
+        parser="DateTime"
+        qualifier="DATE_MODIFICATION"
+        display_name="Registry key last modification"
+        description="last modification timestamp of the registry key"
+      />
+      <object input="key_security">
+        <field
+          input="owner_sid"
+          parser="String"
+          qualifier="USER_SID"
+          description="SID of the user that owns the registry key"
+        />
+        <field
+          input="group_sid"
+          parser="String"
+          description="SID of the group that owns the registry key"
+        />
+        <array>
+          <field
+            input="control_flags"
+            parser="String"
+            description="security descriptor control flags for the key"
+          />
+        </array>
+        <object input="dacl_ace">
+          <field
+            input="ace_type"
+            parser="String"
+            description="type of ACE (e.g., allow, deny)"
+          />
+          <field
+            input="account_sid"
+            parser="String"
+            description="SID of the account the ACE applies to"
+          />
+          <array>
+            <field
+              input="ace_flags"
+              parser="String"
+              description="ACE flags that modify inheritance or behavior"
+            />
+          </array>
+          <array>
+            <field
+              input="rights"
+              parser="String"
+              description="permissions granted or denied by the ACE"
+            />
+          </array>
+        </object>
+      </object>
+    </fields>
+
+  </mapping>
+</plugin>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="Csv" file_encoding="UTF_8">
+  <mapping data_type="processes_orc">
+    <description
+    ><![CDATA[
+Parses CSV files produced by ORC that enumerate running processes. It extracts each process’s metadata, such as name, executable path, timestamps, identifiers, and resource usage.
+
+- Process name, command‑line and executable location.
+- Creation (`creation`) and termination (`termination`) timestamps.
+- Parent/child relationship via `parent_id` and `process_id`.
+- Resource metrics: memory size, CPU times, priority, session.
+- Execution context: user‑mode/kernel‑mode time, responding state, privileged flag.
+]]>
+    </description>
+    <category>Services and Applications</category>
+    <default_date_pattern value='%d/%m/%Y %H:%M:%S' />
+    <default_parser value="Ignore" />
+    <csv_delimiter value="," />
+
+    <!-- Timeline definition -->
+    <timeline>
+      <timeline_type value="Standard" />
+      <description>
+        <output_name value="name" />
+      </description>
+      <additional_description>
+        <output_name value="command_line" />
+        <output_name value="executable_path" />
+      </additional_description>
+    </timeline>
+
+    <!-- field mapping that match the query result -->
+    <fields>
+      <field
+        input="ProcessName"
+        parser="String"
+        output="name"
+        description="executable name of the process (without path)"
+      />
+
+      <field
+        input="Handles"
+        parser="Int"
+        output="nb_handles"
+        description="total number of handles opened by the process"
+      />
+
+      <field
+        input="Path"
+        parser="String"
+        output="executable_path"
+        description="full filesystem path to the process executable"
+      />
+
+      <field
+        input="Company"
+        parser="String"
+        output="company"
+        qualifier="COMPANY"
+        description="publisher name extracted from the executable's version info"
+      />
+
+      <field
+        input="CPU"
+        parser="String"
+        output="cpu_time"
+        description="cumulative CPU time consumed by the process"
+      />
+
+      <field
+        input="FileVersion"
+        parser="String"
+        output="file_version"
+        description="file version string from the executable's version resource"
+      />
+
+      <field
+        input="ProductVersion"
+        parser="String"
+        output="product_version"
+        description="product version string from the executable's version resource"
+      />
+
+      <field
+        input="Product"
+        parser="String"
+        output="product"
+        qualifier="PRODUCT"
+        description="product name extracted from the executable's version info"
+      />
+
+      <field
+        input="MainWindowTitle"
+        parser="String"
+        output="window_title"
+        description="title of the process's main window, if present"
+      />
+
+      <field
+        input="Description"
+        parser="String"
+        output="description"
+        description="human‑readable description from the executable's version info"
+      />
+
+      <field
+        input="StartTime"
+        parser="String"
+        output="creation"
+        description="timestamp when the process was created"
+      />
+
+      <field
+        input="ExitTime"
+        parser="String"
+        output="termination"
+        description="timestamp when the process terminated (if applicable)"
+      />
+
+      <field
+        input="PrivilegedProcessorTime"
+        parser="String"
+        output="kernelmode_time"
+        description="CPU time spent in kernel‑mode (privileged) for the process"
+      />
+
+      <field
+        input="UserProcessorTime"
+        parser="String"
+        output="usermode_time"
+        description="CPU time spent in user‑mode for the process"
+      />
+
+      <field
+        input="TotalProcessorTime"
+        parser="String"
+        output="total_time"
+        description="total CPU time (user + kernel) consumed by the process"
+      />
+
+      <field
+        input="ParentProcessId"
+        parser="Int"
+        output="parent_id"
+        qualifier="PROCESS_ID"
+        description="process identifier (PID) of the parent process"
+      />
+
+      <field
+        input="PriorityClass"
+        parser="String"
+        output="priority_class"
+        description="string representation of the process's priority class"
+      />
+
+      <field
+        input="Priority"
+        parser="Int"
+        output="priority"
+        description="numeric priority value of the process"
+      />
+
+      <field
+        input="Id"
+        parser="Int"
+        output="process_id"
+        description="process identifier (PID) of the current process"
+      />
+
+      <field
+        input="SessionId"
+        parser="Int"
+        output="session_id"
+        description="identifier of the session in which the process runs"
+      />
+
+      <field
+        input="Responding"
+        parser="String"
+        output="responding"
+        description="indicates whether the process is currently responding (True/False)"
+      />
+
+      <field
+        input="VirtualMemorySize"
+        parser="Int"
+        output="memory_size"
+        description="virtual memory size allocated to the process (in bytes)"
+      />
+    </fields>
+  </mapping>
+</plugin>

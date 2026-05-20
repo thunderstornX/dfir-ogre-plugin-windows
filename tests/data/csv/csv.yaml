@@ -1,0 +1,233 @@
+csv_delimiter: ','
+default_parser:
+  type: Ignore
+default_date_pattern: '%Y-%m-%d %H:%M:%S.%3f'
+
+timeline:
+  timeline_type: MacbMacb
+  time_zone: UTC
+  source_type: NTFSInfo
+  data_type: File
+  description_field:
+  - file_path
+  additional_description_field:
+  - file_size
+
+fields:
+- input_name: SnapshotID
+  output_name: snapshot_id
+  parser:
+    type: String
+
+- input:
+  - input_name: ParentName
+    parser:
+      type: String
+  - input_name: File
+    parser:
+      type: String
+  output_name: file_path
+  qualifier: FILE_PATH
+  parser:
+    type: Join
+    separator: '\'
+    avoid_duplication: true  
+
+- input_name: ParentName
+  output_name: parent
+  parser:
+    type: String
+
+- input_name: File
+  output_name: file_name
+  qualifier: FILE_NAME
+  parser:
+    type: String
+
+- input_name: Extension
+  output_name: extension
+  parser:
+    type: String
+
+- input_name: SizeInBytes
+  output_name: file_size
+  qualifier: FILE_SIZE
+  parser:
+    type: Int
+
+- input_name: RecordInUse
+  output_name: file_in_use
+  parser:
+    type: Bool
+
+- input_name: USN
+  output_name: usn_number
+  qualifier: FS_USN
+  parser:
+    type: IntRadix
+    radix: 16
+
+- input_name: FilenameFlags
+  output_name: file_name_flags
+  parser:
+    type: Int
+
+- input_name: FileNameCreationDate
+  output_name: fn_creation_date
+  qualifier: DATE_CREATION
+  parser:
+    type: DateTime
+    pattern: default
+
+- input_name: FileNameLastModificationDate
+  output_name: fn_lastmod_date
+  qualifier: DATE_MODIFICATION
+  parser:
+    type: DateTime
+    pattern: default
+
+- input_name: FileNameLastAccessDate
+  output_name: fn_lastaccess_date
+  qualifier: DATE_ACCESS
+  parser:
+    type: DateTime
+    pattern: default
+
+- input_name: FileNameLastAttrModificationDate
+  output_name: fn_lastchange_date
+  qualifier: DATE_CHANGE
+  parser:
+    type: DateTime
+    pattern: default
+
+- input_name: CreationDate
+  output_name: si_creation_date
+  qualifier: DATE_CREATION
+  parser:
+    type: DateTime
+    pattern: default
+
+- input_name: LastModificationDate
+  output_name: si_lastmod_date
+  qualifier: DATE_MODIFICATION
+  parser:
+    type: DateTime
+    pattern: default
+
+- input_name: LastAccessDate
+  output_name: si_lastaccess_date
+  qualifier: DATE_ACCESS
+  parser:
+    type: DateTime
+    pattern: default
+
+- input_name: LastAttrChangeDate
+  output_name: si_lastchange_date
+  qualifier: DATE_MODIFICATION
+  parser:
+    type: DateTime
+    pattern: default
+
+- input_name: MD5
+  output_name: md5
+  qualifier: FILE_MD5
+  parser:
+    type: String
+
+- input_name: SHA-1
+  output_name: sha1
+  qualifier: FILE_SHA1
+  parser:
+    type: String
+
+- input_name: SHA256
+  output_name: sha256
+  qualifier: FILE_SHA256
+  parser:
+    type: String
+
+- input_name: PeMD5
+  output_name: orc_pe_md5
+  qualifier: PE_MD5
+  parser:
+    type: String
+
+- input_name: PeSHA1
+  output_name: orc_pe_sha1
+  qualifier: PE_SHA1
+  parser:
+    type: String
+
+- input_name: PeSHA256
+  output_name: orc_pe_sha256
+  qualifier: PE_SHA256
+  parser:
+    type: String
+
+- input_name: SignedHash
+  output_name: signedhash_dispatcher
+  parser:
+    type: String
+
+- input_name: AuthenticodeSigner
+  output_name: authenticode_signer
+  parser:
+    type: String
+
+- input_name: AuthenticodeSignerThumbprint
+  output_name: authenticode_signer_thumbprint
+  parser:
+    type: Split
+    at: ;
+
+- input_name: AuthenticodeCA
+  output_name: authenticode_ca
+  parser:
+    type: String
+
+- input_name: AuthenticodeCAThumbprint
+  output_name: authenticode_ca_thumbprint
+  parser:
+    type: Split
+    at: ;
+
+- input_name: AuthenticodeStatus
+  output_name: authenticode_status
+  parser:
+    type: String
+
+- input_name: Version
+  output_name: pe_version
+  qualifier: PE_VERSION
+  parser:
+    type: String
+
+- input_name: CompanyName
+  output_name: pe_companyname
+  qualifier: COMPANY
+  parser:
+    type: String
+
+- input_name: ProductName
+  output_name: pe_productname
+  qualifier: PRODUCT
+  parser:
+    type: String
+
+- input_name: OriginalFileName
+  output_name: pe_original_filename
+  qualifier: FILE_NAME
+  parser:
+    type: String
+
+- input_name: Platform
+  output_name: pe_platform
+  qualifier: PE_ARCH
+  parser:
+    type: String
+
+- input_name: SubSystem
+  output_name: pe_subsystem
+  qualifier: PE_SUBSYSTEM
+  parser:
+    type: String

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="RegUserProfile" file_encoding="UTF_8">
+  <mapping data_type="user_profile">
+    <description
+    ><![CDATA[
+Extracts data about Windows user profiles from the `Software` hive.
+
+- Lists all local user profiles present on the system.
+- Identifies which accounts have administrative privileges.
+- Shows the filesystem location of each profile directory.
+- Detects hidden or disabled accounts.
+- Provides registry key modification times and ACL details.
+]]>
+    </description>
+    <category>System Information</category>
+    <default_parser value="Ignore" />
+    <default_date_pattern value='iso' />
+
+    <!-- Timeline definition -->
+    <timeline>
+      <timeline_type value="Standard" />
+      <related_user>
+        <output_name value="user_sid" />
+      </related_user>
+      <description>
+        <output_name value="path" />
+      </description>
+      <additional_description>
+        <output_name value="is_admin" />
+        <output_name value="user_name" />
+      </additional_description>
+    </timeline>
+
+    <!-- Fields -->
+    <fields>
+      <field
+        input="user_name"
+        parser="String"
+        qualifier="USER_NAME"
+        description="account name derived from the profile directory"
+      />
+
+      <field
+        input="user_sid"
+        parser="String"
+        qualifier="USER_SID"
+        description="security identifier (SID) of the user profile"
+      />
+
+      <field
+        input="path"
+        parser="String"
+        qualifier="FILE_PATH"
+        description="filesystem path to the user's profile directory"
+      />
+
+      <field
+        input="is_hidden"
+        parser="Bool"
+        description="True if the account is listed as hidden in SpecialAccounts\UserList"
+      />
+
+      <field
+        input="is_admin"
+        parser="Bool"
+        description="True if the profile's State flag indicates administrative rights (0x100 set)"
+      />
+
+      <field
+        input="ref_count"
+        parser="String"
+        description="reference count value for the profile entry"
+      />
+
+      <field
+        input="state"
+        parser="String"
+        description="raw State field value from the registry (used to infer admin status)"
+      />
+
+      <!-- Registry Key data-->
+      <field
+        input="key_path"
+        parser="String"
+        qualifier="KEY_PATH"
+        description="full registry key name"
+      />
+      <field
+        input="key_modif_time"
+        parser="DateTime"
+        qualifier="DATE_MODIFICATION"
+        display_name="Registry key last modification"
+        description="last modification timestamp of the registry key"
+      />
+      <object input="key_security">
+        <field
+          input="owner_sid"
+          parser="String"
+          qualifier="USER_SID"
+          description="SID of the user that owns the registry key"
+        />
+        <field
+          input="group_sid"
+          parser="String"
+          description="SID of the group that owns the registry key"
+        />
+        <array>
+          <field
+            input="control_flags"
+            parser="String"
+            description="security descriptor control flags for the key"
+          />
+        </array>
+        <object input="dacl_ace">
+          <field
+            input="ace_type"
+            parser="String"
+            description="type of ACE (e.g., allow, deny)"
+          />
+          <field
+            input="account_sid"
+            parser="String"
+            description="SID of the account the ACE applies to"
+          />
+          <array>
+            <field
+              input="ace_flags"
+              parser="String"
+              description="ACE flags that modify inheritance or behavior"
+            />
+          </array>
+          <array>
+            <field
+              input="rights"
+              parser="String"
+              description="permissions granted or denied by the ACE"
+            />
+          </array>
+        </object>
+      </object>
+    </fields>
+  </mapping>
+</plugin>

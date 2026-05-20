@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="Csv" file_encoding="UTF_8">
+  <mapping data_type="volstats">
+    <description
+    ><![CDATA[
+Parses a Windows volume‑statistics csv file. Each line describes:.
+
+- Computer name identifies the host that exported the volume list.
+- Volume ID and mount point uniquely reference the volume on the system.
+- Volume type indicates whether the volume is fixed, removable, etc.
+- Shadow‑copy ID links the entry to a specific VSS snapshot when present.
+- etc.
+]]>
+</description>
+    <category>File System</category>
+    <default_parser value="Ignore" />
+    <default_date_pattern value='%Y-%m-%d %H:%M:%S.%3f' />
+    <csv_delimiter value="," />
+
+    <fields>
+      <field
+        input="ComputerName"
+        output="computer_name"
+        parser="String"
+        description="Host name that produced the volstat report"
+      />
+      <field
+        input="VolumeID"
+        output="volumeid"
+        parser="String"
+        description="Unique identifier (GUID) of the volume"
+      />
+      <field
+        input="Location"
+        output="location"
+        parser="String"
+        description="Physical location or drive letter of the volume"
+      />
+      <field
+        input="Type"
+        output="volume_type"
+        parser="String"
+        description="File system type (FAT, NTFS, etc.)"
+      />
+      <field input="Parse" output="is_parsed" parser="Bool" />
+      <field
+        input="MountPoint"
+        output="mount_point"
+        parser="String"
+        description="Path where the volume is mounted"
+      />
+      <field
+        input="ShadowCopyId"
+        output="shadow_copy"
+        parser="String"
+        description="Identifier of the associated VSS snapshot, if any"
+      />
+      <field
+        input="FileInfo"
+        output="fileinfo"
+        parser="String"
+        description="raw file‑information from the volume"
+      />
+      <field
+        input="i30Info"
+        output="i30info"
+        parser="String"
+        description="directory index ($I30) information for the volume"
+      />
+      <field
+        input="AttrInfo"
+        output="attrinfo"
+        parser="String"
+        description="NTFS attribute information for the volume"
+      />
+      <field
+        input="Timeline"
+        output="timeline"
+        parser="String"
+        description="timeline metadata (e.g., timestamps) associated with the volume"
+      />
+      <field
+        input="SecDescr"
+        output="secdescr"
+        parser="String"
+        description="security descriptor data for the volume"
+      />
+    </fields>
+  </mapping>
+
+</plugin>

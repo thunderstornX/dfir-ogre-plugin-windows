@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="Regexp" file_encoding="UTF_16_LE">
+  <mapping data_type="pca_general_record">
+    <description
+    ><![CDATA[
+Extracts each line of a PCA log. It captures when a program was launched, its status, executable location and associated metadata such as description, vendor, version, and exit code.
+
+- Reveals the exact time a program was started.
+- Provides the executable’s full path for correlation with other artefacts.
+- Includes human‑readable file description, vendor and version for context.
+- Records the run status and exit code, useful for success/failure determination.
+]]>
+    </description>
+    <category>Logs</category>
+    <default_date_pattern value='%Y-%m-%d %H:%M:%S.%f' />
+    <!-- regexp specific parameters -->
+    <skip_lines value="0" />
+    <regexp_fail_policy value="Fail" />
+    <regex>
+      <![CDATA[
+        (?P<run_time>[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3})\|(?P<run_status>[0-9])\|(?P<executable_path>[\S\s]+|\\[\S\s]+)\|(?P<file_description>[\w ]+)\|(?P<software_vendor>[\w\W]+)\|(?P<file_version>[\w\W]+)\|(?P<program_id>[a-z0-9]{44})\|(?P<exitcode_value>[\w\W]+)
+      ]]>
+    </regex>
+
+    <!-- Timeline definition -->
+    <timeline>
+      <timeline_type value="Standard" />
+      <description>
+        <output_name value="executable_path" />
+      </description>
+      <additional_description>
+        <output_name value="file_description" />
+      </additional_description>
+    </timeline>
+    <!-- field mapping that match the named regexp -->
+    <fields>
+      <field
+        input="run_time"
+        parser="DateTime"
+        qualifier="DATE_LAST_RUN"
+        description="timestamp when the program was launched"
+      />
+
+      <field
+        input="run_status"
+        parser="Int"
+        description="numeric run status (e.g., 0 = success, non‑zero = error)"
+      />
+
+      <field
+        input="executable_path"
+        parser="String"
+        qualifier="FILE_PATH"
+        description="full path of the executable launched via PCA"
+      />
+
+      <field
+        input="file_description"
+        parser="String"
+        description="human‑readable description of the executable or program"
+      />
+
+      <field
+        input="software_vendor"
+        parser="String"
+        qualifier="PUBLISHER"
+        description="name of the software vendor or publisher"
+      />
+
+      <field
+        input="file_version"
+        parser="String"
+        description="version of the executable"
+      />
+
+      <field
+        input="program_id"
+        parser="String"
+        qualifier="APP_ID"
+        description="unique identifier for the program"
+      />
+
+      <field
+        input="exitcode_value"
+        parser="String"
+        qualifier="EXIT_CODE"
+        description="exit code returned by the program after execution"
+      />
+    </fields>
+  </mapping>
+
+</plugin>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="Prefetch" file_encoding="UTF_8">
+  <mapping data_type="prefetch">
+    <description
+    ><![CDATA[
+Parses Windows Prefetch files to extract execution metadata. It shows when and how often an executable ran, which supporting files were loaded, and storage details of the volumes involved.
+
+- Identifies the executable name and version.
+- Records the number of executions and the most recent run timestamp.
+- Lists files and volumes referenced by the executable.
+- Captures path hints that may point to additional artefacts.
+]]>
+    </description>
+    <category>Services and Applications</category>
+    <default_parser value="Ignore" />
+    <default_date_pattern value='iso' />
+
+    <!-- Timeline definition -->
+    <timeline>
+      <timeline_type value="Standard" />
+      <description>
+        <output_name value="executable" />
+      </description>
+      <additional_description>
+        <output_name value="path_hints" />
+      </additional_description>
+    </timeline>
+
+    <!-- Fields -->
+    <fields>
+      <field
+        input="executable"
+        parser="String"
+        qualifier="FILE_NAME"
+        description="executable file name"
+      />
+
+      <field input="version" parser="String" description="version" />
+
+      <field
+        input="prefetch_hash"
+        parser="Int"
+        description="hash identifier of the prefetch file"
+      />
+
+      <field
+        input="run_count"
+        parser="Int"
+        description="number of times the executable was run"
+      />
+
+      <field
+        input="run_date"
+        parser="DateTime"
+        qualifier="DATE_LAST_RUN"
+        display_name="run date"
+        description="timestamp of the most recent execution"
+      />
+
+      <field
+        input="file_count"
+        parser="Int"
+        description="count of file entries referenced by the prefetch"
+      />
+
+      <array>
+        <object input="files">
+          <field
+            input="index"
+            parser="Int"
+            description="index of the file entry"
+          />
+
+          <field
+            input="path"
+            parser="String"
+            qualifier="FILE_PATH"
+            description="full path of a referenced file"
+          />
+
+          <field
+            input="frn"
+            parser="String"
+            description="file reference number (FRN) in hexadecimal"
+          />
+
+          <field
+            input="sequence_number"
+            parser="Int"
+            qualifier="MFT_SEQUENCE"
+            description="sequence component of the FRN"
+          />
+
+          <field
+            input="record_number"
+            parser="Int"
+            qualifier="FS_INODE"
+            description="record/inode component of the FRN"
+          />
+        </object>
+      </array>
+
+      <field
+        input="volume_count"
+        parser="Int"
+        description="number of volumes referenced"
+      />
+
+      <array>
+        <object input="volumes">
+          <field
+            input="path"
+            parser="String"
+            description="device path of the volume"
+          />
+
+          <field
+            input="serial_number"
+            parser="Int"
+            description="volume serial number"
+          />
+
+          <field
+            input="creation_time"
+            parser="DateTime"
+            display_name="volume creation date"
+            description="creation timestamp of the volume"
+          />
+        </object>
+      </array>
+
+      <array>
+        <field
+          input="path_hints"
+          parser="String"
+          description="relative paths within volumes that hint at additional artefacts"
+        />
+      </array>
+    </fields>
+  </mapping>
+</plugin>

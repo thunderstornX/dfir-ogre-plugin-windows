@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="OrcProcesses1" file_encoding="UTF_8">
+  <mapping data_type="processes_orc">
+    <description
+    ><![CDATA[
+Extracts Windows processes data from an ORC‑generated CSV file. It captures basic process attributes such as name, executable path, command line, identifiers and timestamps, exposing the execution context recorded at collection time.
+
+- Provides process names and their originating executable locations.
+- Records command‑line arguments, enabling reconstruction of launch parameters.
+- Includes creation and termination timestamps for temporal correlation.
+- Supplies process IDs, parent IDs and session information for relationship mapping.
+]]>
+    </description>
+    <category>Services and Applications</category>
+    <default_date_pattern value='%Y%m%d-%H%M%S' />
+    <default_parser value="Ignore" />
+    <csv_delimiter value="," />
+
+    <!-- Timeline definition -->
+    <timeline>
+      <timeline_type value="Standard" />
+      <description>
+        <output_name value="name" />
+      </description>
+      <additional_description>
+        <output_name value="command_line" />
+        <output_name value="executable_path" />
+      </additional_description>
+    </timeline>
+
+    <!-- field mapping that match the query result -->
+    <fields>
+      <field
+        input="ProcessName"
+        parser="String"
+        output="name"
+        description="name of the process executable"
+      />
+
+      <field
+        input="Handles"
+        parser="Int"
+        output="nb_handles"
+        description="number of handles opened by the process"
+      />
+
+      <field
+        input="Path"
+        parser="String"
+        output="executable_path"
+        description="full file‑system path to the process executable"
+      />
+
+      <field
+        input="CommandLine"
+        parser="String"
+        qualifier="COMMAND_LINE"
+        output="command_line"
+        description="command‑line used to launch the process"
+      />
+
+      <field
+        input="Description"
+        parser="String"
+        output="description"
+        description="human‑readable description of the process"
+      />
+
+      <field
+        input="CreationDate"
+        parser="Python"
+        output="creation"
+        description="timestamp when the process was created"
+      />
+
+      <field
+        input="TerminationDate"
+        parser="Python"
+        output="termination"
+        description="timestamp when the process terminated (if any)"
+      />
+
+      <field
+        input="KernelModeTime"
+        parser="String"
+        output="kernelmode_time"
+        description="cumulative CPU time spent in kernel mode"
+      />
+
+      <field
+        input="UserModeTime"
+        parser="String"
+        output="usermode_time"
+        description="cumulative CPU time spent in user mode"
+      />
+
+      <field
+        input="ParentProcessId"
+        parser="Int"
+        qualifier="PROCESS_ID"
+        output="parent_id"
+        description="identifier of the parent process"
+      />
+
+      <field
+        input="Priority"
+        parser="Int"
+        output="priority"
+        description="process priority value"
+      />
+
+      <field
+        input="ProcessId"
+        parser="Int"
+        output="process_id"
+        description="identifier (PID) of the process"
+      />
+
+      <field
+        input="SessionId"
+        parser="Int"
+        output="session_id"
+        description="session identifier to which the process belongs"
+      />
+
+      <field
+        input="ThreadCount"
+        parser="Int"
+        output="nb_threads"
+        description="number of threads created by the process"
+      />
+
+      <field
+        input="VirtualSize"
+        parser="Int"
+        output="memory_size"
+        description="virtual memory size allocated to the process (bytes)"
+      />
+    </fields>
+  </mapping>
+</plugin>

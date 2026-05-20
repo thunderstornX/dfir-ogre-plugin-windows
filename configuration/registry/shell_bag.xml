@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="RegShellBag" file_encoding="UTF_8">
+  <mapping data_type="shellbags">
+    <description
+    ><![CDATA[
+Extracts the contents of Shell Bag structures stored in the `UsrClass` hive. These structures record directories and items that a user has browsed with Windows Explorer.
+
+It reconstructs the hierarchical path of each bag entry, exposing the folder path, item type, name and associated registry metadata such as modification timestamps and security descriptors.
+
+- Retrieves browsed folder paths from the registry.
+- Identifies the item type (root folder, file entry, network location, etc.).
+]]>
+    </description>
+    <category>File System</category>
+    <default_parser value="Ignore" />
+    <default_date_pattern value='iso' />
+
+    <!-- Timeline definition -->
+    <timeline>
+      <timeline_type value="Standard" />
+      <related_user>
+        <output_name value="key_security.owner_sid" />
+      </related_user>
+      <description>
+        <output_name value="path" />
+      </description>
+      <additional_description>
+        <output_name value="type" />
+        <output_name value="name" />
+      </additional_description>
+    </timeline>
+
+    <!-- Fields -->
+    <fields>
+      <field
+        input="name"
+        parser="String"
+        description="displayed name of the shell item (folder, file, volume, etc.)"
+      />
+
+      <field
+        input="type"
+        parser="String"
+        description="type identifier of the shell item (e.g., control_panel_category, network_location, file_entry)"
+      />
+
+      <field
+        input="localized_name"
+        parser="String"
+        description="localized (human‑readable) name of a file entry, if present in the extension block"
+      />
+
+      <field
+        input="file_reference"
+        parser="String"
+        description="NTFS file reference (MFT entry) of the file, formatted as 'MFT‑Sequence‑Index'"
+      />
+
+      <field
+        input="path"
+        parser="String"
+        description="reconstructed hierarchical path derived from the shell bag entry"
+      />
+
+      <field
+        input="description"
+        parser="String"
+        description="textual description associated with a network location item"
+      />
+
+      <field
+        input="comments"
+        parser="String"
+        description="user‑defined comments attached to a network location item"
+      />
+
+      <field
+        input="modification_time"
+        parser="DateTime"
+        display_name="Modification time"
+        qualifier="DATE_MODIFICATION"
+        description="last modification timestamp of the underlying file"
+      />
+
+      <field
+        input="access_time"
+        parser="DateTime"
+        display_name="Access time"
+        qualifier="DATE_ACCESS"
+        description="last access timestamp of the underlying file"
+      />
+
+      <field
+        input="creation_time"
+        parser="DateTime"
+        display_name="Creation time"
+        qualifier="DATE_CREATION"
+        description="creation timestamp of the underlying file"
+      />
+
+      <!-- Registry Key data-->
+      <field
+        input="key_path"
+        parser="String"
+        qualifier="KEY_PATH"
+        description="full registry key name"
+      />
+      <field
+        input="key_modif_time"
+        parser="DateTime"
+        qualifier="DATE_MODIFICATION"
+        display_name="Registry key last modification"
+        description="last modification timestamp of the registry key"
+      />
+      <object input="key_security">
+        <field
+          input="owner_sid"
+          parser="String"
+          qualifier="USER_SID"
+          description="SID of the user that owns the registry key"
+        />
+        <field
+          input="group_sid"
+          parser="String"
+          description="SID of the group that owns the registry key"
+        />
+        <array>
+          <field
+            input="control_flags"
+            parser="String"
+            description="security descriptor control flags for the key"
+          />
+        </array>
+        <object input="dacl_ace">
+          <field
+            input="ace_type"
+            parser="String"
+            description="type of ACE (e.g., allow, deny)"
+          />
+          <field
+            input="account_sid"
+            parser="String"
+            description="SID of the account the ACE applies to"
+          />
+          <array>
+            <field
+              input="ace_flags"
+              parser="String"
+              description="ACE flags that modify inheritance or behavior"
+            />
+          </array>
+          <array>
+            <field
+              input="rights"
+              parser="String"
+              description="permissions granted or denied by the ACE"
+            />
+          </array>
+        </object>
+      </object>
+    </fields>
+
+  </mapping>
+</plugin>

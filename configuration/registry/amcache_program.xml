@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="RegAmCacheProgram" file_encoding="UTF_8">
+  <mapping data_type="amcache_program">
+    <description
+        ><![CDATA[
+Extracts metadata about installed programs from the Windows `AmCache` hive.
+
+- Retrieves program identifiers, names, versions, and publishers.
+- Captures installation source, directory paths, and MSI product/package codes.
+]]>
+    </description>
+    <category>Services and Applications</category>
+    <default_parser value="Ignore" />
+    <default_date_pattern value='iso' />
+
+    <!-- Timeline definition -->
+    <timeline>
+      <timeline_type value="Standard" />
+      <related_user>
+        <output_name value="key_security.owner_sid" />
+      </related_user>
+      <description>
+        <output_name value="name" />
+      </description>
+      <additional_description>
+        <output_name value="version" />
+        <output_name value="publisher" />
+        <output_name value="install_dir" />
+        <output_name value="key_path" />
+      </additional_description>
+    </timeline>
+
+    <!-- Fields -->
+    <fields>
+      <field
+                input="id"
+                parser="String"
+                qualifier="APP_ID"
+                description="Program identifier"
+            />
+
+      <field
+                input="name"
+                parser="String"
+                qualifier="APP_NAME"
+                description="Program name"
+            />
+
+      <field
+                input="version"
+                parser="String"
+                qualifier="PE_VERSION"
+                description="Program version"
+            />
+
+      <field
+                input="publisher"
+                parser="String"
+                qualifier="PUBLISHER"
+                description="Program publisher"
+            />
+
+      <field
+                input="source"
+                parser="String"
+                description="Installation method ('MSI', 'AppxPackage', 'AddRemoveProgram')"
+            />
+
+      <field
+                input="install_date"
+                parser="DateTime"
+                qualifier="DATE_INSTALLATION"
+                display_name="Install date"
+                description="Installation date, present if the program is installed via MSI, the time is always 00:00:00"
+            />
+
+      <field
+                input="uninstall_date"
+                parser="DateTime"
+                qualifier="DATE_UNINSTALL"
+                display_name="Uninstall date"
+                description="Uninstall date"
+            />
+
+      <field
+                input="msi_product_code"
+                parser="String"
+                qualifier="MSI_PRODUCT"
+                description="Product code, present if the program is installed via MSI"
+            />
+
+      <field
+                input="msi_package_code"
+                parser="String"
+                qualifier="MSI_PACKAGE"
+                description="Package code, present if the program is installed via MSI "
+            />
+
+      <field
+                input="instance_id"
+                parser="String"
+                description="Equivalent of the 'ProgramInstanceId', hash of the file identifier"
+            />
+
+      <field input="inbox_modern_app" parser="Bool" description="" />
+
+      <field
+                input="os_at_install"
+                parser="String"
+                qualifier="OS_VERSION"
+                description="4 bytes of the operating‑system version during program installation."
+            />
+
+      <field
+                input="install_dir"
+                parser="String"
+                qualifier="FILE_PATH"
+                description="Path of the program installation directory."
+            />
+
+      <!-- Registry Key data-->
+      <field
+                input="key_path"
+                parser="String"
+                qualifier="KEY_PATH"
+                description="full registry key name"
+            />
+      <field
+                input="key_modif_time"
+                parser="DateTime"
+                qualifier="DATE_MODIFICATION"
+                display_name="Registry key last modification"
+                description="last modification timestamp of the registry key"
+            />
+      <object input="key_security">
+        <field
+                    input="owner_sid"
+                    parser="String"
+                    qualifier="USER_SID"
+                    description="SID of the user that owns the registry key"
+                />
+        <field
+                    input="group_sid"
+                    parser="String"
+                    description="SID of the group that owns the registry key"
+                />
+        <array>
+          <field
+                        input="control_flags"
+                        parser="String"
+                        description="security descriptor control flags for the key"
+                    />
+        </array>
+        <object input="dacl_ace">
+          <field
+                        input="ace_type"
+                        parser="String"
+                        description="type of ACE (e.g., allow, deny)"
+                    />
+          <field
+                        input="account_sid"
+                        parser="String"
+                        description="SID of the account the ACE applies to"
+                    />
+          <array>
+            <field
+                            input="ace_flags"
+                            parser="String"
+                            description="ACE flags that modify inheritance or behavior"
+                        />
+          </array>
+          <array>
+            <field
+                            input="rights"
+                            parser="String"
+                            description="permissions granted or denied by the ACE"
+                        />
+          </array>
+        </object>
+      </object>
+    </fields>
+  </mapping>
+
+</plugin>

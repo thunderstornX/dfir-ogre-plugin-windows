@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="XML" file_encoding="UTF_8">
+  <mapping data_type="amcache_program_xml">
+    <description
+    >Parse installed programs from AEINV WER xml reports</description>
+    <category>Services and Applications</category>
+    <default_parser value="Ignore" />
+    <default_date_pattern value='%m/%d/%Y %H:%M:%S' />
+
+    <xpath_tuple value="/Report/ProgramList/Installed/Program" />
+    <fields>
+        <field
+        input="@Id"
+        output="id"
+        parser="String"
+        qualifier="APP_ID"
+        description="Program identifier"
+      />
+
+        <field
+        input="@Name"
+        output="name"
+        parser="String"
+        qualifier="APP_NAME"
+        description="Program name"
+      />
+
+        <field
+        input="@Version"
+        output="version"
+        parser="String"
+        qualifier="PE_VERSION"
+        description="Program version"
+      />
+
+        <field
+        input="@Publisher"
+        output="publisher"
+        parser="String"
+        qualifier="PUBLISHER"
+        description="Program publisher"
+      />
+
+        <field
+        input="@Source"
+        output="source"
+        parser="String"
+        description="Installation method ('MSI', 'AppxPackage', 'AddRemoveProgram')"
+      />
+
+        <array>
+            <object
+          input="Indicators/RegistryIndicators/Registry"
+          output="indicators"
+        >
+                <field input="@Name" output="name" parser="String" />
+                <field input="@File" output="file" parser="String" />
+                <field input="@RegistryRun" output="run" parser="String" />
+            </object>
+        </array>
+        <array>
+            <object input="StaticProperties/Files/File" output="files">
+                <field input="@Name" output="name" parser="String" />
+                <field input="@Id" output="sha1" parser="String" />
+                <field
+            input="@Size"
+            output="size"
+            parser="IntRadix"
+            radix="16"
+          />
+                <field input="@ProductName" output="product" parser="String" />
+                <field input="@CompanyName" output="company" parser="String" />
+                <field
+            input="@ProductVersion"
+            output="product_version"
+            parser="String"
+          />
+                <field
+            input="@VerLanguage"
+            output="version_language"
+            parser="String"
+          />
+                <field
+            input="@FileVersion"
+            output="file_version"
+            parser="String"
+          />
+                <field
+            input="@SizeOfImage"
+            output="image_size"
+            parser="IntRadix"
+            radix="16"
+          />
+                <field
+            input="@FileDescription"
+            output="file_description"
+            parser="String"
+          />
+                <field
+            input="@LinkerVersion"
+            output="linker_version"
+            parser="String"
+          />
+                <field input="@LinkDate" output="link_date" parser="DateTime" />
+                <field
+            input="@BinaryType"
+            output="binary_type"
+            parser="String"
+          />
+                <field input="@Created" output="created" parser="DateTime" />
+                <field input="@Modified" output="modified" parser="DateTime" />
+                <field
+            input="@LongPathHash"
+            output="long_path_hash"
+            parser="String"
+          />
+                <field input="@UniqueId" output="unique_id" parser="String" />
+            </object>
+        </array>
+    </fields>
+  </mapping>
+</plugin>

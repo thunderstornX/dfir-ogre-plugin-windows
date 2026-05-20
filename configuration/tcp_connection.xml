@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="TCPConn" file_encoding="UTF_8">
+  <mapping data_type="tcpvcon">
+    <description>
+    <![CDATA[
+Parse a TCPView “Tcpvcon.txt” export.
+    ]]>
+    </description>
+    <category>Network</category>
+    <default_parser value="Ignore" />
+    <default_date_pattern value='%Y-%m-%d %H:%M:%S.%3f' />
+
+    <fields>
+      <field input="process_name" parser="String" description="Process name" />
+      <field input="pid" parser="String" description="PID" />
+      <field
+        input="protocol"
+        parser="String"
+        description="Protocol.  e.g. TCP, UDP, TCPV6, UDPV6"
+      />
+      <field
+        input="state"
+        parser="String"
+        description="LISTENING, ESTABLISHED, … (can be empty for UDP)"
+      />
+      <field input="local_adress" parser="String" description="local addres" />
+      <field
+        input="remote_adress"
+        parser="String"
+        description="remote address"
+      />
+    </fields>
+  </mapping>
+
+</plugin>

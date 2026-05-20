@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="RegBamDam" file_encoding="UTF_8">
+  <mapping data_type="bam_dam">
+    <description
+    ><![CDATA[
+Extracts Activity Moderator (BAM/DAM) records from the Windows `System` hive. It parses user‑specific settings to retrieve the executable path and execution time.
+]]>
+    </description>
+    <category>Services and Applications</category>
+    <default_parser value="Ignore" />
+    <default_date_pattern value='iso' />
+
+    <!-- Timeline definition -->
+    <timeline>
+      <timeline_type value="Standard" />
+      <related_user>
+        <output_name value="user_sid" />
+      </related_user>
+      <description>
+        <output_name value="exec_path" />
+      </description>
+      <additional_description>
+      </additional_description>
+    </timeline>
+
+    <!-- Fields -->
+    <fields>
+      <field
+        input="exec_path"
+        parser="String"
+        qualifier="FILE_PATH"
+        description="full path of the executable that was run"
+      />
+
+      <field
+        input="user_sid"
+        parser="String"
+        qualifier="USER_SID"
+        description="SID of the user associated with the BAM/DAM entry"
+      />
+
+      <field
+        input="exec_time"
+        parser="DateTime"
+        qualifier="DATE_LAST_RUN"
+        display_name="Last execution date"
+        description="timestamp when the executable was last executed"
+      />
+
+      <!-- Registry Key data-->
+      <field
+        input="key_path"
+        parser="String"
+        qualifier="KEY_PATH"
+        description="full registry key name"
+      />
+      <field
+        input="key_modif_time"
+        parser="DateTime"
+        qualifier="DATE_MODIFICATION"
+        display_name="Registry key last modification"
+        description="last modification timestamp of the registry key"
+      />
+      <object input="key_security">
+        <field
+          input="owner_sid"
+          parser="String"
+          qualifier="USER_SID"
+          description="SID of the user that owns the registry key"
+        />
+        <field
+          input="group_sid"
+          parser="String"
+          description="SID of the group that owns the registry key"
+        />
+        <array>
+          <field
+            input="control_flags"
+            parser="String"
+            description="security descriptor control flags for the key"
+          />
+        </array>
+        <object input="dacl_ace">
+          <field
+            input="ace_type"
+            parser="String"
+            description="type of ACE (e.g., allow, deny)"
+          />
+          <field
+            input="account_sid"
+            parser="String"
+            description="SID of the account the ACE applies to"
+          />
+          <array>
+            <field
+              input="ace_flags"
+              parser="String"
+              description="ACE flags that modify inheritance or behavior"
+            />
+          </array>
+          <array>
+            <field
+              input="rights"
+              parser="String"
+              description="permissions granted or denied by the ACE"
+            />
+          </array>
+        </object>
+      </object>
+    </fields>
+  </mapping>
+
+</plugin>

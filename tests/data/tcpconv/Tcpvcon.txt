@@ -1,0 +1,40 @@
+
+TCPView v3.01 - TCP/UDP endpoint viewer
+Copyright (C) 1998-2010 Mark Russinovich and Bryce Cogswell
+Sysinternals - www.sysinternals.com
+
+TCP,svchost.exe,960,LISTENING,0.0.0.0,0.0.0.0
+TCP,System,4,LISTENING,10.1.10.1,0.0.0.0
+TCP,svchost.exe,420,LISTENING,0.0.0.0,0.0.0.0
+TCP,lsass.exe,716,LISTENING,0.0.0.0,0.0.0.0
+TCP,wininit.exe,608,LISTENING,0.0.0.0,0.0.0.0
+TCP,svchost.exe,1064,LISTENING,0.0.0.0,0.0.0.0
+TCP,spoolsv.exe,1888,LISTENING,0.0.0.0,0.0.0.0
+TCP,svchost.exe,568,LISTENING,0.0.0.0,0.0.0.0
+TCP,services.exe,696,LISTENING,0.0.0.0,0.0.0.0
+TCP,System,4,ESTABLISHED,10.1.10.1,10.0.0.3
+TCP,System,4,LISTENING,0.0.0.0,0.0.0.0
+TCP,System,4,LISTENING,0.0.0.0,0.0.0.0
+TCP,System,4,LISTENING,0.0.0.0,0.0.0.0
+UDP,svchost.exe,2024,*,0.0.0.0,*
+UDP,System,4,*,10.1.10.1,*
+UDP,System,4,*,10.1.10.1,*
+UDP,svchost.exe,420,*,0.0.0.0,*
+UDP,svchost.exe,1472,*,0.0.0.0,*
+UDP,svchost.exe,1472,*,0.0.0.0,*
+UDP,svchost.exe,568,*,127.0.0.1,*
+TCPV6,svchost.exe,960,LISTENING,[0:0:0:0:0:0:0:0],[0:0:0:0:0:0:0:0]
+TCPV6,System,4,LISTENING,[0:0:0:0:0:0:0:0],[0:0:0:0:0:0:0:0]
+TCPV6,svchost.exe,420,LISTENING,[0:0:0:0:0:0:0:0],[0:0:0:0:0:0:0:0]
+TCPV6,System,4,LISTENING,[0:0:0:0:0:0:0:0],[0:0:0:0:0:0:0:0]
+TCPV6,System,4,LISTENING,[0:0:0:0:0:0:0:0],[0:0:0:0:0:0:0:0]
+TCPV6,lsass.exe,716,LISTENING,[0:0:0:0:0:0:0:0],[0:0:0:0:0:0:0:0]
+TCPV6,wininit.exe,608,LISTENING,[0:0:0:0:0:0:0:0],[0:0:0:0:0:0:0:0]
+TCPV6,svchost.exe,1064,LISTENING,[0:0:0:0:0:0:0:0],[0:0:0:0:0:0:0:0]
+TCPV6,spoolsv.exe,1888,LISTENING,[0:0:0:0:0:0:0:0],[0:0:0:0:0:0:0:0]
+TCPV6,svchost.exe,568,LISTENING,[0:0:0:0:0:0:0:0],[0:0:0:0:0:0:0:0]
+TCPV6,services.exe,696,LISTENING,[0:0:0:0:0:0:0:0],[0:0:0:0:0:0:0:0]
+UDPV6,svchost.exe,2024,*,[0:0:0:0:0:0:0:0],*
+UDPV6,svchost.exe,420,*,[0:0:0:0:0:0:0:0],*
+UDPV6,svchost.exe,1472,*,[0:0:0:0:0:0:0:0],*
+UDPV6,svchost.exe,1472,*,[0:0:0:0:0:0:0:0],*

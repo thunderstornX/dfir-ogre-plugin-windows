@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="FirefoxExtension" file_encoding="UTF_8">
+  <mapping data_type="firefox_extension">
+    <description
+        ><![CDATA[
+Extracts metadata from Firefox browser add‑ons (version 26+). It parses each extension’s
+manifest to retrieve identifiers, version information, installation path and declared
+permissions.
+
+- Reveals which extensions are present on a system.
+- Provides version and source details for each add‑on.
+- Lists required, optional and user‑granted permissions.
+- Includes installation and update timestamps.
+]]>
+    </description>
+    <category>Browser Artefacts</category>
+    <default_date_pattern value='iso' />
+    <default_parser value="String" />
+
+
+    <!-- Timeline definition -->
+    <timeline>
+      <timeline_type value="Standard" />
+      <description>
+        <output_name value="name" />
+        <output_name value="browser" />
+      </description>
+      <additional_description>
+        <output_name value="description" />
+        <output_name value="path" />
+        <output_name value="update_url" />
+        <output_name value="source_uri" />
+      </additional_description>
+    </timeline>
+
+    <!-- field mapping that match the query result -->
+    <fields>
+      <field
+                input="name"
+                parser="String"
+                description="display name of the Firefox add‑on"
+            />
+
+      <field
+                input="browser"
+                parser="String"
+                description="browser name (always 'firefox')"
+            />
+
+      <field
+                input="type"
+                parser="String"
+                description="type/category of the add‑on (e.g., extension, theme)"
+            />
+
+      <field
+                input="description"
+                parser="String"
+                description="human‑readable description of the add‑on"
+            />
+
+      <field
+                input="id"
+                parser="String"
+                description="unique identifier of the add‑on"
+            />
+
+      <field
+                input="version"
+                parser="String"
+                description="version string of the add‑on"
+            />
+
+      <field
+                input="path"
+                parser="String"
+                description="filesystem path where the add‑on is installed"
+            />
+
+      <field
+                input="update_url"
+                parser="String"
+                description="URL used by the add‑on to check for updates"
+            />
+
+      <field
+                input="source_uri"
+                parser="String"
+                description="original source URI from which the add‑on was obtained"
+            />
+
+      <field
+                input="root_uri"
+                parser="String"
+                description="root URI of the add‑on package"
+            />
+
+      <object input="user_permissions">
+        <array>
+          <field input="permissions" parser="String" />
+        </array>
+        <array>
+          <field input="origins" parser="String" />
+        </array>
+        <array>
+          <field input="data_collection" parser="String" />
+        </array>
+      </object>
+
+      <object input="optional_permissions">
+        <array>
+          <field input="permissions" parser="String" />
+        </array>
+        <array>
+          <field input="origins" parser="String" />
+        </array>
+        <array>
+          <field input="data_collection" parser="String" />
+        </array>
+      </object>
+
+      <object input="requested_permissions">
+        <array>
+          <field input="permissions" parser="String" />
+        </array>
+        <array>
+          <field input="origins" parser="String" />
+        </array>
+        <array>
+          <field input="data_collection" parser="String" />
+        </array>
+      </object>
+
+      <field
+                input="install_date"
+                parser="DateTime"
+                qualifier="DATE_INSTALLATION"
+                display_name="installation date"
+            />
+
+      <field
+                input="update_date"
+                parser="DateTime"
+                qualifier="DATE_MODIFICATION"
+                display_name="update date"
+            />
+    </fields>
+  </mapping>
+
+</plugin>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="RecycleBin" file_encoding="UTF_8">
+  <mapping data_type="recycle_bin">
+    <description>Extracts metadata from Windows recycle‑bin files.</description>
+    <category>File System</category>
+    <default_parser value="Ignore" />
+    <default_date_pattern value='iso' />
+
+    <!-- Timeline definition -->
+    <timeline>
+      <timeline_type value="Standard" />
+      <description>
+        <output_name value="path" />
+      </description>
+      <additional_description>
+        <output_name value="size" />
+      </additional_description>
+    </timeline>
+
+    <!-- Fields -->
+    <fields>
+      <field
+        input="path"
+        parser="String"
+        qualifier="FILE_PATH"
+        description="original full path of the deleted file before it was sent to the Recycle Bin"
+      />
+
+      <field
+        input="size"
+        parser="Int"
+        qualifier="FILE_SIZE"
+        description="size, in bytes, of the original file that was deleted"
+      />
+
+      <field
+        input="header"
+        parser="String"
+        description="INFO2 file version identifier (1 = Vista/7, 2 = Windows 10+)"
+      />
+
+      <field
+        input="uninstall_date"
+        parser="DateTime"
+        qualifier="DATE_UNINSTALL"
+        display_name="Uninstall date"
+        description="timestamp when the file was removed (deleted) and placed in the Recycle Bin"
+      />
+    </fields>
+
+  </mapping>
+</plugin>

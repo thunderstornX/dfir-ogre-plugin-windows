@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin parser="ChromeExtension" file_encoding="UTF_8">
+  <mapping data_type="chrome_extension">
+    <description>
+<![CDATA[
+Extracts metadata from a Chrome‑based browser extension’s manifest. It reads fields such as
+name, version, description, update URL, permissions and optional permissions, providing a
+structured view of the extension’s declared capabilities.
+
+- Identifies the extension’s displayed name and version.
+- Lists required, host and optional permissions, revealing potential system interactions.
+- Captures localisation, description and update URL for contextual information.
+]]>
+    </description>
+    <category>Browser Artefacts</category>
+    <default_parser value="Ignore" />
+    <default_date_pattern value='iso' />
+    <!-- Fields -->
+    <fields>
+      <field input="name" parser="String" description="display name of the Chrome extension" />
+
+      <field input="version" parser="String" description="version of the extension" />
+
+      <field input="default_locale" parser="String"
+        description="default locale identifier for the extension's resources" />
+
+      <field input="description" parser="String"
+        description="human‑readable description of the extension" />
+
+      <field input="update_url" parser="String"
+        description="URL from which the extension receives updates" />
+
+      <field input="extension_pages" parser="String"
+        description="CSP‑allowed pages that may be opened by the extension" />
+
+      <array>
+        <field input="permissions" parser="String"
+          description="required permissions declared by the extension" />
+      </array>
+
+      <array>
+        <field input="host_permissions" parser="String"
+          description="host (URL) permissions declared by the extension" />
+      </array>
+
+      <array>
+        <field input="optional_permissions" parser="String"
+          description="optional permissions that can be granted by the user" />
+      </array>
+    </fields>
+  </mapping>
+</plugin>

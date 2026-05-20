@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="GetThis" file_encoding="UTF_8">
+  <mapping data_type="getthis">
+    <description
+    >Parse the `GetThis` files produced by Orc and retrieve information about the
+      collected files.</description>
+    <category>File System</category>
+    <default_date_pattern value='%Y-%m-%d %H:%M:%S.%3f' />
+    <default_parser value="String" />
+    <csv_delimiter value="," />
+
+    <!-- Timeline definition -->
+    <timeline>
+      <timeline_type value="MacbMacb" />
+      <description>
+        <output_name value="full_name" />
+      </description>
+      <additional_description>
+        <output_name value="file_size" />
+        <output_name value="sequence_number" />
+        <output_name value="record_number" />
+        <output_name value="parent_sequence_number" />
+        <output_name value="parent_record_number" />
+      </additional_description>
+    </timeline>
+
+    <!-- field mapping that match the query result -->
+    <fields>
+      <field
+        input="VolumeID"
+        parser="String"
+        output="volume_id"
+        description="identifier of the volume that contains the file"
+      />
+
+      <field
+        input="ParentFRN"
+        parser="Extension"
+        description="file reference number (FRN) of the parent directory"
+      />
+
+      <field
+        input="FRN"
+        parser="Extension"
+        description="file reference number (FRN) of the file itself"
+      />
+
+      <field
+        input="FullName"
+        parser="String"
+        output="full_name"
+        description="full absolute path of the collected file"
+      />
+
+      <field
+        input="SampleName"
+        parser="String"
+        output="sample_name"
+        description="name of the sample or collection set the file belongs to"
+      />
+
+      <field
+        input="SizeInBytes"
+        parser="Int"
+        output="file_size"
+        qualifier="FILE_SIZE"
+        description="size of the file in bytes"
+      />
+
+      <field
+        input="FindMatch"
+        parser="String"
+        output="find_match"
+        description="string used to match the file during collection"
+      />
+
+      <field
+        input="ContentType"
+        parser="String"
+        output="content_type"
+        description="MIME type of the file content"
+      />
+
+      <field
+        input="SampleCollectionDate"
+        parser="DateTime"
+        output="sample_collection_date"
+        qualifier="DATE_MODIFICATION"
+        display_name="Collection Date"
+        description="timestamp when the sample was collected"
+      />
+
+      <field
+        input="FileNameCreationDate"
+        parser="DateTime"
+        output="fn_creation_date"
+        qualifier="DATE_CREATION"
+        description="file name creation timestamp"
+      />
+
+      <field
+        input="FileNameLastModificationDate"
+        parser="DateTime"
+        output="fn_lastmod_date"
+        qualifier="DATE_MODIFICATION"
+        description="file name modification timestamp"
+      />
+
+      <field
+        input="FileNameLastAccessDate"
+        parser="DateTime"
+        output="fn_lastaccess_date"
+        qualifier="DATE_ACCESS"
+        description="file name access timestamp"
+      />
+
+      <field
+        input="FileNameLastAttrModificationDate"
+        parser="DateTime"
+        output="fn_lastchange_date"
+        qualifier="DATE_CHANGE"
+        description="file name modification timestamp"
+      />
+
+      <field
+        input="CreationDate"
+        parser="DateTime"
+        output="si_creation_date"
+        qualifier="DATE_CREATION"
+        description="creation timestamp of the file"
+      />
+
+      <field
+        input="LastModificationDate"
+        parser="DateTime"
+        output="si_lastmod_date"
+        qualifier="DATE_MODIFICATION"
+        description="last modification timestamp of the file"
+      />
+
+      <field
+        input="LastAccessDate"
+        parser="DateTime"
+        output="si_lastaccess_date"
+        qualifier="DATE_ACCESS"
+        description="last access timestamp of the file"
+      />
+
+      <field
+        input="LastAttrChangeDate"
+        parser="DateTime"
+        output="si_lastchange_date"
+        qualifier="DATE_MODIFICATION"
+        description="last attribute‑change timestamp of the file"
+      />
+
+      <field
+        input="MD5"
+        parser="String"
+        output="md5"
+        qualifier="FILE_MD5"
+        description="MD5 hash of the file"
+      />
+
+      <field
+        input="SHA1"
+        parser="String"
+        output="sha1"
+        qualifier="FILE_SHA1"
+        description="SHA‑1 hash of the file"
+      />
+
+      <field
+        input="SHA256"
+        parser="String"
+        output="sha256"
+        qualifier="FILE_SHA256"
+        description="SHA‑256 hash of the file"
+      />
+
+      <field
+        input="AttrType"
+        parser="String"
+        output="attr_type"
+        description="type of the NTFS attribute"
+      />
+
+      <field
+        input="AttrName"
+        parser="String"
+        output="attr_name"
+        description="name of the NTFS attribute"
+      />
+
+      <field
+        input="AttrID"
+        parser="Int"
+        output="attr_id"
+        description="numeric identifier of the NTFS attribute"
+      />
+
+      <field
+        input="SnapshotID"
+        parser="String"
+        output="snapshot_id"
+        description="identifier of the snapshot from which the file was extracted"
+      />
+
+      <field
+        input="SSDeep"
+        parser="String"
+        output="ss_deep"
+        description="ssdeep fuzzy hash of the file"
+      />
+
+      <field
+        input="TLSH"
+        parser="String"
+        output="tlsh"
+        description="TLSH hash of the file"
+      />
+
+      <field
+        input="YaraRules"
+        parser="String"
+        output="yara_rules"
+        description="YARA rule(s) that matched the file"
+      />
+
+      <field
+        input="RecordInUse"
+        parser="String"
+        output="record_in_use"
+        description="flag indicating whether the MFT record is currently in use"
+      />
+    </fields>
+  </mapping>
+</plugin>

@@ -1,0 +1,3 @@
+﻿ComputerName,VolumeID,Location,Type,Parse,MountPoint,ShadowCopyId
+"W10-1709",0x38CAE3A6CAE35E9E,"\\.\SCSI#Disk&Ven_Msft&Prod_Virtual_Disk#000000#{53f56307-b6bf-11d0-94f2-00a0c91efb8b},offset=644874240,size=135719288320,sector=512",NTFS,Y,"C:\",
+"W10-1709",0x8892E21892E20A90,"\\.\SCSI#Disk&Ven_Msft&Prod_Virtual_Disk#000000#{53f56307-b6bf-11d0-94f2-00a0c91efb8b},offset=1048576,size=523238912,sector=512",NTFS,Y,,

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin parser="Merge" file_encoding="UTF_8">
+  <mapping data_type="merge_file">
+    <description><![CDATA[
+Reads a text file and concatenates every line into a single output line. It is a simple
+pre‑processing step that normalises multi‑line artefacts for downstream analysis.
+]]>     
+    </description>
+    <category>File System</category>
+    <default_parser value="Ignore" />
+    <default_date_pattern value='iso' />
+
+    <!-- Fields -->
+    <fields>
+
+    </fields>
+  </mapping>
+</plugin>

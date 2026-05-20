@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="WER" file_encoding="UTF_16_LE">
+  <mapping data_type="wer">
+    <description
+    >ParsesWindows Error Reporting files (WER), extracting metadata about crashes,
+      hangs, and other failure events reported by the operating system.</description>
+    <category>Logs</category>
+    <default_parser value="String" />
+    <default_date_pattern value='file_time' />
+
+    <!-- Timeline definition -->
+    <timeline>
+      <timeline_type value="Standard" />
+      <description>
+        <output_name value="app_path" />
+      </description>
+      <additional_description>
+        <output_name value="event_type" />
+        <output_name value="original_file_name" />
+        <output_name value="ns_app_name" />
+      </additional_description>
+    </timeline>
+
+    <!-- Fields -->
+    <fields>
+      <field
+        input="Version"
+        output="version"
+        parser="Int"
+        description="Version of the Windows Error Reporting file format"
+      />
+
+      <field
+        input="EventType"
+        output="event_type"
+        parser="String"
+        description="Type of event that generated the report (e.g., crash, hang)"
+      />
+
+      <field
+        input="EventTime"
+        output="event_time"
+        parser="DateTime"
+        description="Timestamp when the event occurred"
+      />
+
+      <field
+        input="ReportType"
+        output="report_type"
+        parser="Int"
+        description="Numeric identifier of the report category"
+      />
+
+      <field
+        input="Consent"
+        output="consent"
+        parser="Int"
+        description="User‑provided consent flag for sending the report"
+      />
+
+      <field
+        input="UploadTime"
+        output="upload_time"
+        parser="DateTime"
+        description="Timestamp when the report was uploaded to Microsoft"
+      />
+
+      <field
+        input="ReportStatus"
+        output="report_status"
+        parser="Int"
+        description="Current processing status of the report"
+      />
+
+      <field
+        input="BootId"
+        output="boot_id"
+        parser="String"
+        description="Identifier of the boot session during which the event happened"
+      />
+
+      <field
+        input="TargetAsId"
+        output="target_as_id"
+        parser="String"
+        description="Identifier of the target application session"
+      />
+
+      <field
+        input="UserImpactVector"
+        output="user_impact_vector"
+        parser="Int"
+        description="Severity/impact rating of the failure event"
+      />
+
+      <field
+        input="EtwNonCollectReason"
+        output="etw_non_collect_reason"
+        parser="Int"
+        description="Reason code why ETW data was not collected"
+      />
+
+      <field
+        input="MetadataHash"
+        output="metadata_hash"
+        parser="String"
+        description="Hash of the report metadata for integrity verification"
+      />
+
+      <field
+        input="ApplicationIdentity"
+        output="application_identity"
+        parser="String"
+        description="Unique identifier of the reported application"
+      />
+
+      <field
+        input="ReportIdentifier"
+        output="report_identifier"
+        parser="String"
+        description="Globally unique identifier for this WER report"
+      />
+
+      <field
+        input="Wow64Host"
+        output="wow64_host"
+        parser="String"
+        description="Indicates if the report originated from a WoW64 (32‑bit on 64‑bit) process"
+      />
+
+      <field
+        input="NsAppName"
+        output="ns_app_name"
+        parser="String"
+        description="Namespace‑scoped name of the application"
+      />
+
+      <field
+        input="OriginalFilename"
+        output="original_filename"
+        parser="String"
+        description="Original file name of the crashed executable"
+      />
+
+      <field
+        input="AppSessionGuid"
+        output="app_session_guid"
+        parser="String"
+        description="GUID of the application session that generated the report"
+      />
+
+      <field
+        input="TargetAppId"
+        output="target_app_id"
+        parser="String"
+        description="Identifier of the target application"
+      />
+
+      <field
+        input="TargetAppVer"
+        output="target_app_ver"
+        parser="String"
+        description="Version of the target application"
+      />
+
+      <field
+        input="AppPath"
+        output="app_path"
+        parser="String"
+        description="Full file‑system path to the application executable"
+      />
+
+      <field
+        input="AppName"
+        output="app_name"
+        parser="String"
+        description="Human‑readable name of the application"
+      />
+
+      <field
+        input="IsFatal"
+        output="is_fatal"
+        parser="String"
+        description="Flag indicating whether the failure was fatal"
+      />
+
+      <field
+        input="FriendlyEventName"
+        output="friendly_event_name"
+        parser="String"
+        description="User‑friendly description of the event type"
+      />
+
+      <field
+        input="ConsentKey"
+        output="consent_key"
+        parser="String"
+        description="Registry or configuration key associated with user consent"
+      />
+
+      <field
+        input="ReportDescription"
+        output="report_description"
+        parser="String"
+        description="Textual description supplied with the report"
+      />
+
+      <field
+        input="NsPartner"
+        output="ns_partner"
+        parser="String"
+        description="Namespace partner identifier related to the application"
+      />
+
+      <field
+        input="NsGroup"
+        output="ns_group"
+        parser="String"
+        description="Namespace group identifier related to the application"
+      />
+
+      <field
+        input="Response.BucketId"
+        parser="String"
+        output="response_bucket_id"
+        description="Identifier of the bucket used for response classification"
+      />
+
+      <field
+        input="Response.BucketTable"
+        parser="String"
+        output="response_bucket_table"
+        description="Name of the bucket table associated with the response"
+      />
+
+      <field
+        input="Response.LegacyBucketId"
+        parser="String"
+        output="response_legacy_bucket_id"
+        description="Legacy bucket identifier for backward‑compatible processing"
+      />
+
+      <field
+        input="Response.type"
+        parser="String"
+        output="response_type"
+        description="Type/category of the response generated for the report"
+      />
+
+      <array>
+        <field
+          input="loaded_module"
+          parser="String"
+          description="Name of a module that was loaded in the process at crash time"
+        />
+      </array>
+
+      <array>
+        <object input="files">
+
+          <field
+            input="CabName"
+            parser="String"
+            description="Name of the cabinet file containing the crash artifacts"
+          />
+
+          <field
+            input="Path"
+            parser="String"
+            description="File system path of the reported file"
+          />
+
+          <field
+            input="Flags"
+            parser="String"
+            description="Flags describing properties of the file"
+          />
+
+          <field
+            input="Type"
+            parser="String"
+            description="File type/category (e.g., dump, log, cab)"
+          />
+
+          <field
+            input="Original"
+            parser="String"
+            description="Original filename before it was packaged"
+          />
+        </object>
+      </array>
+
+      <object input="Sig" output="sig">
+        <field
+          input="os_version"
+          parser="String"
+          description="Operating‑system version recorded in the static signature"
+        />
+
+        <field
+          input="locale_id"
+          parser="String"
+          description="Locale identifier (LCID) of the system at the time of the crash"
+        />
+      </object>
+
+      <object input="DynamicSig" output="dynamic_sig">
+
+        <field
+          input="stack_version"
+          parser="String"
+          description="Version of the stack information included in the dynamic signature"
+        />
+
+        <field
+          input="package"
+          parser="String"
+          description="Package name associated with the dynamic signature"
+        />
+
+        <field
+          input="version"
+          parser="String"
+          description="Version of the package referenced in the dynamic signature"
+        />
+
+        <field
+          input="architecture"
+          parser="String"
+          description="CPU architecture (e.g., x86, x64) reported in the dynamic signature"
+        />
+
+        <field
+          input="culture"
+          parser="String"
+          description="Culture/language code of the package"
+        />
+
+        <field
+          input="status"
+          parser="String"
+          description="Status flag of the dynamic signature"
+        />
+
+        <field
+          input="failure_source"
+          parser="String"
+          description="Source component that caused the failure"
+        />
+
+        <field
+          input="start_state"
+          parser="String"
+          description="Application state before the failure occurred"
+        />
+
+        <field
+          input="target_state"
+          parser="String"
+          description="Application state targeted after the failure"
+        />
+
+        <field
+          input="client_id"
+          parser="String"
+          description="Identifier of the client that generated the dynamic signature"
+        />
+      </object>
+
+      <object input="OsInfo" output="os_info">
+      </object>
+
+      <object input="State" output="state" />
+
+    </fields>
+
+  </mapping>
+</plugin>

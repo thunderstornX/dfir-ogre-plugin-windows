@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="Csv" file_encoding="UTF_8">
+  <mapping data_type="vss_snapshot">
+    <description>
+    <![CDATA[
+Parses CSV files that list Volume Shadow Copy (VSS) snapshots.
+    ]]>
+    </description>
+
+    <category>File System</category>
+    <csv_delimiter value="," />
+
+    <default_date_pattern value="%Y-%m-%d %H:%M:%S.%3f" />
+
+    <timeline>
+      <timeline_type value="Standard" />
+      <description>
+        <output_name value="volume_name" />
+      </description>
+      <additional_description>
+        <output_name value="device_instance" />
+        <output_name value="snapshot_id" />
+      </additional_description>
+    </timeline>
+
+    <fields>
+      <field
+        input="SnapshotID"
+        output="snapshot_id"
+        parser="String"
+        description="GUID identifying the VSS snapshot"
+      />
+      <field
+        input="DeviceInstance"
+        output="device_instance"
+        parser="String"
+        description="Device path of the shadow copy (e.g. \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1)"
+      />
+      <field
+        input="VolumeName"
+        output="volume_name"
+        parser="String"
+        description="Original volume that the snapshot belongs to"
+      />
+      <field
+        input="CreationTime"
+        output="creation_time"
+        parser="DateTime"
+        description="Timestamp when the snapshot was created"
+      />
+      <field
+        input="Attributes"
+        output="attributes"
+        parser="Split"
+        split_by="|"
+        description="Combined VSS attribute flags (e.g. VSS_VOLSNAP_ATTR_PERSISTENT|…)"
+      />
+    </fields>
+  </mapping>
+</plugin>

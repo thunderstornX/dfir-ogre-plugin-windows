@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="RegScheduledTask" file_encoding="UTF_8">
+  <mapping data_type="scheduled_tasks">
+    <description
+    ><![CDATA[
+Extracts metadata for Windows scheduled tasks stored in the `Software` hive.
+
+- Retrieves task identifiers, authors, creation/registration dates and version.
+- Decodes action blocks (command, arguments, COM data) and links to boot, logon, maintenance and plain sub‑keys.
+- Extracts security information, including owner SID and ACLs.
+]]>
+    </description>
+    <category>Persistence</category>
+    <default_parser value="Ignore" />
+    <default_date_pattern value='iso' />
+
+    <!-- Timeline definition -->
+    <timeline>
+      <timeline_type value="Standard" />
+      <related_user>
+        <output_name value="key_security.owner_sid" />
+      </related_user>
+      <description>
+        <output_name value="task" />
+      </description>
+      <additional_description>
+        <output_name value="actions.action_type" />
+        <output_name value="actions.exec_command" />
+        <output_name value="actions.exec_arguments" />
+        <output_name value="actions.com_data" />
+      </additional_description>
+    </timeline>
+
+    <!-- Fields -->
+    <fields>
+
+
+      <field
+        input="guid"
+        parser="String"
+        qualifier="SCHTASK_GUID"
+        description="unique identifier (GUID) of the scheduled task"
+      />
+
+      <field
+        input="uri"
+        parser="String"
+        qualifier="SCHTASK_URI"
+        description="URI associated with the scheduled task"
+      />
+
+      <field
+        input="task"
+        parser="String"
+        description="full registry path of the scheduled task definition"
+      />
+
+      <field
+        input="task_description"
+        parser="String"
+        description="human‑readable description of the task"
+      />
+
+      <field
+        input="source"
+        parser="String"
+        description="origin source of the task"
+      />
+
+      <field
+        input="author"
+        parser="String"
+        description="author or creator of the scheduled task"
+      />
+
+      <field
+        input="data"
+        parser="String"
+        description="raw data blob stored for the task"
+      />
+
+      <field
+        input="documentation"
+        parser="String"
+        description="documentation URL or text linked to the task"
+      />
+
+      <field
+        input="hash"
+        parser="String"
+        description="hex‑encoded hash of the task definition"
+      />
+
+      <field
+        input="schema"
+        parser="Int"
+        description="schema version number of the task definition"
+      />
+
+      <field
+        input="trigger"
+        parser="String"
+        description="trigger configuration that defines when the task runs"
+      />
+
+      <field
+        input="version"
+        parser="String"
+        description="version string of the scheduled task"
+      />
+
+      <array>
+        <object input="actions">
+          <field
+            input="action_id"
+            parser="String"
+            description="identifier of the action within the task"
+          />
+
+          <field
+            input="action_type"
+            parser="String"
+            description="type of action (e.g., Exec, ComHandler, SendEmail, ShowMessage)"
+          />
+
+          <field
+            input="exec_command"
+            parser="String"
+            description="executable command to run for Exec actions"
+          />
+
+          <field
+            input="exec_arguments"
+            parser="String"
+            description="command‑line arguments for the executable"
+          />
+
+          <field
+            input="exec_working_dir"
+            parser="String"
+            description="working directory used when executing the command"
+          />
+
+          <field
+            input="com_classid"
+            parser="String"
+            description="COM class identifier (CLSID) for ComHandler actions"
+          />
+
+          <field
+            input="com_data"
+            parser="String"
+            description="additional data passed to the COM handler"
+          />
+
+          <field
+            input="email_from"
+            parser="String"
+            description="sender address for SendEmail actions"
+          />
+
+          <field
+            input="email_to"
+            parser="String"
+            description="recipient address(es) for SendEmail actions"
+          />
+
+          <field
+            input="email_cc"
+            parser="String"
+            description="CC address(es) for SendEmail actions"
+          />
+
+          <field
+            input="email_bcc"
+            parser="String"
+            description="BCC address(es) for SendEmail actions"
+          />
+
+          <field
+            input="email_replyto"
+            parser="String"
+            description="Reply‑To address for SendEmail actions"
+          />
+
+          <field
+            input="email_server"
+            parser="String"
+            description="SMTP server used for SendEmail actions"
+          />
+
+          <field
+            input="email_subject"
+            parser="String"
+            description="subject line of the email"
+          />
+
+          <field
+            input="email_body"
+            parser="String"
+            description="body content of the email"
+          />
+
+          <field
+            input="email_attachments"
+            parser="String"
+            description="list of attachment filenames for the email"
+          />
+
+          <field
+            input="message_body"
+            parser="String"
+            description="text displayed in the message box for ShowMessage actions"
+          />
+
+          <field
+            input="message_title"
+            parser="String"
+            description="title of the message box for ShowMessage actions"
+          />
+        </object>
+      </array>
+
+      <object input="security_descriptor" />
+
+      <object input="boot">
+        <field
+          input="mtime"
+          parser="DateTime"
+          qualifier="DATE_MODIFICATION"
+          display_name="Registry boot key modification"
+          description="modification timestamp of the boot sub‑key for the task"
+        />
+      </object>
+
+      <object input="logon">
+        <field
+          input="mtime"
+          parser="DateTime"
+          qualifier="DATE_MODIFICATION"
+          display_name="Registry logon key modification"
+          description="modification timestamp of the logon sub‑key for the task"
+        />
+      </object>
+
+      <object input="maintenance">
+        <field
+          input="mtime"
+          parser="DateTime"
+          qualifier="DATE_MODIFICATION"
+          display_name="Registry maintenance key modification"
+          description="modification timestamp of the maintenance sub‑key for the task"
+        />
+      </object>
+
+      <object input="plain">
+        <field
+          input="mtime"
+          parser="DateTime"
+          qualifier="DATE_MODIFICATION"
+          display_name="Registry plain key modification"
+          description="modification timestamp of the plain sub‑key for the task"
+        />
+      </object>
+
+      <object input="tree">
+        <field
+          input="mtime"
+          parser="DateTime"
+          qualifier="DATE_MODIFICATION"
+          display_name="Registry tree key modification"
+          description="modification timestamp of the tree sub‑key for the task"
+        />
+      </object>
+
+      <field
+        input="creation_date"
+        parser="String"
+        qualifier="DATE_CREATION"
+        display_name="Creation date"
+        description="timestamp when the scheduled task was initially created"
+      />
+
+      <field
+        input="last_run_launch_date"
+        parser="DateTime"
+        qualifier="DATE_LAST_RUN"
+        display_name="Last run launch"
+        description="timestamp of the most recent task launch"
+      />
+
+      <field
+        input="last_run_exit_code"
+        parser="Int"
+        qualifier="EXIT_CODE"
+        description="exit code returned by the latest execution of the task"
+      />
+
+      <field
+        input="last_run_exit_date"
+        parser="DateTime"
+        qualifier="DATE_LAST_RUN"
+        display_name="Last run exit"
+        description="timestamp when the latest task execution completed"
+      />
+
+      <field
+        input="registration_date_local"
+        parser="DateTime"
+        qualifier="DATE_CREATION"
+        display_name="Registration date"
+        description="date the task was registered"
+      />
+
+
+      <!-- Registry Key data-->
+      <field
+        input="key_path"
+        parser="String"
+        qualifier="KEY_PATH"
+        description="full registry key name"
+      />
+      <field
+        input="key_modif_time"
+        parser="DateTime"
+        qualifier="DATE_MODIFICATION"
+        display_name="Registry key last modification"
+        description="last modification timestamp of the registry key"
+      />
+      <object input="key_security">
+        <field
+          input="owner_sid"
+          parser="String"
+          qualifier="USER_SID"
+          description="SID of the user that owns the registry key"
+        />
+        <field
+          input="group_sid"
+          parser="String"
+          description="SID of the group that owns the registry key"
+        />
+        <array>
+          <field
+            input="control_flags"
+            parser="String"
+            description="security descriptor control flags for the key"
+          />
+        </array>
+        <object input="dacl_ace">
+          <field
+            input="ace_type"
+            parser="String"
+            description="type of ACE (e.g., allow, deny)"
+          />
+          <field
+            input="account_sid"
+            parser="String"
+            description="SID of the account the ACE applies to"
+          />
+          <array>
+            <field
+              input="ace_flags"
+              parser="String"
+              description="ACE flags that modify inheritance or behavior"
+            />
+          </array>
+          <array>
+            <field
+              input="rights"
+              parser="String"
+              description="permissions granted or denied by the ACE"
+            />
+          </array>
+        </object>
+      </object>
+    </fields>
+
+
+  </mapping>
+
+</plugin>

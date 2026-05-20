@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="XML" file_encoding="UTF_8">
+  <mapping data_type="amcache_ie_addon_xml">
+    <description
+    >List internet explorer addons from different xml report files</description>
+    <category>Services and Applications</category>
+    <default_parser value="Ignore" />
+    <default_date_pattern value='%m/%d/%Y %H:%M:%S' />
+
+    <xpath_tuple value="//IEAddOn" />
+    <fields>
+        <field
+        input="@CLSID"
+        output="id"
+        parser="String"
+        qualifier="APP_ID"
+        description="Program identifier"
+      />
+
+        <field
+        input="@Name"
+        output="name"
+        parser="String"
+        qualifier="APP_NAME"
+        description="Program name"
+      />
+
+        <field
+        input="@Type"
+        output="type"
+        parser="String"
+        qualifier="PE_VERSION"
+        description="AddOn type"
+      />
+
+        <field
+        input="@Publisher"
+        output="publisher"
+        parser="String"
+        qualifier="PUBLISHER"
+        description="Program publisher"
+      />
+
+    </fields>
+  </mapping>
+</plugin>

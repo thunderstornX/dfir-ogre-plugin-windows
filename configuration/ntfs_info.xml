@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="NTFSInfo" file_encoding="UTF_8">
+  <mapping data_type="ntfsinfo">
+    <description
+    ><![CDATA[
+Extract NTFS's Master File Table (MFT) from an ORC‑generated CSV file.
+
+- Reconstructs exact file‑system hierarchy.
+- Provides creation, modification, access, and change timestamps.
+- Exposes NTFS attributes and USN information for change‑tracking.
+- Supplies cryptographic hashes (MD5, SHA‑1, SHA‑256) and PE‑specific metadata (version, company, compilation date).
+]]>
+</description>
+    <category>File System</category>
+    <default_parser value="Ignore" />
+    <default_date_pattern value='%Y-%m-%d %H:%M:%S.%3f' />
+    <csv_delimiter value="," />
+
+    <!-- Timeline definition -->
+    <timeline>
+      <timeline_type value="MacbMacb" />
+      <description>
+        <output_name value="file_path" />
+      </description>
+      <additional_description include_field_name="true" field_separator=" - ">
+        <output_name value="file_size" />
+      </additional_description>
+    </timeline>
+
+    <fields>
+      <field input="SnapshotID" output="snapshot_id" parser="String" />
+
+      <multi_input
+        output="file_path"
+        qualifier="FILE_PATH"
+        parser="Join"
+        separator="\"
+        avoid_separator_duplication="true"
+        description="full path (path+name) of the file"
+      >
+        <field
+          input="ParentName"
+          parser="String"
+          default_value="\"
+          description="parent directory component of the file path"
+        />
+        <field
+          input="File"
+          parser="String"
+          description="file name component of the file path"
+        />
+      </multi_input>
+
+      <field
+        input="ParentName"
+        output="parent"
+        parser="String"
+        default_value="\"
+        description="full parent directory path of the entry"
+      />
+
+      <field
+        input="File"
+        output="file_name"
+        parser="String"
+        description="name of the file without path"
+      />
+
+      <field
+        input="Extension"
+        output="extension"
+        parser="String"
+        description="file extension (e.g., .txt, .exe)"
+      />
+
+      <field
+        input="SizeInBytes"
+        output="file_size"
+        parser="Int"
+        qualifier="FILE_SIZE"
+        description="size of the file in bytes"
+      />
+
+      <field
+        input="RecordInUse"
+        output="file_in_use"
+        parser="Bool"
+        description="flag indicating whether the MFT record is allocated (true) or free (false)"
+      />
+
+      <field input="FRN" parser="Extension">
+        <field
+          output="sequence_number"
+          parser="Int"
+          description="sequence number part of the File Reference Number (FRN)"
+        />
+        <field
+          output="record_number"
+          parser="Int"
+          description="record/index part of the File Reference Number (FRN)"
+        />
+      </field>
+
+      <field input="Attributes" parser="Extension">
+        <field
+          output="file_attributes_archive"
+          parser="Bool"
+          description="archive attribute flag"
+        />
+
+        <field
+          output="file_attributes_no_scrub_data"
+          parser="Bool"
+          description="no‑scrub‑data attribute flag"
+        />
+
+        <field
+          output="file_attributes_compressed"
+          parser="Bool"
+          description="compressed attribute flag"
+        />
+
+        <field
+          output="file_attributes_directory"
+          parser="Bool"
+          description="directory attribute flag"
+        />
+
+        <field
+          output="file_attributes_encrypted"
+          parser="Bool"
+          description="encrypted attribute flag"
+        />
+
+        <field
+          output="file_attributes_hidden"
+          parser="Bool"
+          description="hidden attribute flag"
+        />
+
+        <field
+          output="file_attributes_not_content_indexed"
+          parser="Bool"
+          description="not‑content‑indexed attribute flag"
+        />
+
+        <field
+          output="file_attributes_reparse_point"
+          parser="Bool"
+          description="reparse‑point attribute flag"
+        />
+
+        <field
+          output="file_attributes_normal"
+          parser="Bool"
+          description="normal attribute flag"
+        />
+
+        <field
+          output="file_attributes_offline"
+          parser="Bool"
+          description="offline attribute flag"
+        />
+
+        <field
+          output="file_attributes_sparse_file"
+          parser="Bool"
+          description="sparse‑file attribute flag"
+        />
+
+        <field
+          output="file_attributes_readonly"
+          parser="Bool"
+          description="read‑only attribute flag"
+        />
+
+        <field
+          output="file_attributes_system"
+          parser="Bool"
+          description="system attribute flag"
+        />
+
+        <field
+          output="file_attributes_temporary"
+          parser="Bool"
+          description="temporary attribute flag"
+        />
+
+        <field
+          output="file_attributes_virtual"
+          parser="Bool"
+          description="virtual attribute flag"
+        />
+
+        <field
+          output="file_attributes_recall_on_data_access"
+          parser="Bool"
+          description="recall‑on‑data‑access attribute flag"
+        />
+
+        <field
+          output="file_attributes_device"
+          parser="Bool"
+          description="device attribute flag"
+        />
+
+        <field
+          output="file_attributes_ea"
+          parser="Bool"
+          description="extended‑attributes (EA) attribute flag"
+        />
+
+        <field
+          output="file_attributes_recall_on_open"
+          parser="Bool"
+          description="recall‑on‑open attribute flag"
+        />
+
+        <field
+          output="file_attributes_pinned"
+          parser="Bool"
+          description="pinned attribute flag"
+        />
+
+        <field
+          output="file_attributes_integrity_stream"
+          parser="Bool"
+          description="integrity‑stream attribute flag"
+        />
+
+        <field
+          output="file_attributes_unpinned"
+          parser="Bool"
+          description="unpinned attribute flag"
+        />
+      </field>
+
+      <field
+        input="USN"
+        output="usn_number"
+        parser="IntRadix"
+        radix="16"
+        qualifier="FS_USN"
+        description="USN journal sequence number (hexadecimal)"
+      />
+
+      <field
+        input="FilenameFlags"
+        output="file_name_flags"
+        parser="Int"
+        description="flags associated with the filename entry"
+      />
+
+      <!-- date fields -->
+      <field
+        input="FileNameCreationDate"
+        output="fn_creation_date"
+        parser="DateTime"
+        qualifier="DATE_CREATION"
+        description="creation timestamp of the filename entry"
+      />
+
+      <field
+        input="FileNameLastModificationDate"
+        output="fn_lastmod_date"
+        parser="DateTime"
+        qualifier="DATE_MODIFICATION"
+        description="last modification timestamp of the filename entry"
+      />
+
+      <field
+        input="FileNameLastAccessDate"
+        output="fn_lastaccess_date"
+        parser="DateTime"
+        qualifier="DATE_ACCESS"
+        description="last access timestamp of the filename entry"
+      />
+
+      <field
+        input="FileNameLastAttrModificationDate"
+        output="fn_lastchange_date"
+        parser="DateTime"
+        qualifier="DATE_CHANGE"
+        description="timestamp of the last attribute change for the filename entry"
+      />
+
+      <field
+        input="CreationDate"
+        output="si_creation_date"
+        parser="DateTime"
+        qualifier="DATE_CREATION"
+        description="creation timestamp of the file"
+      />
+
+      <field
+        input="LastModificationDate"
+        output="si_lastmod_date"
+        parser="DateTime"
+        qualifier="DATE_MODIFICATION"
+        description="last modification timestamp of the file"
+      />
+
+      <field
+        input="LastAccessDate"
+        output="si_lastaccess_date"
+        parser="DateTime"
+        qualifier="DATE_ACCESS"
+        description="last access timestamp of the file"
+      />
+
+      <field
+        input="LastAttrChangeDate"
+        output="si_lastchange_date"
+        parser="DateTime"
+        qualifier="DATE_MODIFICATION"
+        description="timestamp of the last attribute change for the file"
+      />
+
+      <!-- hash -->
+      <field
+        input="MD5"
+        output="md5"
+        parser="String"
+        qualifier="FILE_MD5"
+        description="MD5 hash of the file content"
+      />
+
+      <field
+        input="SHA-1"
+        output="sha1"
+        parser="String"
+        qualifier="FILE_SHA1"
+        description="SHA‑1 hash of the file content"
+      />
+
+      <field
+        input="SHA256"
+        output="sha256"
+        parser="String"
+        qualifier="FILE_SHA256"
+        description="SHA‑256 hash of the file content"
+      />
+
+      <field
+        input="PeMD5"
+        output="orc_pe_md5"
+        parser="String"
+        qualifier="PE_MD5"
+        description="MD5 hash of the PE executable (if file is a PE)"
+      />
+
+      <field
+        input="PeSHA1"
+        output="orc_pe_sha1"
+        parser="String"
+        qualifier="PE_SHA1"
+        description="SHA‑1 hash of the PE executable (if file is a PE)"
+      />
+
+      <field
+        input="PeSHA256"
+        output="orc_pe_sha256"
+        parser="String"
+        qualifier="PE_SHA256"
+        description="SHA‑256 hash of the PE executable (if file is a PE)"
+      />
+
+      <field input="SignedHash" parser="Extension">
+        <field
+          output="file_pe_md5"
+          parser="String"
+          qualifier="PE_MD5"
+          description="MD5 hash extracted from the Authenticode‑signed PE file"
+        />
+
+        <field
+          output="file_pe_sha1"
+          parser="String"
+          qualifier="PE_SHA1"
+          description="SHA‑1 hash extracted from the Authenticode‑signed PE file"
+        />
+
+        <field
+          output="file_pe_sha256"
+          parser="String"
+          qualifier="PE_SHA256"
+          description="SHA‑256 hash extracted from the Authenticode‑signed PE file"
+        />
+      </field>
+
+
+      <!-- authenticode -->
+      <field
+        input="AuthenticodeSigner"
+        output="authenticode_signer"
+        parser="String"
+        description="subject name of the Authenticode signing certificate"
+      />
+
+      <field
+        input="AuthenticodeSignerThumbprint"
+        output="authenticode_signer_thumbprint"
+        parser="Split"
+        split_by=";"
+        description="thumbprint(s) of the Authenticode signing certificate"
+      />
+
+      <field
+        input="AuthenticodeCA"
+        output="authenticode_ca"
+        parser="String"
+        description="certificate authority that issued the signing certificate"
+      />
+
+      <field
+        input="AuthenticodeCAThumbprint"
+        output="authenticode_ca_thumbprint"
+        parser="Split"
+        split_by=";"
+        description="thumbprint(s) of the signing certificate authority"
+      />
+
+      <field
+        input="AuthenticodeStatus"
+        output="authenticode_status"
+        parser="String"
+        description="verification status of the Authenticode signature (e.g., valid, invalid)"
+      />
+
+      <!-- Others -->
+      <field
+        input="Version"
+        output="pe_version"
+        parser="String"
+        qualifier="PE_VERSION"
+        description="version string of the PE file (FileVersion)"
+      />
+
+      <field
+        input="CompanyName"
+        output="pe_companyname"
+        parser="String"
+        qualifier="COMPANY"
+        description="company name embedded in the PE metadata"
+      />
+
+      <field
+        input="ProductName"
+        output="pe_productname"
+        parser="String"
+        qualifier="PRODUCT"
+        description="product name embedded in the PE metadata"
+      />
+
+      <field
+        input="OriginalFileName"
+        output="pe_original_filename"
+        parser="String"
+        qualifier="FILE_NAME"
+        description="original filename stored in the PE metadata"
+      />
+
+      <field
+        input="Platform"
+        output="pe_platform"
+        parser="String"
+        qualifier="PE_ARCH"
+        description="target platform/architecture of the PE (e.g., x86, x64)"
+      />
+
+      <field
+        input="TimeStamp"
+        output="pe_compilation_date"
+        qualifier="DATE_COMPILATION"
+        parser="DateTime"
+        description="compilation timestamp of the PE executable"
+      />
+
+      <field
+        input="SubSystem"
+        output="pe_subsystem"
+        parser="String"
+        qualifier="PE_SUBSYSTEM"
+        description="subsystem type defined in the PE header (e.g., GUI, Console)"
+      />
+    </fields>
+  </mapping>
+
+</plugin>

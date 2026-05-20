@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="FastFindFile" file_encoding="UTF_8">
+  <mapping data_type="fastfind_file">
+    <description>Parse the filesystem results of the fastfind tool</description>
+    <category>Fast Find</category>
+    <default_parser value="Ignore" />
+    <default_date_pattern value='%Y-%m-%d %H:%M:%S.%f' />
+
+    <!-- Timeline definition -->
+    <timeline>
+      <timeline_type value="MacbMacb" />
+      <description include_field_name="false">
+        <output_name value="fn_fullname" />
+      </description>
+      <additional_description include_field_name="false">
+        <output_name value="description" />
+        <output_name value="i30_fullname" />
+      </additional_description>
+    </timeline>
+
+    <xpath_tuple value="/fast_find/filesystem/filefind_match/record" />
+    <fields>
+      <field
+        input="filename/@fullname"
+        output="fn_fullname"
+        parser="String"
+        qualifier="FILE_PATH"
+      />
+      <field
+        input="i30/@fullname"
+        output="i30_fullname"
+        parser="String"
+        qualifier="FILE_PATH"
+      />
+
+      <field input="../@description" output="description" parser="String" />
+
+      <field input="@volume_id" output="volume_id" parser="String" />
+      <field input="@snapshot_id" output="snapshot_id" parser="String" />
+
+      <field input="@frn" parser="Extension">
+        <field output="sequence_number" parser="Int" />
+        <field output="record_number" parser="Int" />
+      </field>
+
+      <field input="filename/@parentfrn" parser="Extension">
+        <field output="fn_parent_sequence_number" parser="Int" />
+        <field output="fn_parent_record_number" parser="Int" />
+      </field>
+
+      <field input="i30/@parentfrn" parser="Extension">
+        <field output="i30_parent_sequence_number" parser="Int" />
+        <field output="i30_parent_record_number" parser="Int" />
+      </field>
+
+      <field
+        input="standardinformation/@attributes"
+        output="file_name_flags"
+        parser="Extension"
+      >
+        <field
+          output="file_attributes_archive"
+          parser="Bool"
+          description="archive attribute flag"
+        />
+
+        <field
+          output="file_attributes_no_scrub_data"
+          parser="Bool"
+          description="no‑scrub‑data attribute flag"
+        />
+
+        <field
+          output="file_attributes_compressed"
+          parser="Bool"
+          description="compressed attribute flag"
+        />
+
+        <field
+          output="file_attributes_directory"
+          parser="Bool"
+          description="directory attribute flag"
+        />
+
+        <field
+          output="file_attributes_encrypted"
+          parser="Bool"
+          description="encrypted attribute flag"
+        />
+
+        <field
+          output="file_attributes_hidden"
+          parser="Bool"
+          description="hidden attribute flag"
+        />
+
+        <field
+          output="file_attributes_not_content_indexed"
+          parser="Bool"
+          description="not‑content‑indexed attribute flag"
+        />
+
+        <field
+          output="file_attributes_reparse_point"
+          parser="Bool"
+          description="reparse‑point attribute flag"
+        />
+
+        <field
+          output="file_attributes_normal"
+          parser="Bool"
+          description="normal attribute flag"
+        />
+
+        <field
+          output="file_attributes_offline"
+          parser="Bool"
+          description="offline attribute flag"
+        />
+
+        <field
+          output="file_attributes_sparse_file"
+          parser="Bool"
+          description="sparse‑file attribute flag"
+        />
+
+        <field
+          output="file_attributes_readonly"
+          parser="Bool"
+          description="read‑only attribute flag"
+        />
+
+        <field
+          output="file_attributes_system"
+          parser="Bool"
+          description="system attribute flag"
+        />
+
+        <field
+          output="file_attributes_temporary"
+          parser="Bool"
+          description="temporary attribute flag"
+        />
+
+        <field
+          output="file_attributes_virtual"
+          parser="Bool"
+          description="virtual attribute flag"
+        />
+
+        <field
+          output="file_attributes_recall_on_data_access"
+          parser="Bool"
+          description="recall‑on‑data‑access attribute flag"
+        />
+
+        <field
+          output="file_attributes_device"
+          parser="Bool"
+          description="device attribute flag"
+        />
+
+        <field
+          output="file_attributes_ea"
+          parser="Bool"
+          description="extended‑attributes (EA) attribute flag"
+        />
+
+        <field
+          output="file_attributes_recall_on_open"
+          parser="Bool"
+          description="recall‑on‑open attribute flag"
+        />
+
+        <field
+          output="file_attributes_pinned"
+          parser="Bool"
+          description="pinned attribute flag"
+        />
+
+        <field
+          output="file_attributes_integrity_stream"
+          parser="Bool"
+          description="integrity‑stream attribute flag"
+        />
+
+        <field
+          output="file_attributes_unpinned"
+          parser="Bool"
+          description="unpinned attribute flag"
+        />
+
+      </field>
+      <!-- standardinformation dates-->
+      <field
+        input="standardinformation/@creation"
+        output="si_creation_date"
+        qualifier="DATE_CREATION"
+        parser="DateTime"
+      />
+      <field
+        input="standardinformation/@lastmodification"
+        output="si_lastmod_date"
+        qualifier="DATE_MODIFICATION"
+        parser="DateTime"
+      />
+      <field
+        input="standardinformation/@lastaccess"
+        output="si_lastaccess_date"
+        qualifier="DATE_ACCESS"
+        parser="DateTime"
+      />
+      <field
+        input="standardinformation/@lastentrychange"
+        output="si_lastchange_date"
+        qualifier="DATE_CHANGE"
+        parser="DateTime"
+      />
+      <!-- filename dates-->
+      <field
+        input="filename/@creation"
+        output="fn_creation_date"
+        qualifier="DATE_CREATION"
+        parser="DateTime"
+      />
+      <field
+        input="filename/@lastmodification"
+        output="fn_lastmod_date"
+        qualifier="DATE_MODIFICATION"
+        parser="DateTime"
+      />
+      <field
+        input="filename/@lastaccess"
+        output="fn_lastaccess_date"
+        qualifier="DATE_ACCESS"
+        parser="DateTime"
+      />
+      <field
+        input="filename/@lastentrychange"
+        output="fn_lastchange_date"
+        qualifier="DATE_CHANGE"
+        parser="DateTime"
+      />
+      <!-- i30 dates-->
+      <field
+        input="i30/@creation"
+        output="i30_creation"
+        parser="DateTime"
+        qualifier="DATE_CREATION"
+      />
+      <field
+        input="i30/@lastmodification"
+        output="i30_lastmodification"
+        qualifier="DATE_MODIFICATION"
+        parser="DateTime"
+      />
+      <field
+        input="i30/@lastaccess"
+        output="i30_lastaccess"
+        qualifier="DATE_ACCESS"
+        parser="DateTime"
+      />
+      <field
+        input="i30/@lastentrychange"
+        output="i30_lastentrychange"
+        qualifier="DATE_CHANGE"
+        parser="DateTime"
+      />
+
+      <array>
+        <object input="data" output="data">
+          <field
+            input="@name"
+            output="name"
+            parser="String"
+            qualifier="FILE_NAME"
+          />
+          <field
+            input="@filesize"
+            output="filesize"
+            parser="Int"
+            qualifier="FILE_SIZE"
+          />
+          <field
+            input="@MD5"
+            output="md5"
+            parser="String"
+            qualifier="FILE_MD5"
+          />
+          <field
+            input="@SHA1"
+            output="sha1"
+            parser="String"
+            qualifier="FILE_SHA1"
+          />
+          <field
+            input="@SHA256"
+            output="sha256"
+            parser="String"
+            qualifier="FILE_SHA256"
+          />
+
+        </object>
+      </array>
+    </fields>
+  </mapping>
+</plugin>

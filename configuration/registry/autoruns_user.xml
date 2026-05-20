@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="RegAutorunsUser" file_encoding="UTF_8">
+  <mapping data_type="reg_autoruns">
+    <description>
+      <![CDATA[
+Extracts persistence‑related registry data from the USER hive (HKCU).
+- Enumerates well‑known keys that Windows and third‑party software use for
+  automatic execution (autoruns) in the current user hive.
+- Groups the results by a *persistence type* (e.g. “Startup Run”, “Shell Load and Run”)
+  and returns the values found under each key.
+]]>
+    </description>
+
+    <category>Persistence</category>
+    <default_parser value="Ignore" />
+    <default_date_pattern value="iso" />
+
+    <!-- Timeline definition (standard timeline, linked to the key owner) -->
+    <timeline>
+      <timeline_type value="Standard" />
+      <related_user>
+        <output_name value="key_security.owner_sid" />
+      </related_user>
+      <description>
+        <output_name value="type" />
+        <output_name value="key_path" />
+      </description>
+      <additional_description>
+        <output_name value="values" />
+      </additional_description>
+    </timeline>
+
+    <!-- Fields emitted by the plugin -->
+    <fields>
+
+        <!-- Logical name of the autorun category -->
+        <field
+        input="type"
+        parser="String"
+        description="Logical name of the persistence mechanism (e.g., 'Startup Run')"
+      />
+
+        <!-- The set of values extracted from the key -->
+        <object
+        input="values"
+        description="Value set extracted from the registry key."
+      />
+
+            <!-- Registry key metadata -->
+            <field
+        input="key_path"
+        parser="String"
+        qualifier="KEY_PATH"
+        description="full registry key name"
+      />
+            <field
+        input="key_modif_time"
+        parser="DateTime"
+        qualifier="DATE_MODIFICATION"
+        display_name="Registry key last modification"
+        description="last modification timestamp of the registry key"
+      />
+            <object input="key_security">
+                <field
+          input="owner_sid"
+          parser="String"
+          qualifier="USER_SID"
+          description="SID of the user that owns the registry key"
+        />
+                <field
+          input="group_sid"
+          parser="String"
+          description="SID of the group that owns the registry key"
+        />
+                <array>
+                <field
+            input="control_flags"
+            parser="String"
+            description="security descriptor control flags for the key"
+          />
+                </array>
+                <object input="dacl_ace">
+                <field
+            input="ace_type"
+            parser="String"
+            description="type of ACE (e.g., allow, deny)"
+          />
+                <field
+            input="account_sid"
+            parser="String"
+            description="SID of the account the ACE applies to"
+          />
+                <array>
+                    <field
+              input="ace_flags"
+              parser="String"
+              description="ACE flags that modify inheritance or behavior"
+            />
+                </array>
+                <array>
+                    <field
+              input="rights"
+              parser="String"
+              description="permissions granted or denied by the ACE"
+            />
+                </array>
+                </object>
+            </object>
+    </fields>
+  </mapping>
+</plugin>

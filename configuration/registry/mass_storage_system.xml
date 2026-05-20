@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="RegMassStorageSystem" file_encoding="UTF_8">
+  <mapping data_type="mass_storage">
+    <description
+    ><![CDATA[
+Extracts information about every USB (or other) mass‑storage device ever connected to a Windows system, using data from the `System` hive. It parses several registry locations (USBSTOR, DeviceClasses, USB, MountedDevices) and consolidates the results into a unified device view.
+
+- Provides device identification (class ID, instance ID, vendor/product IDs).
+- Lists registry paths, friendly names, and owning users
+]]>
+    </description>
+    <category>File System</category>
+    <default_parser value="Ignore" />
+    <default_date_pattern value='iso' />
+
+    <!-- Timeline definition -->
+    <timeline>
+      <timeline_type value="Standard" />
+      <related_user>
+        <output_name value="users" />
+      </related_user>
+      <description>
+        <output_name value="type" />
+        <output_name value="vendor" />
+        <output_name value="product" />
+        <output_name value="instance_id" />
+      </description>
+      <additional_description>
+         <output_name value="class_id" />
+      </additional_description>
+    </timeline>
+
+    <!-- Fields -->
+    <fields>
+      <field
+        input="class_id"
+        parser="String"
+        description="class identifier of the device (e.g., USBSTOR class ID)"
+      />
+
+
+
+      <array>
+        <field
+          input="friendly_names"
+          parser="String"
+          description="list of friendly display names for the device"
+        />
+      </array>
+
+      <field
+        input="controlset"
+        parser="String"
+        description="registry control set (e.g., ControlSet001) where the device information resides"
+      />
+
+      <field
+        input="parent_id"
+        parser="String"
+        description="parent identifier linking to a related device entry"
+      />
+
+      <field
+        input="volume_guid"
+        parser="String"
+        description="GUID of the volume associated with the device"
+      />
+
+      <field
+        input="driver"
+        parser="String"
+        description="driver name or path handling the device"
+      />
+
+      <field input="type" parser="String" description="type of the device" />
+
+      <field
+        input="vendor"
+        parser="String"
+        description="vendor name extracted from the device class ID"
+      />
+
+      <field
+        input="product"
+        parser="String"
+        description="product name extracted from the device class ID"
+      />
+
+      <field
+        input="instance_id"
+        parser="String"
+        description="unique instance ID of the device"
+      />
+
+      <field
+        input="revision"
+        parser="String"
+        description="hardware revision of the device"
+      />
+
+      <field
+        input="silo"
+        parser="String"
+        description="silo/segment identifier for the device"
+      />
+
+      <field
+        input="vendor_id"
+        parser="String"
+        description="USB vendor ID (VID)"
+      />
+
+      <field
+        input="product_id"
+        parser="String"
+        description="USB product ID (PID)"
+      />
+
+      <field
+        input="volume_letter"
+        parser="String"
+        description="assigned drive letter (e.g., C:)"
+      />
+
+      <field
+        input="volume_label"
+        parser="String"
+        description="label of the volume"
+      />
+
+      <field
+        input="volume_sn"
+        parser="String"
+        description="serial number of the volume"
+      />
+
+      <field
+        input="capacity"
+        parser="String"
+        description="storage capacity of the volume"
+      />
+
+      <field
+        input="attributes1"
+        parser="String"
+        description="raw attribute string 1 from device metadata"
+      />
+
+      <field
+        input="attributes2"
+        parser="String"
+        description="raw attribute string 2 from device metadata"
+      />
+
+      <field
+        input="attributes3"
+        parser="String"
+        description="raw attribute string 3 from device metadata"
+      />
+
+      <field
+        input="reason"
+        parser="String"
+        description="reason string associated with device install or removal events"
+      />
+
+      <field
+        input="registry_path"
+        parser="String"
+        description="registry key paths that contributed to this device record"
+      />
+
+      <field
+        input="setupapi_sample_path"
+        parser="String"
+        description="path to the SetupAPI sample file used for this record"
+      />
+
+      <field
+        input="users"
+        parser="String"
+        description="owner SID(s) of the registry entries"
+      />
+
+      <field
+        input="setupapi_first_seen"
+        parser="DateTime"
+        qualifier="DATE_INSTALLATION"
+        display_name="Usb setup first seen"
+        description="first timestamp the device appeared in SetupAPI (installation)"
+      />
+
+      <field
+        input="setupapi_last_seen"
+        parser="DateTime"
+        qualifier="DATE_UNINSTALL"
+        display_name="Usb setup last seen"
+        description="last timestamp the device appeared in SetupAPI (removal)"
+      />
+
+      <field
+        input="usbstor_last_modified"
+        parser="DateTime"
+        qualifier="DATE_MODIFICATION"
+        display_name="Usb storage last modification"
+        description="last modification timestamp of the USBSTOR registry key"
+      />
+
+      <field
+        input="device_classes_last_modified"
+        parser="DateTime"
+        qualifier="DATE_MODIFICATION"
+        display_name="Device class last modification"
+        description="last modification timestamp of the DeviceClasses registry key"
+      />
+
+      <field
+        input="usb_last_modified"
+        parser="DateTime"
+        qualifier="DATE_MODIFICATION"
+        display_name="Usb last modification"
+        description="last modification timestamp of the USB enumeration key"
+      />
+
+      <field
+        input="emdmgmt_last_modified"
+        parser="DateTime"
+        qualifier="DATE_MODIFICATION"
+        display_name="mdmgmt last modified"
+        description="last modification timestamp of the EMDMGMT registry key"
+      />
+
+      <field
+        input="usbstor_first_install"
+        parser="DateTime"
+        qualifier="DATE_CREATION"
+        display_name="Usb first install"
+        description="first install timestamp from USBSTOR properties"
+      />
+
+      <field
+        input="usbstor_install"
+        parser="DateTime"
+        qualifier="DATE_CREATION"
+        display_name="Usb install"
+        description="install timestamp of the USBSTOR device"
+      />
+
+      <field
+        input="usbstor_last_arrival"
+        parser="DateTime"
+        qualifier="DATE_CREATION"
+        display_name="Usb last arrival"
+        description="timestamp of the most recent device arrival"
+      />
+
+      <field
+        input="usbstor_last_removal"
+        parser="DateTime"
+        qualifier="DATE_UNINSTALL"
+        display_name="Usb last removal"
+        description="timestamp of the most recent device removal"
+      />
+    </fields>
+  </mapping>
+
+</plugin>

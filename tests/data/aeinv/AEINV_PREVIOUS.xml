@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Log Version="6.1.7601.17514">
+	<ProgramList>
+		<Program
+            Id="000029aa059fcd56553fd6d8cf71f0867f1d0000ffff"
+            Name="Mozilla Firefox 58.0.2 (x64 fr)"
+            Publisher="Mozilla"
+            Version="58.0.2"
+            Source="AddRemoveProgram"
+        >
+			<StaticProperties>
+				<Files Id="000052d9c95768d170b8a95444cac030de4103ef39f8" />
+			</StaticProperties>
+		</Program>
+		<Program
+            Id="0000e0e447a93b7fbd93bb0078498610ca000000ffff"
+            Name="Mozilla Maintenance Service"
+            Publisher="Mozilla"
+            Version="58.0.2"
+            Source="AddRemoveProgram"
+        >
+			<StaticProperties>
+				<Files Id="000091bca5b1def2ca390fa9d63f15dbc0e5bd0ef02d" />
+			</StaticProperties>
+		</Program>
+		<Program
+            Id="00007ecd37aa3850807e8779dec303063ea90000ffff"
+            Name="Oracle VM VirtualBox Guest Additions 5.0.40"
+            Publisher="Oracle Corporation"
+            Version="5.0.40.0"
+            Source="AddRemoveProgram"
+        >
+			<StaticProperties>
+				<Files Id="000035da37ae43c4f4bccea41cdec26e1d6cd13674a1" />
+			</StaticProperties>
+		</Program>
+		<Program
+            Id="00009cf281533efdce62c747b42673f09d640000ffff"
+            Name="Google Chrome"
+            Publisher="Google Inc."
+            Version="64.0.3282.186"
+            Source="AddRemoveProgram"
+        >
+			<StaticProperties>
+				<Files Id="0000853267500996636c106cfc35c347b762fbcf1c7a" />
+			</StaticProperties>
+		</Program>
+		<Program
+            Id="0000c06038c3dfd5e4d8cb5a11507a57429e0000ffff"
+            Name="Microsoft Visual C++ 2015 Redistributable (x64) - 14.0.24215"
+            Publisher="Microsoft Corporation"
+            Version="14.0.24215.1"
+            Source="AddRemoveProgram"
+        >
+			<StaticProperties>
+				<Files Id="00005c77897821d7dd71023746c8f765fc8e40960585" />
+			</StaticProperties>
+		</Program>
+		<Program
+            Id="0000b58ac8c925148666b380aeef824f60cc00000904"
+            Name="Oracle VM VirtualBox Guest Additions"
+            Publisher="Oracle Corporation"
+            Version="5.0.40.15130"
+            Language="1033"
+            Source="File"
+        >
+			<StaticProperties>
+				<Files Id="0000820884cc3ef743fed613ba51d502388c4f9bc828" />
+			</StaticProperties>
+		</Program>
+	</ProgramList>
+	<IEAddOnList>
+		<IEAddOn
+            CLSID="{19916E01-B44E-4E31-94A4-4696DF46157B}"
+            Name="InformationCardSigninHelper Class"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="000001ea13fd7daac87d64edf7cdf5369a39ac80c5ef" Name="icardie.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{2933BF90-7B36-11D2-B20E-00C04F983E60}"
+            Name="XML DOM Document"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="0000e7055d6cacb8c3fae06dc10ad480c8e6b8b7b592" Name="msxml3.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{2933BF94-7B36-11d2-B20E-00C04F983E60}"
+            Name="XSL Template"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="0000e7055d6cacb8c3fae06dc10ad480c8e6b8b7b592" Name="msxml3.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{3050F819-98B5-11CF-BB82-00AA00BDCE0B}"
+            Name="HtmlDlgSafeHelper Class"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="000089dc827f5fecfe97fd45c50ed01d3b44aefbd073" Name="mshtmled.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{333C7BC4-460F-11D0-BC04-0080C7055A83}"
+            Name="Tabular Data Control"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="0000453dd24332817649f8c5bcc67523ecbb2bdee76f" Name="tdc.ocx" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{373984C9-B845-449B-91E7-45AC83036ADE}"
+            Name="XML Schema Cache"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="0000e7055d6cacb8c3fae06dc10ad480c8e6b8b7b592" Name="msxml3.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{3E4D4F1C-2AEE-11D1-9D3D-00C04FC30DF6}"
+            Name="oleprn Class"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="0000dbe7e379e77aa93c26456a787169d70a1cd7bb37" Name="oleprn.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{435899C9-44AB-11D1-AF00-080036234103}"
+            Name="DSPrintQueue Class"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="0000dbe7e379e77aa93c26456a787169d70a1cd7bb37" Name="oleprn.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{4F664F91-FF01-11D0-8AED-00C04FD7B597}"
+            Name="OleSNMP Class"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="0000dbe7e379e77aa93c26456a787169d70a1cd7bb37" Name="oleprn.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{64AB4BB7-111E-11d1-8F79-00C04FC2FBE1}"
+            Name="Microsoft Shell UI Helper"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="0000639946c23b630798284a92117882990ea31d702e" Name="ieframe.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{65303443-AD66-11D1-9D65-00C04FC30DF6}"
+            Name="OleCvt Class"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="0000dbe7e379e77aa93c26456a787169d70a1cd7bb37" Name="oleprn.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{6BF52A52-394A-11d3-B153-00C04F79FAA6}"
+            Name="Lecteur Windows Media"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="00006d08eb142d0fc76f05c332194eacf28ca635016b" Name="wmp.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{760C4B83-E211-11D2-BF3E-00805FBE84A6}"
+            Name="Windows Media Services DRM Storage object"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="0000d53f369d595d97213da95e643a414d6aa6a0e6b2" Name="msnetobj.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{884e2049-217d-11da-b2a4-000e7bbb2b09}"
+            Name="X509 Enrollment WebClassFactory"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File
+                Id="0000c6f773d69ed859ae48a767e439dd24dca9cbc45e"
+                Name="CertEnrollCtrl.exe"
+            />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{884e2051-217d-11da-b2a4-000e7bbb2b09}"
+            Name="X509 Machine Enrollment Factory"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="0000cee23e7afce68bc02ed0912a3dab110528be66cb" Name="CertEnroll.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{88d96a05-f192-11d4-a65f-0040963251e5}"
+            Name="XML DOM Document 6.0"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="0000a767e893427f9b24fe06cbb3a155dd54162a402a" Name="msxml6.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{88d96a06-f192-11d4-a65f-0040963251e5}"
+            Name="Free Threaded XML DOM Document 6.0"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="0000a767e893427f9b24fe06cbb3a155dd54162a402a" Name="msxml6.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{88d96a07-f192-11d4-a65f-0040963251e5}"
+            Name="XML Schema Cache 6.0"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="0000a767e893427f9b24fe06cbb3a155dd54162a402a" Name="msxml6.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{88d96a08-f192-11d4-a65f-0040963251e5}"
+            Name="XSL Template 6.0"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="0000a767e893427f9b24fe06cbb3a155dd54162a402a" Name="msxml6.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{88d96a0a-f192-11d4-a65f-0040963251e5}"
+            Name="XML HTTP 6.0"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="0000a767e893427f9b24fe06cbb3a155dd54162a402a" Name="msxml6.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{8E4062D9-FE1B-4b9e-AA16-5E8EEF68F48E}"
+            Name="Registration Control"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="0000fbfb589af1f264af88b879f8aaf16475d499e737" Name="RegCtrl.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{92337A8C-E11D-11D0-BE48-00C04FC30DF6}"
+            Name="prturl Class"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="0000dbe7e379e77aa93c26456a787169d70a1cd7bb37" Name="oleprn.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{A9FC132B-096D-460B-B7D5-1DB0FAE0C062}"
+            Name="RMGetLicense Class"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="0000d53f369d595d97213da95e643a414d6aa6a0e6b2" Name="msnetobj.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{C3701884-B39B-11D1-9D68-00C04FC30DF6}"
+            Name="OleInstall Class"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="0000dbe7e379e77aa93c26456a787169d70a1cd7bb37" Name="oleprn.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{EE09B103-97E0-11CF-978F-00A02463E06F}"
+            Name="Scripting.Dictionary"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="0000243c82daa5f5d1a8c3e9fa305db33ee91907b60f" Name="scrrun.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{f5078f32-c551-11d3-89b9-0000f81fe221}"
+            Name="XML DOM Document 3.0"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="0000e7055d6cacb8c3fae06dc10ad480c8e6b8b7b592" Name="msxml3.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{f5078f33-c551-11d3-89b9-0000f81fe221}"
+            Name="Free Threaded XML DOM Document 3.0"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="0000e7055d6cacb8c3fae06dc10ad480c8e6b8b7b592" Name="msxml3.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{f5078f34-c551-11d3-89b9-0000f81fe221}"
+            Name="XML Schema Cache 3.0"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="0000e7055d6cacb8c3fae06dc10ad480c8e6b8b7b592" Name="msxml3.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{f5078f35-c551-11d3-89b9-0000f81fe221}"
+            Name="XML HTTP 3.0"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="0000e7055d6cacb8c3fae06dc10ad480c8e6b8b7b592" Name="msxml3.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{f5078f36-c551-11d3-89b9-0000f81fe221}"
+            Name="XSL Template 3.0"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="0000e7055d6cacb8c3fae06dc10ad480c8e6b8b7b592" Name="msxml3.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{f5078f39-c551-11d3-89b9-0000f81fe221}"
+            Name="XML Data Source Object 3.0"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="0000e7055d6cacb8c3fae06dc10ad480c8e6b8b7b592" Name="msxml3.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{F6D90F11-9C73-11D3-B32E-00C04F990BB4}"
+            Name="XML DOM Document"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="0000e7055d6cacb8c3fae06dc10ad480c8e6b8b7b592" Name="msxml3.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{F6D90F12-9C73-11D3-B32E-00C04F990BB4}"
+            Name="Free Threaded XML DOM Document"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="0000e7055d6cacb8c3fae06dc10ad480c8e6b8b7b592" Name="msxml3.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{F6D90F14-9C73-11D3-B32E-00C04F990BB4}"
+            Name="XML Data Source Object"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="0000e7055d6cacb8c3fae06dc10ad480c8e6b8b7b592" Name="msxml3.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{F6D90F16-9C73-11D3-B32E-00C04F990BB4}"
+            Name="XML HTTP"
+            Type="ActiveX"
+            Publisher="Microsoft Corporation"
+        >
+			<File Id="0000e7055d6cacb8c3fae06dc10ad480c8e6b8b7b592" Name="msxml3.dll" />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{C3101A8B-0EE1-4612-BFE9-41FFC1A3C19D}"
+            Name="Google Update Plugin"
+            Type="ActiveX"
+            Publisher="Google Inc."
+        >
+			<File
+                Id="0000be2e081f8d9ceca2398e80a119131d1f7c08ce62"
+                Name="npGoogleUpdate3.dll"
+            />
+		</IEAddOn>
+		<IEAddOn
+            CLSID="{C442AC41-9200-4770-8CC0-7CDB4F245C55}"
+            Name="Google Update Plugin"
+            Type="ActiveX"
+            Publisher="Google Inc."
+        >
+			<File
+                Id="0000be2e081f8d9ceca2398e80a119131d1f7c08ce62"
+                Name="npGoogleUpdate3.dll"
+            />
+		</IEAddOn>
+	</IEAddOnList>
+</Log>

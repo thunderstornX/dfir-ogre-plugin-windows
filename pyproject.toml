@@ -1,0 +1,42 @@
+[project]
+name = "dfir-ogre-plugin-windows"
+version = "0.4.3"
+description = "A collection of plugin"
+readme = "README.md"
+authors = [{ name = "ANSSI", email = "opensource@ssi.gouv.fr" }]
+requires-python = ">=3.10"
+dependencies = [
+    "dfir-ogre-common",
+    "tabulate>=0.9.0",
+    "dfir-jumplist-parser",
+    "typing_extensions",
+    "dateutils>=0.6.12",
+    "python-dateutil>=2.9.0",
+    "cryptography==46.0.2",
+    "construct>=2.10.70",
+    "libevt-python==20240421",
+    "libscca-python>=20250915",
+    "libfwsi-python>=20240423",
+    "libesedb-python==20240420",
+    "tzdata>=2025.3"
+]
+
+[project.scripts]
+dfir-ogre-plugin = "dfir_ogre_plugin_windows:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/dfir_ogre_plugin_windows"]
+
+[tool.uv.sources]
+dfir-ogre-common = { git = "git+ssh://git@github.com/ANSSI-FR/dfir-ogre-common.git" }
+dfir-jumplist-parser = { git = "git+ssh://git@github.com/ANSSI-FR/dfir-jumplist-parser.git" }
+
+[tool.pyright]
+reportUnknownVariableType = "none"
+reportMissingTypeStubs = "none"
+reportUnknownMemberType = "none"
+reportAny ="none"
