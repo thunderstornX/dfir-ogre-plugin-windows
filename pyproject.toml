@@ -32,8 +32,8 @@ build-backend = "hatchling.build"
 packages = ["src/dfir_ogre_plugin_windows"]
 
 [tool.uv.sources]
-dfir-ogre-common = { git = "git+ssh://git@github.com/ANSSI-FR/dfir-ogre-common.git" }
-dfir-jumplist-parser = { git = "git+ssh://git@github.com/ANSSI-FR/dfir-jumplist-parser.git" }
+dfir-ogre-common = { git = "https://github.com/ANSSI-FR/dfir-ogre-common.git" }
+dfir-jumplist-parser = { git = "https://github.com/ANSSI-FR/dfir-jumplist-parser.git" }
 
 [tool.pyright]
 reportUnknownVariableType = "none"
