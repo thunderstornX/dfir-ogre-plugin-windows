@@ -24,6 +24,7 @@ from .ie_webcache import IeWebCache as IeWebCache
 from .firefox_extension import FirefoxExtension as FirefoxExtension
 from .get_this import GetThis as GetThis
 from .hive import HiveKeys as HiveKeys
+from .i30_info import I30Info as I30Info
 from .java_idx import JavaIdx as JavaIdx
 from .json import Json as Json
 from .jsonl import Jsonl as Jsonl
