@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin parser="I30Info" file_encoding="UTF_8">
+  <mapping data_type="i30info">
+    <description
+    ><![CDATA[
+Extract NTFS's $i30 informations from an ORC‑generated CSV file.
+]]>
+</description>
+    <category>File System</category>
+    <default_parser value="Ignore" />
+    <default_date_pattern value='%Y-%m-%d %H:%M:%S.%3f' />
+    <csv_delimiter value="," />
+
+    <!-- Timeline definition -->
+    <timeline>
+      <timeline_type value="MacbMacb" />
+      <description>
+        <output_name value="name" />
+      </description>
+      <additional_description include_field_name="true" field_separator=" - ">
+        <output_name value="file_size" />
+      </additional_description>
+    </timeline>
+
+    <fields>
+      <field
+        input="Name"
+        output="name"
+        parser="String"
+        description="File Name"
+      />
+
+      <field
+        input="DataSize"
+        output="file_size"
+        parser="Int"
+        qualifier="FILE_SIZE"
+        description="size of the file in bytes"
+      />
+
+      <field
+        input="FilenameFlags"
+        output="flags"
+        parser="String"
+        description="File Name Flag"
+      />
+
+      <field
+        input="CarvedEntry"
+        output="is_carved"
+        parser="String"
+        description="Whether this entry have been carved or not"
+      />
+
+      <field input="FRN" parser="Extension">
+        <field
+          output="sequence_number"
+          parser="Int"
+          description="sequence number part of the File Reference Number (FRN)"
+        />
+        <field
+          output="record_number"
+          parser="Int"
+          description="record/index part of the File Reference Number (FRN)"
+        />
+      </field>
+
+      <field input="ParentFRN" parser="Extension">
+        <field
+          output="parent_sequence_number"
+          parser="Int"
+          description="sequence number part of the File Reference Number (FRN)"
+        />
+        <field
+          output="parent_record_number"
+          parser="Int"
+          description="record/index part of the File Reference Number (FRN)"
+        />
+      </field>
+
+      <field
+        input="VolumeID"
+        output="volume_id"
+        parser="String"
+        description="Volume identifier"
+      />
+
+      <field input="SnapshotID" output="snapshot_id" parser="String" />
+
+      <!-- date fields -->
+      <field
+        input="FileNameCreationDate"
+        output="fn_creation_date"
+        parser="DateTime"
+        qualifier="DATE_CREATION"
+        description="creation timestamp of the filename entry"
+      />
+
+      <field
+        input="FileNameLastModificationDate"
+        output="fn_lastmod_date"
+        parser="DateTime"
+        qualifier="DATE_MODIFICATION"
+        description="last modification timestamp of the filename entry"
+      />
+
+      <field
+        input="FileNameLastAccessDate"
+        output="fn_lastaccess_date"
+        parser="DateTime"
+        qualifier="DATE_ACCESS"
+        description="last access timestamp of the filename entry"
+      />
+
+      <field
+        input="FileNameLastAttrModificationDate"
+        output="fn_lastchange_date"
+        parser="DateTime"
+        qualifier="DATE_CHANGE"
+        description="timestamp of the last attribute change for the filename entry"
+      />
+
+    </fields>
+  </mapping>
+</plugin>
