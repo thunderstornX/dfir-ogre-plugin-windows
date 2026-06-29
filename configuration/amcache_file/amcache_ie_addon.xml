@@ -29,7 +29,6 @@
         input="@Type"
         output="type"
         parser="String"
-        qualifier="PE_VERSION"
         description="AddOn type"
       />
 

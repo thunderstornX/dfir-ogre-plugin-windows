@@ -1,6 +1,6 @@
 [project]
 name = "dfir-ogre-plugin-windows"
-version = "0.4.3"
+version = "2.0.0-beta2"
 description = "A collection of plugin"
 readme = "README.md"
 authors = [{ name = "ANSSI", email = "opensource@ssi.gouv.fr" }]
