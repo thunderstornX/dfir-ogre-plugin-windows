@@ -37,13 +37,35 @@
         input="ParentFRN"
         parser="Extension"
         description="file reference number (FRN) of the parent directory"
-      />
+      >
+        <field
+          output="parent_sequence_number"
+          parser="Int"
+          description="sequence part of the parent FRN"
+        />
+        <field
+          output="parent_record_number"
+          parser="Int"
+          description="record part of the parent FRN"
+        />
+      </field>
 
       <field
         input="FRN"
         parser="Extension"
         description="file reference number (FRN) of the file itself"
-      />
+      >
+        <field
+          output="sequence_number"
+          parser="Int"
+          description="sequence part of the FRN"
+        />
+        <field
+          output="record_number"
+          parser="Int"
+          description="record part of the FRN"
+        />
+      </field>
 
       <field
         input="FullName"

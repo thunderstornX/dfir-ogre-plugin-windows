@@ -36,6 +36,14 @@ Extracts information about the Windows Application Compatibility Shim database s
         description="filesystem path entry in the shim database file"
       />
 
+      <array>
+        <field
+          input="target"
+          parser="String"
+          description="application compatibility target path associated with the shim database"
+        />
+      </array>
+
       <field
         input="install_time"
         parser="DateTime"

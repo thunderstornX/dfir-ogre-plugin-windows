@@ -22,7 +22,7 @@ Extracts the Internet Explorer anti‑phishing registry hive under `NTUser` hiv
         <output_name value="user_file" />
       </description>
       <additional_description>
-        <output_name value="order_index" />
+        <output_name value="key_path" />
       </additional_description>
     </timeline>
 

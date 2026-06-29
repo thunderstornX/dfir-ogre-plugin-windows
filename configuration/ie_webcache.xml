@@ -23,7 +23,7 @@ The plugin queries the Containers and Container_X tables to retrieve URL visits 
         <output_name value="url" />
       </description>
       <additional_description>
-        <output_name value="file_name" />
+        <output_name value="filename" />
         <output_name value="access_count" />
         <output_name value="file_size" />
       </additional_description>

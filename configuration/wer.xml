@@ -16,7 +16,7 @@
       </description>
       <additional_description>
         <output_name value="event_type" />
-        <output_name value="original_file_name" />
+        <output_name value="original_filename" />
         <output_name value="ns_app_name" />
       </additional_description>
     </timeline>

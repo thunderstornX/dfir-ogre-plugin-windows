@@ -41,7 +41,7 @@ visited, and the referer URL if available.
       <additional_description>
         <output_name value="title" />
         <output_name value="visit_count" />
-        <output_name value="origin" />
+        <output_name value="referer" />
       </additional_description>
     </timeline>
 

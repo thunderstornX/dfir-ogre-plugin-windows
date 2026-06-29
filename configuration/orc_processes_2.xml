@@ -24,7 +24,7 @@ Parses CSV files produced by ORC that enumerate running processes. It extracts e
         <output_name value="name" />
       </description>
       <additional_description>
-        <output_name value="command_line" />
+        <output_name value="process_id" />
         <output_name value="executable_path" />
       </additional_description>
     </timeline>
