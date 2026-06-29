@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<plugin parser="FastFindFile" file_encoding="UTF_8">
+<plugin parser="FastFind" file_encoding="UTF_8">
   <mapping data_type="fastfind_file">
     <description>Parse the filesystem results of the fastfind tool</description>
     <category>Fast Find</category>

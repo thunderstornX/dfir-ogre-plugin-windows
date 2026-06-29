@@ -47,7 +47,9 @@ class Wer(OgrePlugin):
                 current_file: Optional[Record] = None
 
                 for line in input:
-                    fields = line.split("=")
+                    fields = line.split("=", 1)
+                    if len(fields) != 2:
+                        continue
                     key = fields[0]
                     value = fields[1].strip()
 
@@ -73,6 +75,9 @@ class Wer(OgrePlugin):
                         parser = field_mapping.get_parser(key)
                         if parser:
                             parser.parse(value, record)
+
+                if current_file:
+                    files.append(Value.Object(current_file))
 
                 # write every collected objects
                 for key, value in tables.items():

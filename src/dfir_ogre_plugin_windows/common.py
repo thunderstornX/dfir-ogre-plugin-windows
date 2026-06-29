@@ -44,14 +44,17 @@ def filetime_to_utc(filetime: int) -> datetime:
 
 def fat_datetime_to_utc(fat_datetime: int) -> Optional[datetime]:
     try:
-        day_of_month = fat_datetime & 0x1F
-        month = (fat_datetime >> 5) & 0x0F
-        year = (fat_datetime >> 9) & 0x7F
+        date = (fat_datetime >> 16) & 0xFFFF
+        time = fat_datetime & 0xFFFF
+
+        day_of_month = date & 0x1F
+        month = (date >> 5) & 0x0F
+        year = (date >> 9) & 0x7F
         year += 1980
 
-        seconds = (fat_datetime & 0x1F) * 2
-        minutes = (fat_datetime >> 5) & 0x3F
-        hours = (fat_datetime >> 11) & 0x1F
+        seconds = (time & 0x1F) * 2
+        minutes = (time >> 5) & 0x3F
+        hours = (time >> 11) & 0x1F
 
         return datetime(
             year, month, day_of_month, hours, minutes, seconds, tzinfo=timezone.utc

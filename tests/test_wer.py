@@ -69,9 +69,48 @@ class WerTest(TestCase):
                         jsoned["files"][0]["CabName"],
                         "CBS.log",
                     )
+                    self.assertEqual(len(jsoned["files"]), 7)
+                    self.assertEqual(jsoned["files"][-1]["CabName"], "sysinfo.txt")
 
                 i += 1
             self.assertEqual(i, expected_lines)
+
+    # python -m unittest tests.test_wer.WerTest.test_wer_preserves_equals_in_values -v
+    def test_wer_preserves_equals_in_values(self):
+        plugin_file = os.path.join(CONF_FOLDER, "wer.xml")
+        input_file = os.path.join(TEMP_FOLDER, "report_equals.wer")
+        base_output_name = "wer_report_equals"
+
+        with open(input_file, "wb") as fp:
+            fp.write(
+                b"\xff\xfe"
+                + "Version=1\nReportDescription=alpha=beta=gamma\n".encode(
+                    "utf-16-le"
+                )
+            )
+
+        output_file = os.path.join(TEMP_FOLDER, base_output_name + ".wer.jsonl")
+        if os.path.exists(output_file):
+            os.remove(output_file)
+
+        output_config = OutputConfiguration(
+          base_output_name,
+          TEMP_FOLDER,
+          with_timeline=False,
+          with_qualifiers=False,
+          include_empty=False,
+        )
+
+        run_config = RunConfiguration([output_config], True)
+        metadata = Metadata("test")
+        parser = Wer()
+
+        report = parser.parse(input_file, plugin_file, run_config, metadata)
+        self.assertEqual(None, report.last_error)
+
+        with open(output_file) as fp:
+            jsoned = json.loads(fp.readline())
+            self.assertEqual(jsoned["report_description"], "alpha=beta=gamma")
 
     # python -m unittest tests.test_wer.WerTest.test_wer_2 -v
     def test_wer_2(self):
