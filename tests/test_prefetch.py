@@ -382,3 +382,42 @@ class TestPrefetch(TestCase):
 
                 i += 1
             self.assertEqual(i, expected_lines)
+
+    # python -m unittest tests.test_prefetch.TestPrefetch.test_prefetch_w11_more_runs_than_timestamps -v
+    def test_prefetch_w11_more_runs_than_timestamps(self):
+        plugin_file = os.path.join(CONF_FOLDER, "prefetch.xml")
+        input_file = os.path.join(
+            DATA_FOLDER, "prefetch", "W11", "SVCHOST.EXE-5D15888E.pf"
+        )
+
+        base_output_name = "prefetch_w11_more_runs_than_timestamps"
+
+        output_file = os.path.join(
+            TEMP_FOLDER, base_output_name + ".prefetch.jsonl"
+        )
+        if os.path.exists(output_file):
+            os.remove(output_file)
+
+        output_config = OutputConfiguration(
+            base_output_name,
+            TEMP_FOLDER,
+            with_timeline=False,
+            include_empty=True,
+        )
+        run_config = RunConfiguration([output_config])
+        metadata = Metadata("test")
+        parser = Prefetch()
+
+        report = parser.parse(input_file, plugin_file, run_config, metadata)
+        self.assertEqual(None, report.last_error)
+
+        expected_lines = 8
+        lines = report.output_reports[0].file_reports[0].num_lines
+        self.assertEqual(lines, expected_lines)
+
+        with open(output_file) as fp:
+            parsed_lines = [json.loads(line) for line in fp]
+
+        self.assertEqual(len(parsed_lines), expected_lines)
+        self.assertEqual(parsed_lines[0]["executable"], "SVCHOST.EXE")
+        self.assertEqual(parsed_lines[0]["run_count"], 15)

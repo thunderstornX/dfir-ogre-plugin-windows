@@ -44,8 +44,15 @@ class Prefetch(OgrePlugin):
                     prefetch.open_file_object(input)
 
                     for i in range(prefetch.run_count):
+                        try:
+                            last_run_time = prefetch.get_last_run_time_as_integer(i)
+                        except OSError as e:
+                            if "invalid last run time index value out of bounds" in str(e):
+                                break
+                            raise
+
                         tuple = Record()
-                        date = filetime_to_utc(prefetch.get_last_run_time_as_integer(i))
+                        date = filetime_to_utc(last_run_time)
                         tuple.add("run_date", value(date))
                         tuple.add("executable", value(prefetch.executable_filename))
                         tuple.add("version", value(str(prefetch.format_version)))
