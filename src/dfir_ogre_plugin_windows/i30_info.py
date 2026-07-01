@@ -7,7 +7,6 @@ from dfir_ogre_common import (
     OgrePlugin,
     PluginConfiguration,
     PluginDescription,
-    Qualifiers,
     Record,
     RunConfiguration,
     RunReport,
@@ -18,7 +17,6 @@ from dfir_ogre_common import (
     win_signed_hash_parser,
 )
 
-Qualifier = Qualifiers()
 
 LOG_BEFORE_FAIL = 1000
 

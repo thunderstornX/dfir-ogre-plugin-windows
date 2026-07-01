@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 from typing import Dict, List, Optional
 
-from dfir_ogre_common import AbstractParser, FieldName, Qualifiers, Record, Value
+from dfir_ogre_common import AbstractParser, FieldName, Record, Value
 
 
 def value(
@@ -63,7 +63,6 @@ def fat_datetime_to_utc(fat_datetime: int) -> Optional[datetime]:
         return None
 
 
-Qualifier = Qualifiers()
 
 
 class FileAttributesParser(AbstractParser):
@@ -141,10 +140,10 @@ class FRNParser(AbstractParser):
     def build(cls, suffix: str) -> "FRNParser":
         parser = FRNParser()
         parser.sequence = FieldName(
-            f"{suffix}sequence_number", qualifier=Qualifier.MFT_SEQUENCE
+            f"{suffix}sequence_number"
         )
         parser.record = FieldName(
-            f"{suffix}record_number", qualifier=Qualifier.FS_INODE
+            f"{suffix}record_number"
         )
         return parser
 

@@ -30,8 +30,7 @@ class SrumTest(TestCase):
           base_output_name,
           TEMP_FOLDER,
           with_timeline=False,
-          with_qualifiers=True,
-          include_empty=True,
+                    include_empty=True,
         )
 
         run_config = RunConfiguration(
@@ -56,7 +55,7 @@ class SrumTest(TestCase):
                 jsoned = json.loads(line)
                 if i == 3:
                     self.assertEqual(
-                        jsoned["app_id:app_id"],
+                        jsoned["app_id"],
                         "!!svchost.exe!1972/12/14:16:22:50!1c364![LocalSystemNetworkRestricted] [WdiSystemHost]",
                     )
                 i += 1

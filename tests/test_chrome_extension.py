@@ -35,8 +35,7 @@ class TestChromeExtension(TestCase):
           base_output_name,
           TEMP_FOLDER,
           with_timeline=False,
-          with_qualifiers=True,
-          include_empty=False,
+                    include_empty=False,
         )
 
         metadata = Metadata("test")

@@ -3,7 +3,6 @@ from dfir_ogre_common import (
     OgrePlugin,
     PluginConfiguration,
     PluginDescription,
-    Qualifiers,
     RunConfiguration,
     RunReport,
     parse_csv,
@@ -11,7 +10,6 @@ from dfir_ogre_common import (
     win_ntfs_flag_parser,
 )
 
-Qualifier = Qualifiers()
 LOG_BEFORE_FAIL = 1000
 
 

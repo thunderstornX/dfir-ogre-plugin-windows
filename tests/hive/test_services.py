@@ -37,8 +37,7 @@ class Services(TestCase):
           base_output_name,
           TEMP_FOLDER,
           with_timeline=True,
-          with_qualifiers=True,
-          include_empty=False,
+                    include_empty=False,
         )
 
         run_config = RunConfiguration([output_config])
@@ -70,7 +69,7 @@ class Services(TestCase):
                         "service_type: Service WIN32 share process - start_type: Ondemand start - image_path: %SystemRoot%\\System32\\svchost.exe -k netsvcs -p - run_as: LocalSystem",
                     )
                     self.assertEqual(
-                        js["data"]["performance_library:file_path"],
+                        js["data"]["performance_library"],
                         "C:\\Windows\\System32\\bitsperf.dll",
                     )
 

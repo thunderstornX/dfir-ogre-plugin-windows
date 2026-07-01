@@ -30,8 +30,7 @@ class NetworkConfig(TestCase):
           base_output_name,
           TEMP_FOLDER,
           with_timeline=True,
-          with_qualifiers=True,
-          include_empty=False,
+                    include_empty=False,
         )
         run_config = RunConfiguration([output_config])
 

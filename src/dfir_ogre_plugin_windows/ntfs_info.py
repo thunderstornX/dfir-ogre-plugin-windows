@@ -7,7 +7,6 @@ from dfir_ogre_common import (
     OgrePlugin,
     PluginConfiguration,
     PluginDescription,
-    Qualifiers,
     Record,
     RunConfiguration,
     RunReport,
@@ -18,7 +17,6 @@ from dfir_ogre_common import (
     win_signed_hash_parser,
 )
 
-Qualifier = Qualifiers()
 
 LOG_BEFORE_FAIL = 1000
 
@@ -55,9 +53,9 @@ class NTFSInfo(OgrePlugin):
 class SignedHashParser(AbstractParser):
     """Cast the value of SignedHash field into the right hash"""
 
-    md5 = FieldName("file_pe_md5", qualifier=Qualifier.PE_MD5)
-    sha1 = FieldName("file_pe_sha1", qualifier=Qualifier.PE_SHA1)
-    sha256 = FieldName("file_pe_sha256", qualifier=Qualifier.PE_SHA256)
+    md5 = FieldName("file_pe_md5")
+    sha1 = FieldName("file_pe_sha1")
+    sha256 = FieldName("file_pe_sha256")
 
     def parse(self, input: str, ouput_name: str) -> Optional[Record]:
         if not input:

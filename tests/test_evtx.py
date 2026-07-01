@@ -29,8 +29,7 @@ class EvtxTest(TestCase):
           base_output_name,
           TEMP_FOLDER,
           with_timeline=True,
-          with_qualifiers=True,
-          include_empty=True,
+                    include_empty=True,
         )
 
         run_config = RunConfiguration([output_config], True)
@@ -54,7 +53,7 @@ class EvtxTest(TestCase):
                 jsoned = json.loads(line)
                 if i == 3:
                     self.assertEqual(
-                        jsoned["data"]["system"]["security"]["user_id:user_id"],
+                        jsoned["data"]["system"]["security"]["user_id"],
                         "S-1-5-18",
                     )
 

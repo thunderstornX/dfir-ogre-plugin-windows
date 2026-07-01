@@ -30,8 +30,7 @@ class AmCacheProgram(TestCase):
           base_output_name,
           TEMP_FOLDER,
           with_timeline=True,
-          with_qualifiers=True,
-          include_empty=True,
+                    include_empty=True,
         )
         run_config = RunConfiguration([output_config])
         metadata = Metadata("test")
@@ -84,8 +83,7 @@ class AmCacheProgram(TestCase):
           base_output_name,
           TEMP_FOLDER,
           with_timeline=True,
-          with_qualifiers=True,
-          include_empty=True,
+                    include_empty=True,
         )
         run_config = RunConfiguration([output_config])
         metadata = Metadata("test")
@@ -120,7 +118,7 @@ class AmCacheProgram(TestCase):
                         "version: 4.1.0.2980 - publisher: Riverbed Technology, Inc. - install_dir: [C:\\Program Files (x86)\\WinPcap] - key_path: AmCache\\Root\\Programs\\00008031ba6c55d6e393bb7b7081898b45020000ffff",
                     )
                     self.assertEqual(
-                        js["data"]["install_dir:file_path"],
+                        js["data"]["install_dir"],
                         ["C:\\Program Files (x86)\\WinPcap"],
                     )
 
@@ -145,8 +143,7 @@ class AmCacheProgram(TestCase):
           base_output_name,
           TEMP_FOLDER,
           with_timeline=True,
-          with_qualifiers=True,
-          include_empty=True,
+                    include_empty=True,
         )
         run_config = RunConfiguration([output_config])
         metadata = Metadata("test")
@@ -182,7 +179,7 @@ class AmCacheProgram(TestCase):
                         "version: 10.0.16299.15 - publisher: CN=Microsoft Windows, O=Microsoft Corporation, L=Redmond, S=Washington, C=US - install_dir: C:\\Windows\\SystemApps\\microsoft.creddialoghost_cw5n1h2txyewy - key_path: AmCache\\Root\\InventoryApplication\\000001d8af836d5ce5b71a9cbcdc40b7427d00000904",
                     )
                     self.assertEqual(
-                        js["data"]["install_dir:file_path"],
+                        js["data"]["install_dir"],
                         "C:\\Windows\\SystemApps\\microsoft.creddialoghost_cw5n1h2txyewy",
                     )
 

@@ -32,7 +32,6 @@ class TestLnk(TestCase):
           base_output_name,
           TEMP_FOLDER,
           with_timeline=True,
-          with_qualifiers=False,
           include_empty=False,
         )
 
@@ -113,8 +112,7 @@ class TestLnk(TestCase):
           base_output_name,
           TEMP_FOLDER,
           with_timeline=True,
-          with_qualifiers=True,
-          include_empty=False,
+                    include_empty=False,
         )
 
         run_config = RunConfiguration([output_config])
@@ -155,7 +153,7 @@ class TestLnk(TestCase):
 
                     self.assertEqual(
                         js["data"]["extra"]["distributed_link_tracker"][
-                            "droid_volume_identifier:volume_guid"
+                            "droid_volume_identifier"
                         ],
                         "cb368e46-431e-4e6d-b3a9-7cbb6dd6a31f",
                     )
@@ -171,7 +169,7 @@ class TestLnk(TestCase):
                     # test FRNSplit extension mapping
                     self.assertEqual(
                         js["data"]["extra"]["distributed_link_tracker"][
-                            "birth_droid_file_record_number:fs_inode"
+                            "birth_droid_file_record_number"
                         ],
                         62896,
                     )
@@ -179,7 +177,7 @@ class TestLnk(TestCase):
                     # test FRNSplit extension mapping
                     self.assertEqual(
                         js["data"]["extra"]["distributed_link_tracker"][
-                            "droid_file_record_number:fs_inode"
+                            "droid_file_record_number"
                         ],
                         62896,
                     )
@@ -200,7 +198,6 @@ class TestLnk(TestCase):
           base_output_name,
           TEMP_FOLDER,
           with_timeline=False,
-          with_qualifiers=False,
           include_empty=True,
         )
 
@@ -260,7 +257,6 @@ class TestLnk(TestCase):
           base_output_name,
           TEMP_FOLDER,
           with_timeline=False,
-          with_qualifiers=False,
           include_empty=False,
         )
 

@@ -31,8 +31,7 @@ class NtfsInfoTest(TestCase):
           base_output_name,
           TEMP_FOLDER,
           with_timeline=True,
-          with_qualifiers=True,
-          include_empty=True,
+                    include_empty=True,
         )
 
         plugin_config = RunConfiguration([output_config])
@@ -62,8 +61,8 @@ class NtfsInfoTest(TestCase):
                     self.assertEqual(
                         jsoned["data"]["file_attributes_sparse_file"], False
                     )
-                    self.assertEqual(jsoned["data"]["sequence_number:mft_sequence"], 5)
-                    self.assertEqual(jsoned["data"]["record_number:fs_inode"], 5)
+                    self.assertEqual(jsoned["data"]["sequence_number"], 5)
+                    self.assertEqual(jsoned["data"]["record_number"], 5)
 
                 i += 1
             self.assertEqual(i, 5)
@@ -84,7 +83,6 @@ class NtfsInfoTest(TestCase):
           base_output_name,
           TEMP_FOLDER,
           with_timeline=False,
-          with_qualifiers=False,
           include_empty=False,
         )
 
@@ -136,8 +134,7 @@ class NtfsInfoTest(TestCase):
           TEMP_FOLDER,
           format="csv",
           with_timeline=False,
-          with_qualifiers=True,
-          include_empty=True,
+                    include_empty=True,
         )
 
         plugin_config = RunConfiguration([output_config])
@@ -182,8 +179,7 @@ class NtfsInfoTest(TestCase):
           TEMP_FOLDER,
           format="csv",
           with_timeline=True,
-          with_qualifiers=True,
-          include_empty=True,
+                    include_empty=True,
         )
 
         plugin_config = RunConfiguration([output_config])

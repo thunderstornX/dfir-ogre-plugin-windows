@@ -30,8 +30,7 @@ class TestOrcProcesses(TestCase):
           base_output_name,
           TEMP_FOLDER,
           with_timeline=True,
-          with_qualifiers=True,
-          include_empty=True,
+                    include_empty=True,
         )
 
         run_config = RunConfiguration([output_config])
@@ -82,8 +81,7 @@ class TestOrcProcesses(TestCase):
           base_output_name,
           TEMP_FOLDER,
           with_timeline=False,
-          with_qualifiers=True,
-          include_empty=True,
+                    include_empty=True,
         )
 
         run_config = RunConfiguration([output_config])

@@ -31,8 +31,7 @@ class UserProfile(TestCase):
           base_output_name,
           TEMP_FOLDER,
           with_timeline=True,
-          with_qualifiers=True,
-          include_empty=True,
+                    include_empty=True,
         )
 
         metadata = Metadata("test")

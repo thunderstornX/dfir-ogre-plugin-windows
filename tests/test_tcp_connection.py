@@ -30,8 +30,7 @@ class TcpConnectionTest(TestCase):
           base_output_name,
           TEMP_FOLDER,
           with_timeline=False,
-          with_qualifiers=True,
-          include_empty=True,            # no extra parameters
+                    include_empty=True,            # no extra parameters
         )
 
         metadata = Metadata("test")

@@ -29,8 +29,7 @@ class TestScheduledTask(TestCase):
           base_output_name,
           TEMP_FOLDER,
           with_timeline=True,
-          with_qualifiers=True,
-          include_empty=False,
+                    include_empty=False,
         )
 
         metadata = Metadata("test")
@@ -65,11 +64,11 @@ class TestScheduledTask(TestCase):
                     )
                     data = jsoned["data"]
                     self.assertEqual(
-                        data["creation_date:creation_date"],
+                        data["creation_date"],
                         "2016-01-21T18:20:43.399251+00:00",
                     )
                     self.assertEqual(
-                        data["plain"]["mtime:modification_date"],
+                        data["plain"]["mtime"],
                         "2015-10-30T07:25:55.704575+00:00",
                     )
 

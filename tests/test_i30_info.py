@@ -31,8 +31,7 @@ class I30InfoTest(TestCase):
           base_output_name,
           TEMP_FOLDER,
           with_timeline=True,
-          with_qualifiers=True,
-          include_empty=True,
+                    include_empty=True,
         )
 
         plugin_config = RunConfiguration([output_config])

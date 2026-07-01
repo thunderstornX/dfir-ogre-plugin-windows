@@ -27,8 +27,7 @@ class TestAcmru(TestCase):
         output_config = OutputConfiguration(
             base_output_name,
             TEMP_FOLDER,
-            with_qualifiers=True,
-        )
+                    )
         run_config = RunConfiguration([output_config])
 
         metadata = Metadata("test")

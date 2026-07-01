@@ -29,8 +29,7 @@ class HiveTest(TestCase):
           base_output_name,
           TEMP_FOLDER,
           with_timeline=True,
-          with_qualifiers=True,
-          include_empty=True,
+                    include_empty=True,
         )
 
         run_config = RunConfiguration(
@@ -60,7 +59,7 @@ class HiveTest(TestCase):
                 jsoned = json.loads(line)
                 if i == 3:
                     self.assertEqual(
-                        jsoned["data"]["path:key_path"],
+                        jsoned["data"]["path"],
                         "HELLO\\subpath-test\\with-two-levels-of-subkeys",
                     )
                 i += 1

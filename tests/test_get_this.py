@@ -30,8 +30,7 @@ class GetThisTest(TestCase):
           base_output_name,
           TEMP_FOLDER,
           with_timeline=True,
-          with_qualifiers=True,
-          include_empty=True,
+                    include_empty=True,
         )
 
         metadata = Metadata("test")
@@ -55,7 +54,7 @@ class GetThisTest(TestCase):
                 jsoned = json.loads(line)
                 if i == 20:
                     self.assertEqual(
-                        jsoned["data"]["parent_sequence_number:mft_sequence"], 6
+                        jsoned["data"]["parent_sequence_number"], 6
                     )
 
                 i += 1
