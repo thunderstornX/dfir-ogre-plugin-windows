@@ -64,6 +64,7 @@ from .registry.shim_database import RegShimDb as RegShimDb
 from .registry.snapshot_exclude import RegSnapExclude as RegSnapExclude
 from .registry.subject_interface_package import RegSIPP as RegSIPP
 from .registry.system_info import RegSystemInfo as RegSystemInfo
+from .registry.typed_paths import RegTypedPaths as RegTypedPaths
 from .registry.user_assist import RegUserAssist as RegUserAssist
 from .registry.user_profile import RegUserProfile as RegUserProfile
 from .tcp_connection import TCPConn as TCPConn
