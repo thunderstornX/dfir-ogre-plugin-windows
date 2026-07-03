@@ -61,6 +61,26 @@ class AutorunsTest(TestCase):
             "enabled: true - category: Logon - profile: System-wide - image_path: c:\\windows\\system32\\userinit.exe",
         )
 
+    # python -m unittest tests.test_autoruns.AutorunsTest.test_autoruns_3 -v
+    def test_autoruns_3(self):
+        output_file, report = self.parse_autoruns("autoruns_3.csv")
+
+        self.assertEqual(None, report.last_error)
+        self.assertEqual(report.output_reports[0].file_reports[0].num_lines, 1372)
+        self.assertEqual(
+            report.output_reports[0].file_reports[0].file_name,
+            output_file,
+        )
+
+        with open(output_file) as fp:
+            rows = [json.loads(line) for line in fp]
+
+        self.assertEqual(len(rows), 1372)
+        self.assertEqual(
+            rows[3]["additional_description"],
+            "enabled: true - category: Hijacks - profile: System-wide - image_path: c:\\program files\\internet explorer\\iexplore.exe",
+        )
+
     def test_date_parser_falls_back_to_best_effort_parsing(self):
         parser = AutorunsDateParser()
 

@@ -94,7 +94,11 @@ class AutorunsDateParser(AbstractParser):
 
 
 def normalize_autoruns_csv(input_file: str) -> str:
-    with open(input_file, encoding="utf-16", newline="") as csv_file:
+    with open(
+        input_file,
+        encoding=detect_autoruns_csv_encoding(input_file),
+        newline="",
+    ) as csv_file:
         rows = list(csv.reader(csv_file))
 
     output = tempfile.NamedTemporaryFile(
@@ -121,3 +125,13 @@ def normalize_autoruns_csv(input_file: str) -> str:
             writer.writerow(row)
 
     return output.name
+
+
+def detect_autoruns_csv_encoding(input_file: str) -> str:
+    with open(input_file, "rb") as fp:
+        bom = fp.read(2)
+
+    if bom in (b"\xff\xfe", b"\xfe\xff"):
+        return "utf-16"
+
+    return "utf-16le"
