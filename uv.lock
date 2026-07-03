@@ -174,7 +174,7 @@ wheels = [
 [[package]]
 name = "dfir-jumplist-parser"
 version = "3.2.0"
-source = { git = "ssh://git@github.com/ANSSI-FR/dfir-jumplist-parser.git#7ff0455be6569b21324dcc2f82d15350f7421bd1" }
+source = { git = "https://github.com/ANSSI-FR/dfir-jumplist-parser.git#054662e18d58e001c5a0d57a60bdb272540b1153" }
 dependencies = [
     { name = "lnkparse3" },
     { name = "olefile" },
@@ -184,12 +184,12 @@ dependencies = [
 
 [[package]]
 name = "dfir-ogre-common"
-version = "2.0.0b1"
-source = { git = "ssh://git@github.com/ANSSI-FR/dfir-ogre-common.git#c6403ec12f698cfd02e4630c38ab21075ce5abab" }
+version = "2.0.0b2"
+source = { git = "https://github.com/ANSSI-FR/dfir-ogre-common.git#6fc5da353d912297206dc632ad53780dc2b118ea" }
 
 [[package]]
 name = "dfir-ogre-plugin-windows"
-version = "0.4.3"
+version = "2.0.0b2"
 source = { editable = "." }
 dependencies = [
     { name = "construct" },
@@ -212,8 +212,8 @@ requires-dist = [
     { name = "construct", specifier = ">=2.10.70" },
     { name = "cryptography", specifier = "==46.0.2" },
     { name = "dateutils", specifier = ">=0.6.12" },
-    { name = "dfir-jumplist-parser", git = "ssh://git@github.com/ANSSI-FR/dfir-jumplist-parser.git" },
-    { name = "dfir-ogre-common", git = "ssh://git@github.com/ANSSI-FR/dfir-ogre-common.git" },
+    { name = "dfir-jumplist-parser", git = "https://github.com/ANSSI-FR/dfir-jumplist-parser.git" },
+    { name = "dfir-ogre-common", git = "https://github.com/ANSSI-FR/dfir-ogre-common.git" },
     { name = "libesedb-python", specifier = "==20240420" },
     { name = "libevt-python", specifier = "==20240421" },
     { name = "libfwsi-python", specifier = ">=20240423" },
