@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<plugin parser="Csv" file_encoding="UTF_16_LE">
+<plugin parser="Autoruns" file_encoding="UTF_16_LE">
   <mapping data_type="autoruns">
     <description
     ><![CDATA[
@@ -34,7 +34,7 @@ Parses CSV files produced by the Windows Autoruns utility, extracting entries 
       <field
         input="Time"
         output="time"
-        parser="DateTime"
+        parser="Python"
         description="timestamp of the autorun entry"
       />
 

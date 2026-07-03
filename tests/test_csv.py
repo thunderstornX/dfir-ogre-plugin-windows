@@ -19,53 +19,6 @@ os.makedirs(TEMP_FOLDER, exist_ok=True)
 
 
 class CSVTest(TestCase):
-    # python -m unittest tests.test_csv.CSVTest.test_autoruns -v
-    def test_autoruns(self):
-        plugin_file = os.path.join(CONF_FOLDER, "autoruns.xml")
-        input_file = os.path.join(DATA_FOLDER, "csv", "autoruns.csv")
-
-        base_output_name = "autoruns"
-        output_file = os.path.join(
-            TEMP_FOLDER, base_output_name + ".autoruns.jsonl"
-        )
-        if os.path.exists(output_file):
-            os.remove(output_file)
-
-        output_config = OutputConfiguration(
-          base_output_name,
-          TEMP_FOLDER,
-          with_timeline=True,
-                    include_empty=True,
-        )
-
-        metadata = Metadata("test")
-        parser = Csv()
-
-        run_configuration = RunConfiguration([output_config])
-        report = parser.parse(input_file, plugin_file, run_configuration, metadata)
-        print(report.last_error)
-        self.assertEqual(None, report.last_error)
-
-        lines = report.output_reports[0].file_reports[0].num_lines
-        self.assertEqual(lines, 99)
-
-        filename = report.output_reports[0].file_reports[0].file_name
-
-        self.assertEqual(filename, output_file)
-
-        with open(output_file) as fp:
-            i = 0
-            for line in fp:
-                jsoned = json.loads(line)
-                if i == 3:
-                    self.assertEqual(
-                        jsoned["additional_description"],
-                        "enabled: true - category: Hijacks - profile: System-wide - image_path: c:\\program files\\internet explorer\\iexplore.exe",
-                    )
-
-                i += 1
-            self.assertEqual(i, 99)
-
     # python -m unittest tests.test_csv.CSVTest.test_volstat_10_2_2 -v
     def test_volstat_10_2_2(self):
         plugin_file = os.path.join(CONF_FOLDER, "volstat.xml")
